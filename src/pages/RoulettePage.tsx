@@ -98,21 +98,6 @@ const RoulettePage: React.FC<RoulettePageProps> = ({
               width={200}
               height={200}
             />
-            
-            {/* Spin Button */}
-            <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
-              <button
-                onClick={handleSpinClick}
-                disabled={mustSpin}
-                className="w-20 h-20 bg-gradient-to-r from-yellow-400 to-orange-500 hover:from-yellow-500 hover:to-orange-600 disabled:from-gray-400 disabled:to-gray-500 text-white font-bold rounded-full shadow-2xl transform hover:scale-105 active:scale-95 disabled:scale-100 transition-all duration-200 pointer-events-auto border-4 border-white"
-              >
-                {mustSpin ? (
-                  <div className="w-6 h-6 border-2 border-white border-t-transparent rounded-full animate-spin mx-auto"></div>
-                ) : (
-                  <span className="text-sm">SPIN</span>
-                )}
-              </button>
-            </div>
           </div>
         )}
 
