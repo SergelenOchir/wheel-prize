@@ -81,8 +81,8 @@ const RoulettePage: React.FC<RoulettePageProps> = ({
           <div className="relative">
             {/* Custom wheel container to override default sizing */}
             <div className="wheel-container" style={{
-              width: '300px',
-              height: '300px',
+              width: '150px',
+              height: '150px',
               display: 'flex',
               alignItems: 'center',
               justifyContent: 'center'
