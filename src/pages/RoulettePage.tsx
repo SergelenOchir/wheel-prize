@@ -98,18 +98,23 @@ const RoulettePage: React.FC<RoulettePageProps> = ({
               width={200}
               height={200}
             />
+            
+            {/* Spin Button */}
+            <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
+              <button
+                onClick={handleSpinClick}
+                disabled={mustSpin}
+                className="w-20 h-20 bg-gradient-to-r from-yellow-400 to-orange-500 hover:from-yellow-500 hover:to-orange-600 disabled:from-gray-400 disabled:to-gray-500 text-white font-bold rounded-full shadow-2xl transform hover:scale-105 active:scale-95 disabled:scale-100 transition-all duration-200 pointer-events-auto border-4 border-white"
+              >
+                {mustSpin ? (
+                  <div className="w-6 h-6 border-2 border-white border-t-transparent rounded-full animate-spin mx-auto"></div>
+                ) : (
+                  <span className="text-sm">SPIN</span>
+                )}
+              </button>
+            </div>
           </div>
         )}
-
-        {/* Instructions */}
-        <div className="mt-8 text-center">
-          <p className="text-white text-lg font-medium mb-2">
-            Press <kbd className="px-2 py-1 bg-white/20 rounded text-sm font-mono">ENTER</kbd> or click SPIN to play!
-          </p>
-          <p className="text-white/70 text-sm">
-            Good luck on your treasure hunt!
-          </p>
-        </div>
       </div>
 
       {showModal && (
