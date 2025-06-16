@@ -1,5 +1,5 @@
 import React, {useState, useCallback, useEffect} from 'react';
-import { Wheel } from 'react-custom-roulette';
+import { Wheel } from '../components/Wheel';
 import { WheelData } from '../types/WheelData';
 import { getPrizeIcon } from '../utils/prizeIcons';
 
@@ -65,7 +65,7 @@ const RoulettePage: React.FC<RoulettePageProps> = ({
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center p-8 relative">
+    <div className="min-h-screen p-8 relative">
       <div
         className="absolute inset-0"
         style={{
@@ -76,57 +76,55 @@ const RoulettePage: React.FC<RoulettePageProps> = ({
         }}
       ></div>
 
-      <div className="relative z-10 flex flex-col items-center justify-center">
-        {data.length > 0 && (
-          <div className="relative">
-            {/* Custom wheel container to override default sizing */}
-            <div className="wheel-container" style={{
-              width: '150px',
-              height: '150px',
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center'
-            }}>
-              <Wheel
-                mustStartSpinning={mustSpin}
-                prizeNumber={prizeNumber}
-                data={data}
-                onStopSpinning={handleSpinStop}
-                backgroundColors={data.map(item => item.style.backgroundColor)}
-                textColors={['#ffffff']}
-                outerBorderColor="#d97706"
-                outerBorderWidth={8}
-                innerBorderColor="#f59e0b"
-                innerBorderWidth={4}
-                radiusLineColor="#ffffff"
-                radiusLineWidth={3}
-                fontSize={12}
-                textDistance={55}
-                spinDuration={1.2}
-              />
-            </div>
-            
-            {/* Spin Button */}
-            <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
-              <button
-                onClick={handleSpinClick}
-                disabled={mustSpin}
-                className="w-16 h-16 bg-gradient-to-r from-yellow-400 to-orange-500 hover:from-yellow-500 hover:to-orange-600 disabled:from-gray-400 disabled:to-gray-500 text-white font-bold rounded-full shadow-2xl transform hover:scale-105 active:scale-95 disabled:scale-100 transition-all duration-200 pointer-events-auto border-4 border-white"
-              >
-                {mustSpin ? (
-                  <div className="w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin mx-auto"></div>
-                ) : (
-                  <span className="text-xs">SPIN</span>
-                )}
-              </button>
-            </div>
-          </div>
-        )}
-
-        {/* Instructions */}
-        <div className="mt-8 text-center">
-          <p className="text-white/80 text-lg mb-2">Click the button or press <kbd className="px-2 py-1 bg-white/20 rounded text-sm font-mono">Enter</kbd> to spin!</p>
-        </div>
+        <div className="flex flex-col items-center mt-[300px]">
+          {
+            data.length > 0 &&
+            <Wheel
+              mustStartSpinning={mustSpin}
+              prizeNumber={prizeNumber}
+              data={data}
+              onStopSpinning={handleSpinStop}
+              backgroundColors={data.map(item => item.style.backgroundColor)}
+              textColors={['#ffffff']}
+              outerBorderColor="#d97706"
+              outerBorderWidth={8}
+              innerBorderColor="#f59e0b"
+              innerBorderWidth={4}
+              radiusLineColor="#ffffff"
+              radiusLineWidth={3}
+              fontSize={16}
+              textDistance={70}
+              spinDuration={1.2}
+            />
+          }
+            {/*<div className="relative bg-gradient-to-br from-amber-50 to-yellow-100 rounded-full p-6 shadow-2xl border-4 border-amber-400 ring-4 ring-amber-300/50">*/}
+            {/*  {data.length > 0 ? (*/}
+            {/*    <Wheel*/}
+            {/*      mustStartSpinning={mustSpin}*/}
+            {/*      prizeNumber={prizeNumber}*/}
+            {/*      data={data}*/}
+            {/*      onStopSpinning={handleSpinStop}*/}
+            {/*      backgroundColors={data.map(item => item.style.backgroundColor)}*/}
+            {/*      textColors={['#ffffff']}*/}
+            {/*      outerBorderColor="#d97706"*/}
+            {/*      outerBorderWidth={8}*/}
+            {/*      innerBorderColor="#f59e0b"*/}
+            {/*      innerBorderWidth={4}*/}
+            {/*      radiusLineColor="#ffffff"*/}
+            {/*      radiusLineWidth={3}*/}
+            {/*      fontSize={16}*/}
+            {/*      textDistance={70}*/}
+            {/*      spinDuration={1.2}*/}
+            {/*    />*/}
+            {/*  ) : (*/}
+            {/*    <div className="w-96 h-96 flex items-center justify-center text-amber-800">*/}
+            {/*      <div className="text-center">*/}
+            {/*        <Target className="w-20 h-20 mx-auto mb-4" />*/}
+            {/*        <p className="text-lg font-semibold">Configure treasures first</p>*/}
+            {/*      </div>*/}
+            {/*    </div>*/}
+            {/*  )}*/}
+            {/*</div>*/}
       </div>
 
       {showModal && (
