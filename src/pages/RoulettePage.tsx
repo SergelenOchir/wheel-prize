@@ -74,8 +74,6 @@ const RoulettePage: React.FC<RoulettePageProps> = ({
           backgroundImage: `url('/Artboard 2 copy@3x-8.png')`,
         }}
       >
-        {/* Overlay for better contrast */}
-        <div className="absolute inset-0 bg-black/20"></div>
       </div>
 
       {/* Content Container */}
