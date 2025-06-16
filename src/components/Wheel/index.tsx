@@ -59,6 +59,7 @@ interface Props {
   startingOptionIndex?: number;
   pointerProps?: PointerProps;
   disableInitialAnimation?: boolean;
+  centerIcon?: React.ReactNode;
 }
 
 const STARTED_SPINNING = 'started-spinning';
@@ -91,6 +92,7 @@ export const Wheel = ({
   startingOptionIndex = -1,
   pointerProps = {},
   disableInitialAnimation = DISABLE_INITIAL_ANIMATION,
+  centerIcon,
 }: Props): JSX.Element | null => {
   const [wheelData, setWheelData] = useState<WheelData[]>([...data]);
   const [prizeMap, setPrizeMap] = useState<number[][]>([[0]]);
@@ -300,6 +302,7 @@ export const Wheel = ({
           prizeMap={prizeMap}
           rouletteUpdater={rouletteUpdater}
           textDistance={textDistance}
+          centerIcon={centerIcon}
         />
       </RotationContainer>
       <RoulettePointerImage

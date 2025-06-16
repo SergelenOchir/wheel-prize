@@ -2,6 +2,7 @@ import React, {useState, useCallback, useEffect} from 'react';
 import { Wheel } from '../components/Wheel';
 import { WheelData } from '../types/WheelData';
 import { getPrizeIcon } from '../utils/prizeIcons';
+import { Crown } from 'lucide-react';
 
 interface RoulettePageProps {
   data: WheelData[];
@@ -103,6 +104,7 @@ const RoulettePage: React.FC<RoulettePageProps> = ({
                   textDistance={70}
                   spinDuration={1.2}
                   innerRadius={25}
+                  centerIcon={<Crown size={48} className="text-yellow-400" />}
                 />
               </div>
             )}
