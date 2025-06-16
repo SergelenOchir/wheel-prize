@@ -95,8 +95,8 @@ const RoulettePage: React.FC<RoulettePageProps> = ({
               fontSize={14}
               textDistance={60}
               spinDuration={1.2}
-              width={400}
-              height={400}
+              width={200}
+              height={200}
             />
             
             {/* Spin Button */}
