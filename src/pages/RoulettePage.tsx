@@ -7,6 +7,7 @@ interface RoulettePageProps {
   data: WheelData[];
   onNavigateToChances: () => void;
 }
+
 const RoulettePage: React.FC<RoulettePageProps> = ({
   data,
 }) => {
@@ -65,74 +66,89 @@ const RoulettePage: React.FC<RoulettePageProps> = ({
   };
 
   return (
-    <div className="min-h-screen p-8 relative">
-      <div
-        className="absolute inset-0"
+    <div className="min-h-screen relative overflow-hidden">
+      {/* Full Screen Background */}
+      <div 
+        className="absolute inset-0 bg-cover bg-center bg-no-repeat"
         style={{
-          backgroundImage: `url('/public/Artboard 2 copy@3x-8.png')`,
-          backgroundSize: 'contain',
-          backgroundPosition: 'center',
-          backgroundRepeat: 'no-repeat',
+          backgroundImage: `url('/Artboard 2 copy@3x-8.png')`,
         }}
-      ></div>
-
-        <div className="flex flex-col items-center mt-[300px]">
-          {
-            data.length > 0 &&
-            <Wheel
-              mustStartSpinning={mustSpin}
-              prizeNumber={prizeNumber}
-              data={data}
-              onStopSpinning={handleSpinStop}
-              backgroundColors={data.map(item => item.style.backgroundColor)}
-              textColors={['#ffffff']}
-              outerBorderColor="#d97706"
-              outerBorderWidth={8}
-              innerBorderColor="#f59e0b"
-              innerBorderWidth={4}
-              radiusLineColor="#ffffff"
-              radiusLineWidth={3}
-              fontSize={16}
-              textDistance={70}
-              spinDuration={1.2}
-            />
-          }
-            {/*<div className="relative bg-gradient-to-br from-amber-50 to-yellow-100 rounded-full p-6 shadow-2xl border-4 border-amber-400 ring-4 ring-amber-300/50">*/}
-            {/*  {data.length > 0 ? (*/}
-            {/*    <Wheel*/}
-            {/*      mustStartSpinning={mustSpin}*/}
-            {/*      prizeNumber={prizeNumber}*/}
-            {/*      data={data}*/}
-            {/*      onStopSpinning={handleSpinStop}*/}
-            {/*      backgroundColors={data.map(item => item.style.backgroundColor)}*/}
-            {/*      textColors={['#ffffff']}*/}
-            {/*      outerBorderColor="#d97706"*/}
-            {/*      outerBorderWidth={8}*/}
-            {/*      innerBorderColor="#f59e0b"*/}
-            {/*      innerBorderWidth={4}*/}
-            {/*      radiusLineColor="#ffffff"*/}
-            {/*      radiusLineWidth={3}*/}
-            {/*      fontSize={16}*/}
-            {/*      textDistance={70}*/}
-            {/*      spinDuration={1.2}*/}
-            {/*    />*/}
-            {/*  ) : (*/}
-            {/*    <div className="w-96 h-96 flex items-center justify-center text-amber-800">*/}
-            {/*      <div className="text-center">*/}
-            {/*        <Target className="w-20 h-20 mx-auto mb-4" />*/}
-            {/*        <p className="text-lg font-semibold">Configure treasures first</p>*/}
-            {/*      </div>*/}
-            {/*    </div>*/}
-            {/*  )}*/}
-            {/*</div>*/}
+      >
+        {/* Overlay for better contrast */}
+        <div className="absolute inset-0 bg-black/20"></div>
       </div>
 
+      {/* Content Container */}
+      <div className="relative z-10 min-h-screen flex flex-col items-center justify-center p-4 sm:p-6 lg:p-8">
+        
+        {/* Roulette Wheel Container */}
+        <div className="flex flex-col items-center space-y-8">
+          
+          {/* Wheel Wrapper with Responsive Sizing */}
+          <div className="relative">
+            {data.length > 0 && (
+              <div className="w-64 h-64 sm:w-80 sm:h-80 md:w-96 md:h-96 lg:w-[28rem] lg:h-[28rem] xl:w-[32rem] xl:h-[32rem] flex items-center justify-center">
+                <Wheel
+                  mustStartSpinning={mustSpin}
+                  prizeNumber={prizeNumber}
+                  data={data}
+                  onStopSpinning={handleSpinStop}
+                  backgroundColors={data.map(item => item.style.backgroundColor)}
+                  textColors={['#ffffff']}
+                  outerBorderColor="#d97706"
+                  outerBorderWidth={8}
+                  innerBorderColor="#f59e0b"
+                  innerBorderWidth={4}
+                  radiusLineColor="#ffffff"
+                  radiusLineWidth={3}
+                  fontSize={16}
+                  textDistance={70}
+                  spinDuration={1.2}
+                />
+              </div>
+            )}
+          </div>
+
+          {/* Spin Button */}
+          <button
+            onClick={handleSpinClick}
+            disabled={mustSpin || data.length === 0}
+            className="group relative overflow-hidden bg-gradient-to-r from-yellow-400 via-orange-500 to-red-500 hover:from-yellow-500 hover:via-orange-600 hover:to-red-600 disabled:from-gray-500 disabled:to-gray-600 text-white font-bold py-4 px-8 sm:py-5 sm:px-10 lg:py-6 lg:px-12 rounded-full text-lg sm:text-xl lg:text-2xl transition-all duration-300 transform hover:scale-105 active:scale-95 disabled:scale-100 disabled:cursor-not-allowed shadow-2xl border-4 border-white/30"
+          >
+            <div className="relative z-10 flex items-center gap-3">
+              {mustSpin ? (
+                <>
+                  <div className="w-6 h-6 border-3 border-white border-t-transparent rounded-full animate-spin"></div>
+                  Spinning...
+                </>
+              ) : (
+                <>
+                  🎯 SPIN THE WHEEL 🎯
+                </>
+              )}
+            </div>
+            <div className="absolute inset-0 bg-gradient-to-r from-white/0 via-white/20 to-white/0 -skew-x-12 group-hover:translate-x-full transition-transform duration-700"></div>
+          </button>
+
+          {/* Instructions */}
+          <div className="text-center space-y-2">
+            <p className="text-white/90 text-sm sm:text-base font-medium drop-shadow-lg">
+              Press <kbd className="px-2 py-1 bg-white/20 rounded text-xs font-mono">ENTER</kbd> or click the button to spin!
+            </p>
+            <p className="text-white/70 text-xs sm:text-sm drop-shadow-lg">
+              Good luck, treasure hunter! 🏴‍☠️
+            </p>
+          </div>
+        </div>
+      </div>
+
+      {/* Prize Modal */}
       {showModal && (
         <div className="fixed inset-0 bg-black/60 backdrop-blur-sm flex items-center justify-center z-50 p-4">
-          <div className="bg-black/40 backdrop-blur-lg rounded-3xl p-8 border border-amber-400/50 max-w-md w-full mx-4 transform animate-in zoom-in-95 duration-300 shadow-2xl">
+          <div className="bg-black/40 backdrop-blur-lg rounded-3xl p-6 sm:p-8 border border-amber-400/50 max-w-sm sm:max-w-md w-full mx-4 transform animate-in zoom-in-95 duration-300 shadow-2xl">
             <div className="text-center">
               <div className="mb-6">
-                <div className="w-32 h-32 mx-auto mb-4 rounded-2xl overflow-hidden bg-amber-500/20 shadow-2xl border-2 border-amber-400/50">
+                <div className="w-24 h-24 sm:w-32 sm:h-32 mx-auto mb-4 rounded-2xl overflow-hidden bg-amber-500/20 shadow-2xl border-2 border-amber-400/50">
                   <img
                     src={selectedPrizeImage}
                     alt={selectedPrize}
@@ -151,15 +167,15 @@ const RoulettePage: React.FC<RoulettePageProps> = ({
                     {getPrizeIcon(selectedPrize)}
                   </div>
                 </div>
-                <h2 className="text-3xl font-bold text-white mb-2 drop-shadow-lg">{selectedPrize}</h2>
-                <p className={`text-lg font-semibold drop-shadow-md ${
+                <h2 className="text-2xl sm:text-3xl font-bold text-white mb-2 drop-shadow-lg">{selectedPrize}</h2>
+                <p className={`text-base sm:text-lg font-semibold drop-shadow-md ${
                   selectedPrize === 'Try Again' ? 'text-red-400' : 'text-amber-300'
                 }`}>
                   {selectedPrize === 'Try Again' ? 'Keep hunting for treasure!' : 'Treasure Found!'}
                 </p>
               </div>
 
-              <div className="flex gap-3">
+              <div className="flex flex-col sm:flex-row gap-3">
                 <button
                   onClick={closeModal}
                   className="flex-1 bg-black/40 hover:bg-black/60 text-white font-semibold py-3 px-6 rounded-xl transition-colors border border-white/30 backdrop-blur-sm"
