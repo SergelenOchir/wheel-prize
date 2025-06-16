@@ -108,37 +108,6 @@ const RoulettePage: React.FC<RoulettePageProps> = ({
               </div>
             )}
           </div>
-
-          {/* Spin Button */}
-          <button
-            onClick={handleSpinClick}
-            disabled={mustSpin || data.length === 0}
-            className="group relative overflow-hidden bg-gradient-to-r from-yellow-400 via-orange-500 to-red-500 hover:from-yellow-500 hover:via-orange-600 hover:to-red-600 disabled:from-gray-500 disabled:to-gray-600 text-white font-bold py-4 px-8 sm:py-5 sm:px-10 lg:py-6 lg:px-12 rounded-full text-lg sm:text-xl lg:text-2xl transition-all duration-300 transform hover:scale-105 active:scale-95 disabled:scale-100 disabled:cursor-not-allowed shadow-2xl border-4 border-white/30"
-          >
-            <div className="relative z-10 flex items-center gap-3">
-              {mustSpin ? (
-                <>
-                  <div className="w-6 h-6 border-3 border-white border-t-transparent rounded-full animate-spin"></div>
-                  Spinning...
-                </>
-              ) : (
-                <>
-                  🎯 SPIN THE WHEEL 🎯
-                </>
-              )}
-            </div>
-            <div className="absolute inset-0 bg-gradient-to-r from-white/0 via-white/20 to-white/0 -skew-x-12 group-hover:translate-x-full transition-transform duration-700"></div>
-          </button>
-
-          {/* Instructions */}
-          <div className="text-center space-y-2">
-            <p className="text-white/90 text-sm sm:text-base font-medium drop-shadow-lg">
-              Press <kbd className="px-2 py-1 bg-white/20 rounded text-xs font-mono">ENTER</kbd> or click the button to spin!
-            </p>
-            <p className="text-white/70 text-xs sm:text-sm drop-shadow-lg">
-              Good luck, treasure hunter! 🏴‍☠️
-            </p>
-          </div>
         </div>
       </div>
 
