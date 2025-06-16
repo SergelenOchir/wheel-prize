@@ -102,6 +102,7 @@ const RoulettePage: React.FC<RoulettePageProps> = ({
                   fontSize={16}
                   textDistance={70}
                   spinDuration={1.2}
+                  innerRadius={25}
                 />
               </div>
             )}
