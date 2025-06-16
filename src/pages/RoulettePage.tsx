@@ -3,6 +3,7 @@ import { Wheel } from '../components/Wheel';
 import { WheelData } from '../types/WheelData';
 import { getPrizeIcon } from '../utils/prizeIcons';
 import { Crown } from 'lucide-react';
+import logo from '../assets/logo.png'
 
 interface RoulettePageProps {
   data: WheelData[];
@@ -69,7 +70,7 @@ const RoulettePage: React.FC<RoulettePageProps> = ({
   return (
     <div className="min-h-screen relative overflow-hidden">
       {/* Full Screen Background */}
-      <div 
+      <div
         className="absolute inset-0 bg-cover bg-center bg-no-repeat"
         style={{
           backgroundImage: `url('/Artboard 2 copy@3x-8.png')`,
@@ -79,42 +80,44 @@ const RoulettePage: React.FC<RoulettePageProps> = ({
 
       {/* Content Container */}
       <div className="relative z-10 min-h-screen flex flex-col items-center justify-center p-4 sm:p-6 lg:p-8">
-        
+
         {/* Roulette Wheel Container */}
         <div className="flex flex-col items-center space-y-8">
-          
-          {/* Wheel Wrapper with Responsive Sizing */}
-          <div className="relative">
-            {data.length > 0 && (
-              <div className="w-64 h-64 sm:w-80 sm:h-80 md:w-96 md:h-96 lg:w-[28rem] lg:h-[28rem] xl:w-[32rem] xl:h-[32rem] flex items-center justify-center">
-                <Wheel
-                  mustStartSpinning={mustSpin}
-                  prizeNumber={prizeNumber}
-                  data={data}
-                  onStopSpinning={handleSpinStop}
-                  backgroundColors={data.map(item => item.style.backgroundColor)}
-                  textColors={['#ffffff']}
-                  outerBorderColor="#d97706"
-                  outerBorderWidth={8}
-                  innerBorderColor="#f59e0b"
-                  innerBorderWidth={4}
-                  radiusLineColor="#ffffff"
-                  radiusLineWidth={3}
-                  fontSize={16}
-                  textDistance={70}
-                  spinDuration={1.2}
-                  innerRadius={25}
-                  centerIcon={<Crown size={48} className="text-yellow-400" />}
-                />
-              </div>
-            )}
+          {/*<div className="w-64 h-64 sm:w-80 sm:h-80 md:w-96 md:h-96 lg:w-[28rem] lg:h-[28rem] xl:w-[32rem] xl:h-[32rem] flex items-center justify-center">*/}
+            {/* Wheel Wrapper with Responsive Sizing */}
+            <div className="relative">
+              {data.length > 0 && (
+
+                  <div
+                      className="w-96 h-96 flex items-center justify-center">
+                    <Wheel
+                        mustStartSpinning={mustSpin}
+                        prizeNumber={prizeNumber}
+                        data={data}
+                        onStopSpinning={handleSpinStop}
+                        backgroundColors={data.map(item => item.style.backgroundColor)}
+                        textColors={['#ffffff']}
+                        outerBorderColor="#FAB654"
+                        outerBorderWidth={8}
+                        innerBorderColor="#f59e0b"
+                        innerBorderWidth={4}
+                        radiusLineColor="#FFD08F"
+                        radiusLineWidth={1}
+                        fontSize={16}
+                        textDistance={70}
+                        spinDuration={1.2}
+                        innerRadius={0}
+                        centerIcon={<img style={{width: 48, height: 48}} alt="logoImage" src={logo}/>}
+                    />
+                  </div>
+              )}
+            </div>
           </div>
         </div>
-      </div>
 
-      {/* Prize Modal */}
-      {showModal && (
-        <div className="fixed inset-0 bg-black/60 backdrop-blur-sm flex items-center justify-center z-50 p-4">
+        {/* Prize Modal */}
+        {showModal && (
+            <div className="fixed inset-0 bg-black/60 backdrop-blur-sm flex items-center justify-center z-50 p-4">
           <div className="bg-black/40 backdrop-blur-lg rounded-3xl p-6 sm:p-8 border border-amber-400/50 max-w-sm sm:max-w-md w-full mx-4 transform animate-in zoom-in-95 duration-300 shadow-2xl">
             <div className="text-center">
               <div className="mb-6">
