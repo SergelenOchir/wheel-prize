@@ -6,4 +6,5 @@ export interface WheelData {
   };
   chance: number;
   image_url: string;
+  amount: number; // New field for product quantity
 }

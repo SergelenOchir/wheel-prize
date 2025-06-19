@@ -1,7 +1,8 @@
 import React, { useState, useRef } from 'react';
-import { Edit3, Save, X, Trash2, Plus, Link, Upload, Image, Play, ArrowRight } from 'lucide-react';
+import { Edit3, Save, X, Trash2, Plus, Link, Upload, Image, Play, ArrowRight, Package, RotateCcw } from 'lucide-react';
 import { WheelData } from '../types/WheelData';
 import { getPrizeIcon } from '../utils/prizeIcons';
+import { clearWheelData } from '../utils/localStorage';
 
 interface WinningChancesPageProps {
   data: WheelData[];
@@ -49,9 +50,22 @@ const WinningChancesPage: React.FC<WinningChancesPageProps> = ({
     setImageInputMethod('url');
   };
 
+  const handleResetStock = () => {
+    if (confirm('Are you sure you want to reset all stock amounts to their original values? This will clear all localStorage data.')) {
+      clearWheelData();
+      window.location.reload(); // Reload to get default data
+    }
+  };
+
   const handleChanceChange = (index: number, newChance: number) => {
     const updatedData = [...tempData];
     updatedData[index] = { ...updatedData[index], chance: Math.max(0, newChance) };
+    setTempData(updatedData);
+  };
+
+  const handleAmountChange = (index: number, newAmount: number) => {
+    const updatedData = [...tempData];
+    updatedData[index] = { ...updatedData[index], amount: Math.max(0, newAmount) };
     setTempData(updatedData);
   };
 
@@ -120,6 +134,7 @@ const WinningChancesPage: React.FC<WinningChancesPageProps> = ({
       option: 'New Prize',
       style: { backgroundColor: randomColor, textColor: '#ffffff' },
       chance: 10,
+      amount: 10,
       image_url: 'https://images.pexels.com/photos/1666065/pexels-photo-1666065.jpeg?auto=compress&cs=tinysrgb&w=400'
     };
     
@@ -128,6 +143,8 @@ const WinningChancesPage: React.FC<WinningChancesPageProps> = ({
 
   const currentData = isEditing ? tempData : data;
   const totalChance = currentData.reduce((sum, item) => sum + item.chance, 0);
+  const totalItems = currentData.reduce((sum, item) => sum + item.amount, 0);
+  const availableItems = currentData.filter(item => item.amount > 0).length;
 
   return (
     <div className="min-h-screen p-8">
@@ -137,7 +154,24 @@ const WinningChancesPage: React.FC<WinningChancesPageProps> = ({
           <h1 className="text-5xl font-bold text-white mb-4 bg-gradient-to-r from-yellow-400 to-orange-500 bg-clip-text text-transparent">
             Configure Winning Chances
           </h1>
-          <p className="text-xl text-gray-300">Set up your prizes and their winning probabilities</p>
+          <p className="text-xl text-gray-300">Set up your prizes, probabilities, and stock amounts</p>
+        </div>
+
+        {/* Stock Overview */}
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-8">
+          <div className="bg-white/10 backdrop-blur-lg rounded-xl p-4 border border-white/20 text-center">
+            <Package className="w-8 h-8 text-blue-400 mx-auto mb-2" />
+            <div className="text-2xl font-bold text-white">{totalItems}</div>
+            <div className="text-sm text-gray-300">Total Items</div>
+          </div>
+          <div className="bg-white/10 backdrop-blur-lg rounded-xl p-4 border border-white/20 text-center">
+            <div className="text-2xl font-bold text-green-400">{availableItems}</div>
+            <div className="text-sm text-gray-300">Available Prizes</div>
+          </div>
+          <div className="bg-white/10 backdrop-blur-lg rounded-xl p-4 border border-white/20 text-center">
+            <div className="text-2xl font-bold text-amber-400">{totalChance}%</div>
+            <div className="text-sm text-gray-300">Total Probability</div>
+          </div>
         </div>
 
         {/* Main Content */}
@@ -146,13 +180,22 @@ const WinningChancesPage: React.FC<WinningChancesPageProps> = ({
             <h3 className="text-2xl font-semibold text-white">Prize Configuration</h3>
             <div className="flex gap-3">
               {!isEditing ? (
-                <button
-                  onClick={handleEditStart}
-                  className="flex items-center gap-2 px-4 py-2 bg-blue-500 hover:bg-blue-600 text-white rounded-lg font-medium transition-colors"
-                >
-                  <Edit3 className="w-5 h-5" />
-                  Edit Prizes
-                </button>
+                <>
+                  <button
+                    onClick={handleResetStock}
+                    className="flex items-center gap-2 px-4 py-2 bg-orange-500 hover:bg-orange-600 text-white rounded-lg font-medium transition-colors"
+                  >
+                    <RotateCcw className="w-5 h-5" />
+                    Reset Stock
+                  </button>
+                  <button
+                    onClick={handleEditStart}
+                    className="flex items-center gap-2 px-4 py-2 bg-blue-500 hover:bg-blue-600 text-white rounded-lg font-medium transition-colors"
+                  >
+                    <Edit3 className="w-5 h-5" />
+                    Edit Prizes
+                  </button>
+                </>
               ) : (
                 <>
                   <button
@@ -177,7 +220,7 @@ const WinningChancesPage: React.FC<WinningChancesPageProps> = ({
           {isEditing && (
             <div className="mb-6 p-4 bg-blue-500/20 border border-blue-500/30 rounded-lg">
               <p className="text-blue-300 font-medium">
-                Total Probability: {totalChance}% | Edit prizes, chances, and images
+                Total Probability: {totalChance}% | Total Items: {totalItems} | Edit prizes, chances, amounts, and images
               </p>
             </div>
           )}
@@ -186,7 +229,11 @@ const WinningChancesPage: React.FC<WinningChancesPageProps> = ({
             {currentData.map((item, index) => (
               <div
                 key={index}
-                className="flex items-center gap-4 p-4 bg-white/5 rounded-xl hover:bg-white/10 transition-colors"
+                className={`flex items-center gap-4 p-4 rounded-xl transition-colors ${
+                  item.amount === 0 
+                    ? 'bg-red-500/10 border border-red-500/30' 
+                    : 'bg-white/5 hover:bg-white/10'
+                }`}
               >
                 <div className="w-16 h-16 flex-shrink-0 rounded-xl overflow-hidden bg-white/10 relative group">
                   <img 
@@ -215,8 +262,22 @@ const WinningChancesPage: React.FC<WinningChancesPageProps> = ({
                 {!isEditing ? (
                   <>
                     <div className="flex-1">
-                      <h4 className="text-lg font-semibold text-white">{item.option}</h4>
-                      <div className="flex items-center gap-3 mt-2">
+                      <div className="flex items-center gap-3 mb-2">
+                        <h4 className={`text-lg font-semibold ${item.amount === 0 ? 'text-red-400' : 'text-white'}`}>
+                          {item.option}
+                        </h4>
+                        <div className={`inline-flex items-center gap-1 px-2 py-1 rounded-full text-xs font-medium ${
+                          item.amount === 0 
+                            ? 'bg-red-500/20 text-red-400 border border-red-500/30' 
+                            : item.amount <= 5
+                            ? 'bg-orange-500/20 text-orange-400 border border-orange-500/30'
+                            : 'bg-green-500/20 text-green-400 border border-green-500/30'
+                        }`}>
+                          <Package className="w-3 h-3" />
+                          {item.amount === 0 ? 'Out of Stock' : `${item.amount} left`}
+                        </div>
+                      </div>
+                      <div className="flex items-center gap-3">
                         <div className="flex-1 bg-gray-700 rounded-full h-3">
                           <div 
                             className="bg-gradient-to-r from-green-400 to-blue-500 h-3 rounded-full transition-all duration-300"
@@ -239,15 +300,27 @@ const WinningChancesPage: React.FC<WinningChancesPageProps> = ({
                       />
                     </div>
                     <div className="flex items-center gap-3">
-                      <input
-                        type="number"
-                        min="0"
-                        max="100"
-                        value={item.chance}
-                        onChange={(e) => handleChanceChange(index, parseInt(e.target.value) || 0)}
-                        className="w-20 px-3 py-2 bg-white/10 border border-white/20 rounded-lg text-white text-center font-medium focus:outline-none focus:border-blue-400"
-                      />
-                      <span className="text-sm text-gray-300 font-medium">%</span>
+                      <div className="text-center">
+                        <input
+                          type="number"
+                          min="0"
+                          max="100"
+                          value={item.chance}
+                          onChange={(e) => handleChanceChange(index, parseInt(e.target.value) || 0)}
+                          className="w-20 px-3 py-2 bg-white/10 border border-white/20 rounded-lg text-white text-center font-medium focus:outline-none focus:border-blue-400"
+                        />
+                        <div className="text-xs text-gray-400 mt-1">Chance %</div>
+                      </div>
+                      <div className="text-center">
+                        <input
+                          type="number"
+                          min="0"
+                          value={item.amount}
+                          onChange={(e) => handleAmountChange(index, parseInt(e.target.value) || 0)}
+                          className="w-20 px-3 py-2 bg-white/10 border border-white/20 rounded-lg text-white text-center font-medium focus:outline-none focus:border-blue-400"
+                        />
+                        <div className="text-xs text-gray-400 mt-1">Stock</div>
+                      </div>
                       <button
                         onClick={() => handleRemoveItem(index)}
                         className="p-2 text-red-400 hover:text-red-300 hover:bg-red-500/20 rounded-lg transition-colors"
@@ -277,12 +350,18 @@ const WinningChancesPage: React.FC<WinningChancesPageProps> = ({
         <div className="text-center">
           <button
             onClick={onNavigateToRoulette}
-            disabled={isEditing || data.length === 0}
+            disabled={isEditing || data.length === 0 || availableItems === 0}
             className="group relative overflow-hidden bg-gradient-to-r from-yellow-400 to-orange-500 hover:from-yellow-500 hover:to-orange-600 disabled:from-gray-500 disabled:to-gray-600 text-white font-bold py-4 px-8 rounded-full text-xl transition-all duration-300 transform hover:scale-105 active:scale-95 disabled:scale-100 disabled:cursor-not-allowed shadow-2xl"
           >
             <div className="relative z-10 flex items-center gap-3">
               <Play className="w-6 h-6" />
-              {isEditing ? 'Save Changes First' : data.length === 0 ? 'Add Prizes First' : 'Go to Roulette'}
+              {isEditing 
+                ? 'Save Changes First' 
+                : data.length === 0 
+                ? 'Add Prizes First' 
+                : availableItems === 0
+                ? 'No Items Available'
+                : 'Go to Roulette'}
               <ArrowRight className="w-6 h-6" />
             </div>
             <div className="absolute inset-0 bg-gradient-to-r from-white/0 via-white/20 to-white/0 -skew-x-12 group-hover:translate-x-full transition-transform duration-700"></div>
