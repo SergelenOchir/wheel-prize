@@ -101,7 +101,6 @@ const RoulettePage: React.FC<RoulettePageProps> = ({
 
   // Filter data to only show items with amount > 0 for the wheel
   const availableData = data.filter(item => item.amount > 0);
-  const totalAvailableItems = data.reduce((sum, item) => sum + item.amount, 0);
 
   return (
     <div className="min-h-screen relative overflow-hidden">
@@ -117,16 +116,6 @@ const RoulettePage: React.FC<RoulettePageProps> = ({
       {/* Content Container */}
       <div className="relative z-10 min-h-screen flex flex-col items-center justify-center p-4 sm:p-6 lg:p-8">
         
-        {/* Stock Status */}
-        <div className="mb-6 text-center">
-          <div className="inline-flex items-center gap-2 bg-black/40 backdrop-blur-lg rounded-full px-6 py-3 border border-amber-400/50">
-            <Package className="w-5 h-5 text-amber-400" />
-            <span className="text-white font-semibold">
-              Total Items Available: <span className="text-amber-400">{totalAvailableItems}</span>
-            </span>
-          </div>
-        </div>
-
         {/* Roulette Wheel Container */}
         <div className="flex flex-col items-center space-y-8">
           {/* Wheel Wrapper with Larger Responsive Sizing */}
@@ -202,12 +191,6 @@ const RoulettePage: React.FC<RoulettePageProps> = ({
                   <p className="text-base sm:text-lg font-semibold drop-shadow-md text-amber-300 mb-2">
                     Treasure Found!
                   </p>
-                  <div className="inline-flex items-center gap-2 bg-amber-500/20 rounded-full px-4 py-2 border border-amber-400/30">
-                    <Package className="w-4 h-4 text-amber-400" />
-                    <span className="text-sm text-amber-300 font-medium">
-                      {selectedPrizeAmount - 1} remaining
-                    </span>
-                  </div>
                 </div>
               )}
 
