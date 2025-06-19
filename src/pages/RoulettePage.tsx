@@ -41,16 +41,16 @@ const RoulettePage: React.FC<RoulettePageProps> = ({
   }, [mustSpin, data]);
 
   useEffect(() => {
-    const handleKeyPress = (event: KeyboardEvent) => {
-      if (event.key === 'Enter' && !showModal) {
+    const handleKeyPress = (event: MouseEvent) => {
+      if (event instanceof MouseEvent && event.button === 0 && !showModal) {
         event.preventDefault();
         handleSpinClick();
       }
     };
 
-    window.addEventListener('keydown', handleKeyPress);
+    window.addEventListener('mousedown', handleKeyPress);
     return () => {
-      window.removeEventListener('keydown', handleKeyPress);
+      window.removeEventListener('mousedown', handleKeyPress);
     };
   }, [handleSpinClick, showModal]);
 
