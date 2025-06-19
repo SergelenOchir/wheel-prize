@@ -76,68 +76,68 @@ function App() {
     // 10 Mysterious Prizes - Continuing alternating pattern
     {
       option: 'Mysterious Prize #1',
-      style: { backgroundColor: '#A4580C', textColor: '#FFD700' }, // Index 11 (odd)
+      style: { backgroundColor: '#A4580C', textColor: '#ffffff' }, // Index 11 (odd)
       chance: 2,
       image_url: 'https://images.pexels.com/photos/1666065/pexels-photo-1666065.jpeg?auto=compress&cs=tinysrgb&w=400'
     },
     {
       option: 'Mysterious Prize #2',
-      style: { backgroundColor: '#723E00', textColor: '#FFD700' }, // Index 12 (even)
+      style: { backgroundColor: '#723E00', textColor: '#ffffff' }, // Index 12 (even)
       chance: 2,
       image_url: 'https://images.pexels.com/photos/1303081/pexels-photo-1303081.jpeg?auto=compress&cs=tinysrgb&w=400'
     },
     {
       option: 'Mysterious Prize #3',
-      style: { backgroundColor: '#A4580C', textColor: '#FFD700' }, // Index 13 (odd)
+      style: { backgroundColor: '#A4580C', textColor: '#ffffff' }, // Index 13 (odd)
       chance: 2,
       image_url: 'https://images.pexels.com/photos/1319854/pexels-photo-1319854.jpeg?auto=compress&cs=tinysrgb&w=400'
     },
     {
       option: 'Mysterious Prize #4',
-      style: { backgroundColor: '#723E00', textColor: '#FFD700' }, // Index 14 (even)
+      style: { backgroundColor: '#723E00', textColor: '#ffffff' }, // Index 14 (even)
       chance: 2,
       image_url: 'https://images.pexels.com/photos/1666065/pexels-photo-1666065.jpeg?auto=compress&cs=tinysrgb&w=400'
     },
     {
       option: 'Mysterious Prize #5',
-      style: { backgroundColor: '#A4580C', textColor: '#FFD700' }, // Index 15 (odd)
+      style: { backgroundColor: '#A4580C', textColor: '#ffffff' }, // Index 15 (odd)
       chance: 2,
       image_url: 'https://images.pexels.com/photos/1303081/pexels-photo-1303081.jpeg?auto=compress&cs=tinysrgb&w=400'
     },
     {
       option: 'Mysterious Prize #6',
-      style: { backgroundColor: '#723E00', textColor: '#FFD700' }, // Index 16 (even)
+      style: { backgroundColor: '#723E00', textColor: '#ffffff' }, // Index 16 (even)
       chance: 2,
       image_url: 'https://images.pexels.com/photos/1319854/pexels-photo-1319854.jpeg?auto=compress&cs=tinysrgb&w=400'
     },
     {
       option: 'Mysterious Prize #7',
-      style: { backgroundColor: '#A4580C', textColor: '#FFD700' }, // Index 17 (odd)
+      style: { backgroundColor: '#A4580C', textColor: '#ffffff' }, // Index 17 (odd)
       chance: 2,
       image_url: 'https://images.pexels.com/photos/1666065/pexels-photo-1666065.jpeg?auto=compress&cs=tinysrgb&w=400'
     },
     {
       option: 'Mysterious Prize #8',
-      style: { backgroundColor: '#723E00', textColor: '#FFD700' }, // Index 18 (even)
+      style: { backgroundColor: '#723E00', textColor: '#ffffff' }, // Index 18 (even)
       chance: 2,
       image_url: 'https://images.pexels.com/photos/1303081/pexels-photo-1303081.jpeg?auto=compress&cs=tinysrgb&w=400'
     },
     {
       option: 'Mysterious Prize #9',
-      style: { backgroundColor: '#A4580C', textColor: '#FFD700' }, // Index 19 (odd)
+      style: { backgroundColor: '#A4580C', textColor: '#ffffff' }, // Index 19 (odd)
       chance: 2,
       image_url: 'https://images.pexels.com/photos/1319854/pexels-photo-1319854.jpeg?auto=compress&cs=tinysrgb&w=400'
     },
     {
       option: 'Mysterious Prize #10',
-      style: { backgroundColor: '#723E00', textColor: '#FFD700' }, // Index 20 (even)
+      style: { backgroundColor: '#723E00', textColor: '#ffffff' }, // Index 20 (even)
       chance: 2,
       image_url: 'https://images.pexels.com/photos/1666065/pexels-photo-1666065.jpeg?auto=compress&cs=tinysrgb&w=400'
     },
     // The Ultimate Treasure - Using gradient background
     {
       option: 'ULTIMATE TREASURE',
-      style: { backgroundColor: '#723E00', textColor: '#FFD700' }, // Will be enhanced with gradient
+      style: { backgroundColor: '#723E00', textColor: '#ffffff' }, // Will be enhanced with gradient
       chance: 35, // Remaining percentage to total 100%
       image_url: 'https://images.pexels.com/photos/164527/pexels-photo-164527.jpeg?auto=compress&cs=tinysrgb&w=400'
     },

@@ -83,41 +83,38 @@ const RoulettePage: React.FC<RoulettePageProps> = ({
 
         {/* Roulette Wheel Container */}
         <div className="flex flex-col items-center space-y-8">
-          {/*<div className="w-64 h-64 sm:w-80 sm:h-80 md:w-96 md:h-96 lg:w-[28rem] lg:h-[28rem] xl:w-[32rem] xl:h-[32rem] flex items-center justify-center">*/}
-            {/* Wheel Wrapper with Responsive Sizing */}
-            <div className="relative">
-              {data.length > 0 && (
-
-                  <div
-                      className="w-96 h-96 flex items-center justify-center">
-                    <Wheel
-                        mustStartSpinning={mustSpin}
-                        prizeNumber={prizeNumber}
-                        data={data}
-                        onStopSpinning={handleSpinStop}
-                        backgroundColors={data.map(item => item.style.backgroundColor)}
-                        textColors={['#ffffff']}
-                        outerBorderColor="#FAB654"
-                        outerBorderWidth={8}
-                        innerBorderColor="#f59e0b"
-                        innerBorderWidth={4}
-                        radiusLineColor="#FFD08F"
-                        radiusLineWidth={1}
-                        fontSize={16}
-                        textDistance={70}
-                        spinDuration={1.2}
-                        innerRadius={0}
-                        centerIcon={<img style={{width: 48, height: 48}} alt="logoImage" src={logo}/>}
-                    />
-                  </div>
-              )}
-            </div>
+          {/* Wheel Wrapper with Larger Responsive Sizing */}
+          <div className="relative">
+            {data.length > 0 && (
+              <div className="w-[28rem] h-[28rem] sm:w-[32rem] sm:h-[32rem] md:w-[36rem] md:h-[36rem] lg:w-[40rem] lg:h-[40rem] xl:w-[44rem] xl:h-[44rem] flex items-center justify-center">
+                <Wheel
+                  mustStartSpinning={mustSpin}
+                  prizeNumber={prizeNumber}
+                  data={data}
+                  onStopSpinning={handleSpinStop}
+                  backgroundColors={data.map(item => item.style.backgroundColor)}
+                  textColors={['#ffffff']}
+                  outerBorderColor="#FAB654"
+                  outerBorderWidth={8}
+                  innerBorderColor="#f59e0b"
+                  innerBorderWidth={4}
+                  radiusLineColor="#FFD08F"
+                  radiusLineWidth={1}
+                  fontSize={18}
+                  textDistance={70}
+                  spinDuration={1.2}
+                  innerRadius={0}
+                  centerIcon={<img style={{width: 64, height: 64}} alt="logoImage" src={logo}/>}
+                />
+              </div>
+            )}
           </div>
         </div>
+      </div>
 
-        {/* Prize Modal */}
-        {showModal && (
-            <div className="fixed inset-0 bg-black/60 backdrop-blur-sm flex items-center justify-center z-50 p-4">
+      {/* Prize Modal */}
+      {showModal && (
+        <div className="fixed inset-0 bg-black/60 backdrop-blur-sm flex items-center justify-center z-50 p-4">
           <div className="bg-black/40 backdrop-blur-lg rounded-3xl p-6 sm:p-8 border border-amber-400/50 max-w-sm sm:max-w-md w-full mx-4 transform animate-in zoom-in-95 duration-300 shadow-2xl">
             <div className="text-center">
               <div className="mb-6">
