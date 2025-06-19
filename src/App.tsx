@@ -7,163 +7,163 @@ import { saveWheelData, loadWheelData } from './utils/localStorage';
 function App() {
   const [currentPage, setCurrentPage] = useState<'chances' | 'roulette'>('chances');
   
-  // Default wheel data with amounts
+  // Default wheel data with updated amounts and percentages
   const defaultWheelData: WheelData[] = [
-    // Brand Sponsors - Alternating colors based on index
+    // Brand Sponsors - All with 5% chance and 5 amount
     {
       option: 'NatureHike Outdoors',
       style: { backgroundColor: '#723E00', textColor: '#ffffff' },
-      chance: 4,
-      amount: 50,
+      chance: 5,
+      amount: 5,
       image_url: 'https://images.pexels.com/photos/1687845/pexels-photo-1687845.jpeg?auto=compress&cs=tinysrgb&w=400'
     },
     {
       option: 'Compass Outdoors',
       style: { backgroundColor: '#A4580C', textColor: '#ffffff' },
-      chance: 4,
-      amount: 30,
+      chance: 5,
+      amount: 5,
       image_url: 'https://images.pexels.com/photos/1271619/pexels-photo-1271619.jpeg?auto=compress&cs=tinysrgb&w=400'
     },
     {
       option: 'HiSpeed Nomin',
       style: { backgroundColor: '#723E00', textColor: '#ffffff' },
-      chance: 4,
-      amount: 25,
+      chance: 5,
+      amount: 5,
       image_url: 'https://images.pexels.com/photos/919073/pexels-photo-919073.jpeg?auto=compress&cs=tinysrgb&w=400'
     },
     {
       option: 'Vans Mongolia',
       style: { backgroundColor: '#A4580C', textColor: '#ffffff' },
-      chance: 4,
-      amount: 40,
+      chance: 5,
+      amount: 5,
       image_url: 'https://images.pexels.com/photos/1598505/pexels-photo-1598505.jpeg?auto=compress&cs=tinysrgb&w=400'
     },
     {
       option: 'Kids Toys Mongolia',
       style: { backgroundColor: '#723E00', textColor: '#ffffff' },
-      chance: 4,
-      amount: 60,
+      chance: 5,
+      amount: 5,
       image_url: 'https://images.pexels.com/photos/1148998/pexels-photo-1148998.jpeg?auto=compress&cs=tinysrgb&w=400'
     },
     {
       option: 'Avandra',
       style: { backgroundColor: '#A4580C', textColor: '#ffffff' },
-      chance: 4,
-      amount: 35,
+      chance: 5,
+      amount: 5,
       image_url: 'https://images.pexels.com/photos/1667088/pexels-photo-1667088.jpeg?auto=compress&cs=tinysrgb&w=400'
     },
     {
       option: 'HobbyZone',
       style: { backgroundColor: '#723E00', textColor: '#ffffff' },
-      chance: 4,
-      amount: 45,
+      chance: 5,
+      amount: 5,
       image_url: 'https://images.pexels.com/photos/1148998/pexels-photo-1148998.jpeg?auto=compress&cs=tinysrgb&w=400'
     },
     {
       option: 'Otog Outdoors',
       style: { backgroundColor: '#A4580C', textColor: '#ffffff' },
-      chance: 4,
-      amount: 20,
+      chance: 5,
+      amount: 5,
       image_url: 'https://images.pexels.com/photos/1687845/pexels-photo-1687845.jpeg?auto=compress&cs=tinysrgb&w=400'
     },
     {
       option: 'Gorkhi Family Resort',
       style: { backgroundColor: '#723E00', textColor: '#ffffff' },
-      chance: 4,
-      amount: 15,
+      chance: 5,
+      amount: 5,
       image_url: 'https://images.pexels.com/photos/338504/pexels-photo-338504.jpeg?auto=compress&cs=tinysrgb&w=400'
     },
     {
       option: 'Wonderer Mongolia',
       style: { backgroundColor: '#A4580C', textColor: '#ffffff' },
-      chance: 4,
-      amount: 30,
+      chance: 5,
+      amount: 5,
       image_url: 'https://images.pexels.com/photos/1271619/pexels-photo-1271619.jpeg?auto=compress&cs=tinysrgb&w=400'
     },
     {
       option: 'Cases.Mn',
       style: { backgroundColor: '#723E00', textColor: '#ffffff' },
-      chance: 4,
-      amount: 25,
+      chance: 5,
+      amount: 5,
       image_url: 'https://images.pexels.com/photos/1667088/pexels-photo-1667088.jpeg?auto=compress&cs=tinysrgb&w=400'
     },
-    // 10 Mysterious Prizes - Continuing alternating pattern
+    // 10 Mysterious Prizes - All with 5% chance and 5 amount
     {
       option: 'Mysterious Prize #1',
       style: { backgroundColor: '#A4580C', textColor: '#ffffff' },
-      chance: 2,
-      amount: 10,
+      chance: 5,
+      amount: 5,
       image_url: 'https://images.pexels.com/photos/1666065/pexels-photo-1666065.jpeg?auto=compress&cs=tinysrgb&w=400'
     },
     {
       option: 'Mysterious Prize #2',
       style: { backgroundColor: '#723E00', textColor: '#ffffff' },
-      chance: 2,
-      amount: 8,
+      chance: 5,
+      amount: 5,
       image_url: 'https://images.pexels.com/photos/1303081/pexels-photo-1303081.jpeg?auto=compress&cs=tinysrgb&w=400'
     },
     {
       option: 'Mysterious Prize #3',
       style: { backgroundColor: '#A4580C', textColor: '#ffffff' },
-      chance: 2,
-      amount: 12,
+      chance: 5,
+      amount: 5,
       image_url: 'https://images.pexels.com/photos/1319854/pexels-photo-1319854.jpeg?auto=compress&cs=tinysrgb&w=400'
     },
     {
       option: 'Mysterious Prize #4',
       style: { backgroundColor: '#723E00', textColor: '#ffffff' },
-      chance: 2,
-      amount: 6,
+      chance: 5,
+      amount: 5,
       image_url: 'https://images.pexels.com/photos/1666065/pexels-photo-1666065.jpeg?auto=compress&cs=tinysrgb&w=400'
     },
     {
       option: 'Mysterious Prize #5',
       style: { backgroundColor: '#A4580C', textColor: '#ffffff' },
-      chance: 2,
-      amount: 9,
+      chance: 5,
+      amount: 5,
       image_url: 'https://images.pexels.com/photos/1303081/pexels-photo-1303081.jpeg?auto=compress&cs=tinysrgb&w=400'
     },
     {
       option: 'Mysterious Prize #6',
       style: { backgroundColor: '#723E00', textColor: '#ffffff' },
-      chance: 2,
-      amount: 7,
+      chance: 5,
+      amount: 5,
       image_url: 'https://images.pexels.com/photos/1319854/pexels-photo-1319854.jpeg?auto=compress&cs=tinysrgb&w=400'
     },
     {
       option: 'Mysterious Prize #7',
       style: { backgroundColor: '#A4580C', textColor: '#ffffff' },
-      chance: 2,
-      amount: 11,
+      chance: 5,
+      amount: 5,
       image_url: 'https://images.pexels.com/photos/1666065/pexels-photo-1666065.jpeg?auto=compress&cs=tinysrgb&w=400'
     },
     {
       option: 'Mysterious Prize #8',
       style: { backgroundColor: '#723E00', textColor: '#ffffff' },
-      chance: 2,
+      chance: 5,
       amount: 5,
       image_url: 'https://images.pexels.com/photos/1303081/pexels-photo-1303081.jpeg?auto=compress&cs=tinysrgb&w=400'
     },
     {
       option: 'Mysterious Prize #9',
       style: { backgroundColor: '#A4580C', textColor: '#ffffff' },
-      chance: 2,
-      amount: 8,
+      chance: 5,
+      amount: 5,
       image_url: 'https://images.pexels.com/photos/1319854/pexels-photo-1319854.jpeg?auto=compress&cs=tinysrgb&w=400'
     },
     {
       option: 'Mysterious Prize #10',
       style: { backgroundColor: '#723E00', textColor: '#ffffff' },
-      chance: 2,
-      amount: 4,
+      chance: 5,
+      amount: 5,
       image_url: 'https://images.pexels.com/photos/1666065/pexels-photo-1666065.jpeg?auto=compress&cs=tinysrgb&w=400'
     },
-    // The Ultimate Treasure - Now with red background
+    // The Ultimate Treasure - 1% chance and 1 amount (very rare!)
     {
       option: 'ULTIMATE TREASURE',
       style: { backgroundColor: '#DC2626', textColor: '#ffffff' },
-      chance: 35,
-      amount: 3, // Very limited ultimate treasure
+      chance: 1,
+      amount: 1,
       image_url: 'https://images.pexels.com/photos/164527/pexels-photo-164527.jpeg?auto=compress&cs=tinysrgb&w=400'
     },
   ];
