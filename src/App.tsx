@@ -134,10 +134,10 @@ function App() {
       chance: 2,
       image_url: 'https://images.pexels.com/photos/1666065/pexels-photo-1666065.jpeg?auto=compress&cs=tinysrgb&w=400'
     },
-    // The Ultimate Treasure - Using gradient background
+    // The Ultimate Treasure - Now with red background
     {
       option: 'ULTIMATE TREASURE',
-      style: { backgroundColor: '#723E00', textColor: '#ffffff' }, // Will be enhanced with gradient
+      style: { backgroundColor: '#DC2626', textColor: '#ffffff' }, // Red background
       chance: 35, // Remaining percentage to total 100%
       image_url: 'https://images.pexels.com/photos/164527/pexels-photo-164527.jpeg?auto=compress&cs=tinysrgb&w=400'
     },

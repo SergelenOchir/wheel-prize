@@ -106,11 +106,11 @@ const drawWheel = (
         (2 * Math.PI) / QUANTITY;
       const endAngle = startAngle + arc;
 
-      // Special gradient handling for Ultimate Treasure
+      // Special red gradient handling for Ultimate Treasure
       if (option === 'ULTIMATE TREASURE') {
         const gradient = ctx.createRadialGradient(centerX, centerY, insideRadius, centerX, centerY, outsideRadius);
-        gradient.addColorStop(0, '#A4580C');
-        gradient.addColorStop(1, '#723E00');
+        gradient.addColorStop(0, '#EF4444'); // Lighter red
+        gradient.addColorStop(1, '#DC2626'); // Darker red
         ctx.fillStyle = gradient;
       } else {
         ctx.fillStyle = (style && style.backgroundColor) as string;
