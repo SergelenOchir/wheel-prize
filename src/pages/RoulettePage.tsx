@@ -101,7 +101,7 @@ const RoulettePage: React.FC<RoulettePageProps> = ({
                   radiusLineColor="#FFD08F"
                   radiusLineWidth={1}
                   fontSize={13}
-                  textDistance={70}
+                  textDistance={10}
                   spinDuration={1.2}
                   innerRadius={0}
                   centerIcon={<img style={{width: 64, height: 64}} alt="logoImage" src={logo}/>}
