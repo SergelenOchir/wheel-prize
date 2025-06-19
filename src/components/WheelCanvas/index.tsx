@@ -99,14 +99,22 @@ const drawWheel = (
     const centerY = canvas.height / 2;
 
     for (let i = 0; i < data.length; i++) {
-      const { optionSize, style } = data[i];
+      const { optionSize, style, option } = data[i];
 
       const arc =
         (optionSize && (optionSize * (2 * Math.PI)) / QUANTITY) ||
         (2 * Math.PI) / QUANTITY;
       const endAngle = startAngle + arc;
 
-      ctx.fillStyle = (style && style.backgroundColor) as string;
+      // Special gradient handling for Ultimate Treasure
+      if (option === 'ULTIMATE TREASURE') {
+        const gradient = ctx.createRadialGradient(centerX, centerY, insideRadius, centerX, centerY, outsideRadius);
+        gradient.addColorStop(0, '#A4580C');
+        gradient.addColorStop(1, '#723E00');
+        ctx.fillStyle = gradient;
+      } else {
+        ctx.fillStyle = (style && style.backgroundColor) as string;
+      }
 
       ctx.beginPath();
       ctx.arc(centerX, centerY, outsideRadius, startAngle, endAngle, false);
