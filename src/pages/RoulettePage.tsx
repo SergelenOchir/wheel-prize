@@ -86,7 +86,7 @@ const RoulettePage: React.FC<RoulettePageProps> = ({
           {/* Wheel Wrapper with Larger Responsive Sizing */}
           <div className="relative">
             {data.length > 0 && (
-              <div className="w-[28rem] h-[28rem] sm:w-[32rem] sm:h-[32rem] md:w-[36rem] md:h-[36rem] lg:w-[40rem] lg:h-[40rem] xl:w-[44rem] xl:h-[44rem] flex items-center justify-center">
+              <div className="w-[28rem] h-[28rem] flex items-center justify-center">
                 <Wheel
                   mustStartSpinning={mustSpin}
                   prizeNumber={prizeNumber}
@@ -100,7 +100,7 @@ const RoulettePage: React.FC<RoulettePageProps> = ({
                   innerBorderWidth={4}
                   radiusLineColor="#FFD08F"
                   radiusLineWidth={1}
-                  fontSize={18}
+                  fontSize={15}
                   textDistance={70}
                   spinDuration={1.2}
                   innerRadius={0}
