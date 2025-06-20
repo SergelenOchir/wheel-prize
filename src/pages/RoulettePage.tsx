@@ -147,11 +147,7 @@ const RoulettePage: React.FC<RoulettePageProps> = ({
                   textDistance={60}
                   spinDuration={1.2}
                   innerRadius={0}
-                  centerIcon={
-                    <div className="bg-gradient-to-br from-yellow-400 via-orange-500 to-red-500 rounded-full p-4 shadow-2xl border-4 border-white/30 backdrop-blur-sm">
-                      <Gift className="w-8 h-8 text-white drop-shadow-lg" />
-                    </div>
-                  }
+                  centerIcon={<img style={{width: 64, height: 64}} alt="logoImage" src={logo}/>}
                 />
               </div>
             ) : (

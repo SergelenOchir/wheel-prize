@@ -3,6 +3,7 @@ import React, { createRef, RefObject, useEffect } from 'react';
 import { WheelCanvasStyle } from './styles';
 import { WheelData } from '../Wheel/types';
 import { clamp, getQuantity } from '../../utils';
+import { getPrizeIcon } from '../../utils/prizeIcons';
 
 interface WheelCanvasProps extends DrawWheelProps {
   width: string;
@@ -48,6 +49,101 @@ const drawRadialBorder = (
   );
   ctx.closePath();
   ctx.stroke();
+};
+
+// Helper function to create SVG icon as canvas image
+const createIconCanvas = (iconType: string, size: number = 32) => {
+  const canvas = document.createElement('canvas');
+  const ctx = canvas.getContext('2d');
+  canvas.width = size;
+  canvas.height = size;
+  
+  if (!ctx) return canvas;
+  
+  // Set icon color to white
+  ctx.fillStyle = '#ffffff';
+  ctx.strokeStyle = '#ffffff';
+  ctx.lineWidth = 2;
+  ctx.lineCap = 'round';
+  ctx.lineJoin = 'round';
+  
+  const center = size / 2;
+  const scale = size / 24; // Scale factor for 24x24 icons
+  
+  // Draw different icons based on type
+  switch (iconType) {
+    case 'gift':
+      // Gift box icon
+      ctx.fillRect(center - 8 * scale, center - 4 * scale, 16 * scale, 12 * scale);
+      ctx.fillRect(center - 10 * scale, center - 6 * scale, 20 * scale, 4 * scale);
+      ctx.fillRect(center - 2 * scale, center - 6 * scale, 4 * scale, 14 * scale);
+      ctx.fillRect(center - 10 * scale, center - 2 * scale, 20 * scale, 4 * scale);
+      break;
+    case 'crown':
+      // Crown icon
+      ctx.beginPath();
+      ctx.moveTo(center - 10 * scale, center + 6 * scale);
+      ctx.lineTo(center - 8 * scale, center - 2 * scale);
+      ctx.lineTo(center - 4 * scale, center + 2 * scale);
+      ctx.lineTo(center, center - 6 * scale);
+      ctx.lineTo(center + 4 * scale, center + 2 * scale);
+      ctx.lineTo(center + 8 * scale, center - 2 * scale);
+      ctx.lineTo(center + 10 * scale, center + 6 * scale);
+      ctx.closePath();
+      ctx.fill();
+      break;
+    case 'star':
+      // Star icon
+      ctx.beginPath();
+      for (let i = 0; i < 5; i++) {
+        const angle = (i * 144 - 90) * Math.PI / 180;
+        const x = center + Math.cos(angle) * 8 * scale;
+        const y = center + Math.sin(angle) * 8 * scale;
+        if (i === 0) ctx.moveTo(x, y);
+        else ctx.lineTo(x, y);
+        
+        const innerAngle = ((i + 0.5) * 144 - 90) * Math.PI / 180;
+        const innerX = center + Math.cos(innerAngle) * 4 * scale;
+        const innerY = center + Math.sin(innerAngle) * 4 * scale;
+        ctx.lineTo(innerX, innerY);
+      }
+      ctx.closePath();
+      ctx.fill();
+      break;
+    case 'gem':
+      // Diamond/Gem icon
+      ctx.beginPath();
+      ctx.moveTo(center, center - 8 * scale);
+      ctx.lineTo(center - 6 * scale, center - 2 * scale);
+      ctx.lineTo(center - 4 * scale, center + 6 * scale);
+      ctx.lineTo(center + 4 * scale, center + 6 * scale);
+      ctx.lineTo(center + 6 * scale, center - 2 * scale);
+      ctx.closePath();
+      ctx.fill();
+      break;
+    case 'trophy':
+      // Trophy icon
+      ctx.fillRect(center - 3 * scale, center + 2 * scale, 6 * scale, 6 * scale);
+      ctx.fillRect(center - 6 * scale, center - 6 * scale, 12 * scale, 8 * scale);
+      ctx.fillRect(center - 2 * scale, center - 8 * scale, 4 * scale, 4 * scale);
+      break;
+    default:
+      // Default gift icon
+      ctx.fillRect(center - 8 * scale, center - 4 * scale, 16 * scale, 12 * scale);
+      ctx.fillRect(center - 10 * scale, center - 6 * scale, 20 * scale, 4 * scale);
+      ctx.fillRect(center - 2 * scale, center - 6 * scale, 4 * scale, 14 * scale);
+      ctx.fillRect(center - 10 * scale, center - 2 * scale, 20 * scale, 4 * scale);
+  }
+  
+  return canvas;
+};
+
+const getIconTypeForPrize = (prizeName: string): string => {
+  if (prizeName === 'ULTIMATE TREASURE') return 'crown';
+  if (prizeName.includes('Mysterious Prize')) return 'gem';
+  if (prizeName.includes('Jackpot')) return 'trophy';
+  if (prizeName.includes('Lucky') || prizeName.includes('Star')) return 'star';
+  return 'gift';
 };
 
 const drawWheel = (
@@ -201,11 +297,25 @@ const drawWheel = (
           img.height
         );
       } else {
-        // CASE TEXT
+        // CASE TEXT WITH ICON
         contentRotationAngle += perpendicularText ? Math.PI / 2 : 0;
         ctx.rotate(contentRotationAngle);
 
         const text = data[i].option;
+        const iconType = getIconTypeForPrize(text || '');
+        
+        // Create and draw icon
+        const iconSize = Math.min(32, fontSize * 1.5);
+        const iconCanvas = createIconCanvas(iconType, iconSize);
+        
+        // Draw icon above text
+        ctx.drawImage(
+          iconCanvas,
+          -iconSize / 2,
+          -fontSize * 1.5 - iconSize / 2
+        );
+        
+        // Draw text below icon
         ctx.font = `${style?.fontStyle || fontStyle} ${
           style?.fontWeight || fontWeight
         } ${(style?.fontSize || fontSize) * 2}px ${
@@ -215,7 +325,7 @@ const drawWheel = (
         ctx.fillText(
           text || '',
           -ctx.measureText(text || '').width / 2,
-          fontSize / 2.7
+          fontSize / 2.7 + iconSize / 2
         );
       }
 
