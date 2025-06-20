@@ -178,7 +178,7 @@ const RoulettePage: React.FC<RoulettePageProps> = ({
                   </p>
                 </div>
               ) : (
-                <div className="mb-6">
+                <div className="mb-6" onClick={handleModalBackdropClick}>
                   <img
                     src={selectedPrizeImage}
                     alt={selectedPrize}
