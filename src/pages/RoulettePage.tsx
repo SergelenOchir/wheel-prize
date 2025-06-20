@@ -160,7 +160,6 @@ const RoulettePage: React.FC<RoulettePageProps> = ({
       {/* Prize Modal */}
       {showModal && (
         <div className="fixed inset-0 bg-black/60 backdrop-blur-sm flex items-center justify-center z-50 p-4">
-          <div className="bg-black/40 backdrop-blur-lg rounded-3xl p-6 sm:p-8 border border-amber-400/50 max-w-sm sm:max-w-md w-full mx-4 transform animate-in zoom-in-95 duration-300 shadow-2xl">
             <div className="text-center">
               {isOutOfStock ? (
                 <div className="mb-6">
@@ -186,7 +185,6 @@ const RoulettePage: React.FC<RoulettePageProps> = ({
                   />
                 </div>
               )}
-            </div>
           </div>
         </div>
       )}
