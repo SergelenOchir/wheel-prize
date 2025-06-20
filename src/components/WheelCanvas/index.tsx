@@ -148,7 +148,7 @@ const drawWheel = (
         const { optionSize, style, option } = data[i];
 
         const arc =
-          (optionSize && (optionSize * (2 * Math.PI)) / QUANTITY) ||
+          (optionSize && (optionSize * (3 * Math.PI)) / QUANTITY) ||
           (2 * Math.PI) / QUANTITY;
         const endAngle = currentStartAngle + arc;
 
