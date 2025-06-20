@@ -144,10 +144,6 @@ export const getAssetForPrize = (prizeName: string): string => {
 };
 
 export const getOptionNameAsset = (prizeName: string): string => {
-  // First try to get the specific option name asset
-  if (OPTION_NAME_ASSETS[prizeName as keyof typeof OPTION_NAME_ASSETS]) {
-    return OPTION_NAME_ASSETS[prizeName as keyof typeof OPTION_NAME_ASSETS];
-  }
   
   // Fallback to category-based option name images
   const lowerName = prizeName.toLowerCase();
