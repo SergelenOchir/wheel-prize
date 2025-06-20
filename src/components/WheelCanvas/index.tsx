@@ -278,10 +278,10 @@ const drawWheel = (
               prizeHeight
             );
             
-            // Draw option name image (larger, positioned towards inner edge)
+            // Draw option name image (larger, positioned towards inner edge) - INCREASED SIZE
             const optionAspectRatio = optionNameImage.naturalWidth / optionNameImage.naturalHeight;
-            let optionWidth = maxImageSize;
-            let optionHeight = maxImageSize * 0.4; // Make text images shorter
+            let optionWidth = maxImageSize * 1.2; // Increased from maxImageSize to maxImageSize * 1.2
+            let optionHeight = maxImageSize * 0.5; // Increased from maxImageSize * 0.4 to maxImageSize * 0.5
             
             if (optionAspectRatio > 1) {
               optionHeight = optionWidth / optionAspectRatio;
@@ -322,13 +322,13 @@ const drawWheel = (
               drawHeight
             );
           } else if (optionNameImage) {
-            // Only option name image available
+            // Only option name image available - INCREASED SIZE
             const aspectRatio = optionNameImage.naturalWidth / optionNameImage.naturalHeight;
             const segmentWidth = (outsideRadius - insideRadius) * 0.8;
             const maxImageSize = Math.min(100, segmentWidth);
             
-            let drawWidth = maxImageSize;
-            let drawHeight = maxImageSize * 0.4; // Make text images shorter
+            let drawWidth = maxImageSize * 1.2; // Increased from maxImageSize to maxImageSize * 1.2
+            let drawHeight = maxImageSize * 0.5; // Increased from maxImageSize * 0.4 to maxImageSize * 0.5
             
             if (aspectRatio > 1) {
               drawHeight = drawWidth / aspectRatio;
