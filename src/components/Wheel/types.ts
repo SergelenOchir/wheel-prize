@@ -7,6 +7,7 @@ export interface WheelData {
   option?: string;
   style?: StyleType;
   optionSize?: number;
+  option_url?: string;
 }
 
 export interface StyleType {

@@ -111,6 +111,8 @@ export const getAssetForPrize = (prizeName: string): string => {
   if (PRIZE_ASSETS[prizeName as keyof typeof PRIZE_ASSETS]) {
     return PRIZE_ASSETS[prizeName as keyof typeof PRIZE_ASSETS];
   }
+
+  console.log('hereeee')
   
   // Fallback to category-based images
   const lowerName = prizeName.toLowerCase();

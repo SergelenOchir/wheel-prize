@@ -155,8 +155,10 @@ const drawWheel = (
         // Special red gradient handling for Ultimate Treasure
         if (option === 'ULTIMATE TREASURE') {
           const gradient = ctx.createRadialGradient(centerX, centerY, insideRadius, centerX, centerY, outsideRadius);
-          gradient.addColorStop(0, '#EF4444'); // Lighter red
-          gradient.addColorStop(1, '#DC2626'); // Darker red
+          gradient.addColorStop(0, '#ff7200');
+          gradient.addColorStop(0.33, '#ffc400');
+          gradient.addColorStop(0.66, '#ffc790');
+          gradient.addColorStop(1, '#ff8700');
           ctx.fillStyle = gradient;
         } else {
           ctx.fillStyle = (style && style.backgroundColor) as string;
@@ -303,17 +305,18 @@ const drawWheel = (
             // Only prize image available
             const aspectRatio = prizeImage.naturalWidth / prizeImage.naturalHeight;
             const segmentWidth = (outsideRadius - insideRadius) * 0.8;
-            const maxImageSize = Math.min(100, segmentWidth);
+            const maxImageSize = Math.min(180, segmentWidth);
+            console.log(maxImageSize, 'maxImageSize')
             
-            let drawWidth = maxImageSize;
-            let drawHeight = maxImageSize;
+            let drawWidth = 200;
+            let drawHeight = 200;
             
             if (aspectRatio > 1) {
               drawHeight = maxImageSize / aspectRatio;
             } else {
               drawWidth = maxImageSize * aspectRatio;
             }
-            
+
             ctx.drawImage(
               prizeImage,
               -drawWidth / 2,
