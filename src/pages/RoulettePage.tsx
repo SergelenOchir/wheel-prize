@@ -174,18 +174,16 @@ const RoulettePage: React.FC<RoulettePageProps> = ({
                 </div>
               ) : (
                 <div className="mb-6">
-                  <div className="w-24 h-24 sm:w-32 sm:h-32 mx-auto mb-4">
-                    <img
-                      src={selectedPrizeImage}
-                      alt={selectedPrize}
-                      className="w-[200px] h-[200px] object-cover"
-                      onError={(e) => {
-                        const target = e.target as HTMLImageElement;
-                        target.style.display = 'none';
-                        target.nextElementSibling?.classList.remove('hidden');
-                      }}
-                    />
-                  </div>
+                  <img
+                    src={selectedPrizeImage}
+                    alt={selectedPrize}
+                    className="w-[200px] h-[200px] object-cover"
+                    onError={(e) => {
+                      const target = e.target as HTMLImageElement;
+                      target.style.display = 'none';
+                      target.nextElementSibling?.classList.remove('hidden');
+                    }}
+                  />
                 </div>
               )}
             </div>
