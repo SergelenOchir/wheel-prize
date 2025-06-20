@@ -4,8 +4,8 @@ import { NonDraggableImage } from '../common/styledComponents';
 
 export const RouletteContainer = styled.div`
   position: relative;
-  width: 400px;
-  height: 400px;
+  width: 600px;
+  height: 600px;
   max-width: 100%;
   max-height: 100%;
   object-fit: contain;
