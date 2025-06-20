@@ -3,7 +3,7 @@ import { Edit3, Save, X, Trash2, Plus, Play, ArrowRight, Package, RotateCcw, Ima
 import { WheelData } from '../types/WheelData';
 import { getPrizeIcon } from '../utils/prizeIcons';
 import { clearWheelData } from '../utils/localStorage';
-import { AVAILABLE_ASSETS, getAssetForPrize } from '../utils/staticAssets';
+import { getAssetForPrize } from '../utils/staticAssets';
 
 interface WinningChancesPageProps {
   data: WheelData[];
@@ -18,7 +18,6 @@ const WinningChancesPage: React.FC<WinningChancesPageProps> = ({
 }) => {
   const [isEditing, setIsEditing] = useState(false);
   const [tempData, setTempData] = useState<WheelData[]>([]);
-  const [editingImageIndex, setEditingImageIndex] = useState<number | null>(null);
 
   const handleEditStart = () => {
     setTempData([...data]);
@@ -28,7 +27,6 @@ const WinningChancesPage: React.FC<WinningChancesPageProps> = ({
   const handleEditCancel = () => {
     setTempData([]);
     setIsEditing(false);
-    setEditingImageIndex(null);
   };
 
   const handleEditSave = () => {
@@ -44,7 +42,6 @@ const WinningChancesPage: React.FC<WinningChancesPageProps> = ({
     onDataUpdate([...tempData]);
     setTempData([]);
     setIsEditing(false);
-    setEditingImageIndex(null);
   };
 
   const handleResetStock = () => {
@@ -74,21 +71,6 @@ const WinningChancesPage: React.FC<WinningChancesPageProps> = ({
       image_url: getAssetForPrize(newOption) // Auto-update image based on name
     };
     setTempData(updatedData);
-  };
-
-  const handleImageChange = (index: number, newImagePath: string) => {
-    const updatedData = [...tempData];
-    updatedData[index] = { ...updatedData[index], image_url: newImagePath };
-    setTempData(updatedData);
-    setEditingImageIndex(null);
-  };
-
-  const handleImageEdit = (index: number) => {
-    setEditingImageIndex(index);
-  };
-
-  const handleImageEditClose = () => {
-    setEditingImageIndex(null);
   };
 
   const handleRemoveItem = (index: number) => {
@@ -123,18 +105,9 @@ const WinningChancesPage: React.FC<WinningChancesPageProps> = ({
   return (
     <div className="min-h-screen p-8">
       <div className="max-w-4xl mx-auto">
-        {/* Header */}
-        <div className="text-center mb-8">
-          <h1 className="text-5xl font-bold text-white mb-4 bg-gradient-to-r from-yellow-400 to-orange-500 bg-clip-text text-transparent">
-            Configure Winning Chances
-          </h1>
-          <p className="text-xl text-gray-300">Set up your prizes, probabilities, and stock amounts</p>
-        </div>
-
         {/* Stock Overview */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-8">
           <div className="bg-white/10 backdrop-blur-lg rounded-xl p-4 border border-white/20 text-center">
-            <Package className="w-8 h-8 text-blue-400 mx-auto mb-2" />
             <div className="text-2xl font-bold text-white">{totalItems}</div>
             <div className="text-sm text-gray-300">Total Items</div>
           </div>
@@ -194,7 +167,7 @@ const WinningChancesPage: React.FC<WinningChancesPageProps> = ({
           {isEditing && (
             <div className="mb-6 p-4 bg-blue-500/20 border border-blue-500/30 rounded-lg">
               <p className="text-blue-300 font-medium">
-                Total Probability: {totalChance}% | Total Items: {totalItems} | Edit prizes, chances, amounts, and select from available images
+                Total Probability: {totalChance}% | Total Items: {totalItems}
               </p>
             </div>
           )}
@@ -223,14 +196,6 @@ const WinningChancesPage: React.FC<WinningChancesPageProps> = ({
                   <div className="w-full h-full flex items-center justify-center hidden">
                     {getPrizeIcon(item.option)}
                   </div>
-                  {isEditing && (
-                    <button
-                      onClick={() => handleImageEdit(index)}
-                      className="absolute inset-0 bg-black/50 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center"
-                    >
-                      <Edit3 className="w-5 h-5 text-white" />
-                    </button>
-                  )}
                 </div>
                 
                 {!isEditing ? (
@@ -265,15 +230,9 @@ const WinningChancesPage: React.FC<WinningChancesPageProps> = ({
                 ) : (
                   <>
                     <div className="flex-1 space-y-3">
-                      <input
-                        type="text"
-                        value={item.option}
-                        onChange={(e) => handleOptionChange(index, e.target.value)}
-                        className="w-full px-3 py-2 bg-white/10 border border-white/20 rounded-lg text-white font-medium focus:outline-none focus:border-blue-400"
-                        placeholder="Prize name"
-                      />
+                      <div className="w-full px-3 py-2 bg-white/10 border border-white/20 rounded-lg text-white font-medium focus:outline-none focus:border-blue-400">{item.option}</div>
                     </div>
-                    <div className="flex items-center gap-3">
+                    <div className="flex items-center justify-center gap-3">
                       <div className="text-center">
                         <input
                           type="number"
@@ -342,71 +301,6 @@ const WinningChancesPage: React.FC<WinningChancesPageProps> = ({
           </button>
         </div>
       </div>
-
-      {/* Image Selection Modal */}
-      {editingImageIndex !== null && (
-        <div className="fixed inset-0 bg-black/50 backdrop-blur-sm flex items-center justify-center z-50 p-4">
-          <div className="bg-white/10 backdrop-blur-lg rounded-3xl p-6 border border-white/20 max-w-2xl w-full mx-4 max-h-[80vh] overflow-y-auto">
-            <div className="flex items-center justify-between mb-4">
-              <h3 className="text-lg font-semibold text-white">Select Image</h3>
-              <button
-                onClick={handleImageEditClose}
-                className="p-1 text-gray-400 hover:text-white transition-colors"
-              >
-                <X className="w-5 h-5" />
-              </button>
-            </div>
-
-            <div className="space-y-4">
-              {/* Current Image Preview */}
-              <div className="w-full h-32 rounded-lg overflow-hidden bg-white/5">
-                <img 
-                  src={tempData[editingImageIndex]?.image_url} 
-                  alt="Current"
-                  className="w-full h-full object-cover"
-                  onError={(e) => {
-                    const target = e.target as HTMLImageElement;
-                    target.style.display = 'none';
-                    target.nextElementSibling?.classList.remove('hidden');
-                  }}
-                />
-                <div className="w-full h-full flex items-center justify-center hidden text-gray-400">
-                  <Image className="w-8 h-8" />
-                </div>
-              </div>
-
-              {/* Available Assets Grid */}
-              <div className="space-y-2">
-                <label className="text-sm text-gray-300 flex items-center gap-2">
-                  <Image className="w-4 h-4" />
-                  Available Assets
-                </label>
-                <div className="grid grid-cols-3 sm:grid-cols-4 gap-3">
-                  {AVAILABLE_ASSETS.map((asset, index) => (
-                    <button
-                      key={index}
-                      onClick={() => handleImageChange(editingImageIndex, asset.path)}
-                      className="group relative aspect-square rounded-lg overflow-hidden bg-white/5 hover:bg-white/10 border border-white/20 hover:border-blue-400 transition-colors"
-                    >
-                      <img
-                        src={asset.path}
-                        alt={asset.name}
-                        className="w-full h-full object-cover"
-                      />
-                      <div className="absolute inset-0 bg-black/50 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
-                        <div className="text-center">
-                          <div className="text-xs text-white font-medium">{asset.name}</div>
-                          <div className="text-xs text-gray-300">{asset.category}</div>
-                        </div>
-                      </div>
-                    </button>
-                  ))}
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      )}
     </div>
   );
 };
