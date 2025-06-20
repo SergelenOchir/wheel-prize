@@ -3,7 +3,7 @@ import { Edit3, Save, X, Trash2, Plus, Play, ArrowRight, Package, RotateCcw, Ima
 import { WheelData } from '../types/WheelData';
 import { getPrizeIcon } from '../utils/prizeIcons';
 import { clearWheelData } from '../utils/localStorage';
-import { getAssetForPrize } from '../utils/staticAssets';
+import { getAssetForPrize, getOptionNameAsset } from '../utils/staticAssets';
 
 interface WinningChancesPageProps {
   data: WheelData[];
@@ -68,7 +68,8 @@ const WinningChancesPage: React.FC<WinningChancesPageProps> = ({
     updatedData[index] = { 
       ...updatedData[index], 
       option: newOption,
-      image_url: getAssetForPrize(newOption) // Auto-update image based on name
+      image_url: getAssetForPrize(newOption), // Auto-update image based on name
+      option_url: getOptionNameAsset(newOption) // Auto-update option name image
     };
     setTempData(updatedData);
   };
@@ -91,7 +92,8 @@ const WinningChancesPage: React.FC<WinningChancesPageProps> = ({
       style: { backgroundColor: randomColor, textColor: '#ffffff' },
       chance: 10,
       amount: 10,
-      image_url: getAssetForPrize('New Prize')
+      image_url: getAssetForPrize('New Prize'),
+      option_url: getOptionNameAsset('New Prize')
     };
     
     setTempData([...tempData, newItem]);

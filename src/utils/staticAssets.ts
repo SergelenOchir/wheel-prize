@@ -13,6 +13,21 @@ import cases from '../assets/cases.png';
 import bigPrize from '../assets/big-prize.png';
 import mysterious from '../assets/mysterious.png';
 
+// Import option name images
+import natureHikeName from '../assets/nature-kine-name.png';
+import compassName from '../assets/compass-name.png';
+import hiSpeedNominName from '../assets/hispeed-nomin-name.png';
+import vansMongoliaName from '../assets/vans-mongolia-name.png';
+import kidsToysName from '../assets/kids-toy-name.png';
+import avandraName from '../assets/avandra-name.png';
+import hobbyzoneName from '../assets/hobby-zone-name.png';
+import otogName from '../assets/otog-outdoors-name.png';
+import gorkhiTereljName from '../assets/gorhi-terelj-name.png';
+import wondererName from '../assets/wonderer-name.png';
+import casesName from '../assets/cases-name.png';
+import treasureName from '../assets/treasure-name.png';
+import mysteriousName from '../assets/mysterious-name.png';
+
 // Static asset mappings for prizes
 export const PRIZE_ASSETS = {
   'NatureHike Outdoors': natureHike,
@@ -39,6 +54,32 @@ export const PRIZE_ASSETS = {
   'Mysterious Prize #10': mysterious,
 };
 
+// Static asset mappings for option names (text as images)
+export const OPTION_NAME_ASSETS = {
+  'NatureHike Outdoors': natureHikeName,
+  'Compass Outdoors': compassName,
+  'HiSpeed Nomin': hiSpeedNominName,
+  'Vans Mongolia': vansMongoliaName,
+  'Kids Toys Mongolia': kidsToysName,
+  'Avandra': avandraName,
+  'HobbyZone': hobbyzoneName,
+  'Otog Outdoors': otogName,
+  'Gorkhi Family Resort': gorkhiTereljName,
+  'Wonderer Mongolia': wondererName,
+  'Cases.Mn': casesName,
+  'ULTIMATE TREASURE': treasureName,
+  'Mysterious Prize #1': mysteriousName,
+  'Mysterious Prize #2': mysteriousName,
+  'Mysterious Prize #3': mysteriousName,
+  'Mysterious Prize #4': mysteriousName,
+  'Mysterious Prize #5': mysteriousName,
+  'Mysterious Prize #6': mysteriousName,
+  'Mysterious Prize #7': mysteriousName,
+  'Mysterious Prize #8': mysteriousName,
+  'Mysterious Prize #9': mysteriousName,
+  'Mysterious Prize #10': mysteriousName,
+};
+
 // Fallback images for different categories
 export const FALLBACK_IMAGES = {
   outdoor: natureHike,
@@ -50,6 +91,19 @@ export const FALLBACK_IMAGES = {
   mystery: mysterious,
   treasure: bigPrize,
   default: mysterious
+};
+
+// Fallback option name images
+export const FALLBACK_OPTION_NAMES = {
+  outdoor: natureHikeName,
+  tech: hiSpeedNominName,
+  fashion: vansMongoliaName,
+  toys: kidsToysName,
+  accessories: casesName,
+  resort: gorkhiTereljName,
+  mystery: mysteriousName,
+  treasure: treasureName,
+  default: mysteriousName
 };
 
 export const getAssetForPrize = (prizeName: string): string => {
@@ -87,6 +141,43 @@ export const getAssetForPrize = (prizeName: string): string => {
   }
   
   return FALLBACK_IMAGES.default;
+};
+
+export const getOptionNameAsset = (prizeName: string): string => {
+  // First try to get the specific option name asset
+  if (OPTION_NAME_ASSETS[prizeName as keyof typeof OPTION_NAME_ASSETS]) {
+    return OPTION_NAME_ASSETS[prizeName as keyof typeof OPTION_NAME_ASSETS];
+  }
+  
+  // Fallback to category-based option name images
+  const lowerName = prizeName.toLowerCase();
+  
+  if (lowerName.includes('outdoor') || lowerName.includes('nature') || lowerName.includes('compass')) {
+    return FALLBACK_OPTION_NAMES.outdoor;
+  }
+  if (lowerName.includes('speed') || lowerName.includes('tech')) {
+    return FALLBACK_OPTION_NAMES.tech;
+  }
+  if (lowerName.includes('vans') || lowerName.includes('fashion')) {
+    return FALLBACK_OPTION_NAMES.fashion;
+  }
+  if (lowerName.includes('toys') || lowerName.includes('hobby')) {
+    return FALLBACK_OPTION_NAMES.toys;
+  }
+  if (lowerName.includes('cases') || lowerName.includes('avandra')) {
+    return FALLBACK_OPTION_NAMES.accessories;
+  }
+  if (lowerName.includes('resort') || lowerName.includes('gorkhi')) {
+    return FALLBACK_OPTION_NAMES.resort;
+  }
+  if (lowerName.includes('mysterious') || lowerName.includes('mystery')) {
+    return FALLBACK_OPTION_NAMES.mystery;
+  }
+  if (lowerName.includes('treasure') || lowerName.includes('ultimate')) {
+    return FALLBACK_OPTION_NAMES.treasure;
+  }
+  
+  return FALLBACK_OPTION_NAMES.default;
 };
 
 // Available static assets for selection

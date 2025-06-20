@@ -174,6 +174,24 @@ export const Wheel = ({
         };
       }
       
+      // Handle option name images from option_url
+      if (data[i].option_url) {
+        setTotalImages(prevCounter => prevCounter + 1);
+
+        const img = new Image();
+        img.crossOrigin = 'anonymous';
+        img.src = data[i].option_url;
+        img.onload = () => {
+          setLoadedImagesCounter(prevCounter => prevCounter + 1);
+          setRouletteUpdater(prevState => !prevState);
+        };
+        img.onerror = () => {
+          // If image fails to load, still count it as loaded to prevent hanging
+          setLoadedImagesCounter(prevCounter => prevCounter + 1);
+          setRouletteUpdater(prevState => !prevState);
+        };
+      }
+      
       // Handle existing image property (for backward compatibility)
       if (data[i].image) {
         setTotalImages(prevCounter => prevCounter + 1);

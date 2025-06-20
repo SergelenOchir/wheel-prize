@@ -124,15 +124,28 @@ const drawWheel = (
     const centerX = canvas.width / 2;
     const centerY = canvas.height / 2;
 
-    // Pre-load all images
+    // Pre-load all images (both prize images and option name images)
     const imagePromises = data.map(item => {
+      const promises = [];
+      
+      // Load prize image
       if (item.image_url) {
-        return loadImage(item.image_url).catch(() => null);
+        promises.push(loadImage(item.image_url).catch(() => null));
+      } else {
+        promises.push(Promise.resolve(null));
       }
-      return Promise.resolve(null);
+      
+      // Load option name image
+      if (item.option_url) {
+        promises.push(loadImage(item.option_url).catch(() => null));
+      } else {
+        promises.push(Promise.resolve(null));
+      }
+      
+      return Promise.all(promises);
     });
 
-    Promise.all(imagePromises).then(loadedImages => {
+    Promise.all(imagePromises).then(loadedImagePairs => {
       // Clear canvas again before drawing
       ctx.clearRect(0, 0, canvas.width, canvas.height);
       
@@ -241,18 +254,64 @@ const drawWheel = (
             img.height
           );
         } else {
-          // CASE PRIZE IMAGE FROM image_url
+          // CASE PRIZE IMAGE AND OPTION NAME IMAGE
           ctx.rotate(contentRotationAngle);
 
-          const loadedImage = loadedImages[i];
+          const [prizeImage, optionNameImage] = loadedImagePairs[i] || [null, null];
           
-          if (loadedImage) {
-            // Calculate image size based on wheel segment
+          if (prizeImage && optionNameImage) {
+            // Calculate segment dimensions
+            const segmentWidth = (outsideRadius - insideRadius) * 0.8;
+            const maxImageSize = Math.min(80, segmentWidth * 0.6);
+            
+            // Draw prize image (smaller, positioned towards outer edge)
+            const prizeAspectRatio = prizeImage.naturalWidth / prizeImage.naturalHeight;
+            let prizeWidth = maxImageSize * 0.7;
+            let prizeHeight = maxImageSize * 0.7;
+            
+            if (prizeAspectRatio > 1) {
+              prizeHeight = prizeWidth / prizeAspectRatio;
+            } else {
+              prizeWidth = prizeHeight * prizeAspectRatio;
+            }
+            
+            // Position prize image towards outer edge
+            const prizeOffset = segmentWidth * 0.15;
+            ctx.drawImage(
+              prizeImage,
+              -prizeWidth / 2,
+              -prizeHeight / 2 - prizeOffset,
+              prizeWidth,
+              prizeHeight
+            );
+            
+            // Draw option name image (larger, positioned towards inner edge)
+            const optionAspectRatio = optionNameImage.naturalWidth / optionNameImage.naturalHeight;
+            let optionWidth = maxImageSize;
+            let optionHeight = maxImageSize * 0.4; // Make text images shorter
+            
+            if (optionAspectRatio > 1) {
+              optionHeight = optionWidth / optionAspectRatio;
+            } else {
+              optionWidth = optionHeight * optionAspectRatio;
+            }
+            
+            // Position option name towards inner edge
+            const optionOffset = segmentWidth * 0.15;
+            ctx.drawImage(
+              optionNameImage,
+              -optionWidth / 2,
+              -optionHeight / 2 + optionOffset,
+              optionWidth,
+              optionHeight
+            );
+            
+          } else if (prizeImage) {
+            // Only prize image available
+            const aspectRatio = prizeImage.naturalWidth / prizeImage.naturalHeight;
             const segmentWidth = (outsideRadius - insideRadius) * 0.8;
             const maxImageSize = Math.min(100, segmentWidth);
             
-            // Calculate aspect ratio to maintain proportions
-            const aspectRatio = loadedImage.naturalWidth / loadedImage.naturalHeight;
             let drawWidth = maxImageSize;
             let drawHeight = maxImageSize;
             
@@ -262,16 +321,37 @@ const drawWheel = (
               drawWidth = maxImageSize * aspectRatio;
             }
             
-            // Draw the prize image
             ctx.drawImage(
-              loadedImage,
+              prizeImage,
+              -drawWidth / 2,
+              -drawHeight / 2,
+              drawWidth,
+              drawHeight
+            );
+          } else if (optionNameImage) {
+            // Only option name image available
+            const aspectRatio = optionNameImage.naturalWidth / optionNameImage.naturalHeight;
+            const segmentWidth = (outsideRadius - insideRadius) * 0.8;
+            const maxImageSize = Math.min(100, segmentWidth);
+            
+            let drawWidth = maxImageSize;
+            let drawHeight = maxImageSize * 0.4; // Make text images shorter
+            
+            if (aspectRatio > 1) {
+              drawHeight = drawWidth / aspectRatio;
+            } else {
+              drawWidth = drawHeight * aspectRatio;
+            }
+            
+            ctx.drawImage(
+              optionNameImage,
               -drawWidth / 2,
               -drawHeight / 2,
               drawWidth,
               drawHeight
             );
           } else {
-            // Fallback to text if image fails to load
+            // Fallback to text if both images fail to load
             const text = data[i].option;
             ctx.font = `${style?.fontStyle || fontStyle} ${
               style?.fontWeight || fontWeight
