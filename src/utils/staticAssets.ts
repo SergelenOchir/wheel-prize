@@ -1,27 +1,42 @@
+// Import all static assets
+import natureHike from '../assets/nature-hike.png';
+import compass from '../assets/compass.png';
+import hiSpeedNomin from '../assets/hispeed-nomin.png';
+import vansMongolia from '../assets/vans-mongolia.png';
+import kidsToys from '../assets/kids-toys.png';
+import avandra from '../assets/avandra.png';
+import hobbyzone from '../assets/hobbyzone.png';
+import otog from '../assets/otog.png';
+import gorkhiTerelj from '../assets/gorkhi-terelj.png';
+import wonderer from '../assets/wonderer.png';
+import cases from '../assets/cases.png';
+import bigPrize from '../assets/big-prize.png';
+import mysterious from '../assets/mysterious.png';
+
 // Static asset mappings for prizes
 export const PRIZE_ASSETS = {
-  'NatureHike Outdoors': '/src/assets/nature-hike.png',
-  'Compass Outdoors': '/src/assets/compass.png',
-  'HiSpeed Nomin': '/src/assets/hispeed-nomin.png',
-  'Vans Mongolia': '/src/assets/vans-mongolia.png',
-  'Kids Toys Mongolia': '/src/assets/kids-toys.png',
-  'Avandra': '/src/assets/avandra.png',
-  'HobbyZone': '/src/assets/hobbyzone.png',
-  'Otog Outdoors': '/src/assets/otog.png',
-  'Gorkhi Family Resort': '/src/assets/gorkhi-terelj.png',
-  'Wonderer Mongolia': '/src/assets/wonderer.png',
-  'Cases.Mn': '/src/assets/cases.png',
-  'ULTIMATE TREASURE': '/src/assets/big-prize.png',
-  'Mysterious Prize #1': '/src/assets/mysterious.png',
-  'Mysterious Prize #2': '/src/assets/mysterious.png',
-  'Mysterious Prize #3': '/src/assets/mysterious.png',
-  'Mysterious Prize #4': '/src/assets/mysterious.png',
-  'Mysterious Prize #5': '/src/assets/mysterious.png',
-  'Mysterious Prize #6': '/src/assets/mysterious.png',
-  'Mysterious Prize #7': '/src/assets/mysterious.png',
-  'Mysterious Prize #8': '/src/assets/mysterious.png',
-  'Mysterious Prize #9': '/src/assets/mysterious.png',
-  'Mysterious Prize #10': '/src/assets/mysterious.png',
+  'NatureHike Outdoors': natureHike,
+  'Compass Outdoors': compass,
+  'HiSpeed Nomin': hiSpeedNomin,
+  'Vans Mongolia': vansMongolia,
+  'Kids Toys Mongolia': kidsToys,
+  'Avandra': avandra,
+  'HobbyZone': hobbyzone,
+  'Otog Outdoors': otog,
+  'Gorkhi Family Resort': gorkhiTerelj,
+  'Wonderer Mongolia': wonderer,
+  'Cases.Mn': cases,
+  'ULTIMATE TREASURE': bigPrize,
+  'Mysterious Prize #1': mysterious,
+  'Mysterious Prize #2': mysterious,
+  'Mysterious Prize #3': mysterious,
+  'Mysterious Prize #4': mysterious,
+  'Mysterious Prize #5': mysterious,
+  'Mysterious Prize #6': mysterious,
+  'Mysterious Prize #7': mysterious,
+  'Mysterious Prize #8': mysterious,
+  'Mysterious Prize #9': mysterious,
+  'Mysterious Prize #10': mysterious,
 };
 
 // Fallback images for different categories
@@ -76,17 +91,17 @@ export const getAssetForPrize = (prizeName: string): string => {
 
 // Available static assets for selection
 export const AVAILABLE_ASSETS = [
-  { name: 'Nature Hike', path: '/src/assets/nature-hike.png', category: 'Outdoor' },
-  { name: 'Compass', path: '/src/assets/compass.png', category: 'Outdoor' },
-  { name: 'HiSpeed Nomin', path: '/src/assets/hispeed-nomin.png', category: 'Tech' },
-  { name: 'Vans Mongolia', path: '/src/assets/vans-mongolia.png', category: 'Fashion' },
-  { name: 'Kids Toys', path: '/src/assets/kids-toys.png', category: 'Toys' },
-  { name: 'Avandra', path: '/src/assets/avandra.png', category: 'Accessories' },
-  { name: 'HobbyZone', path: '/src/assets/hobbyzone.png', category: 'Toys' },
-  { name: 'Otog', path: '/src/assets/otog.png', category: 'Outdoor' },
-  { name: 'Gorkhi Terelj', path: '/src/assets/gorkhi-terelj.png', category: 'Resort' },
-  { name: 'Wonderer', path: '/src/assets/wonderer.png', category: 'Travel' },
-  { name: 'Cases', path: '/src/assets/cases.png', category: 'Accessories' },
-  { name: 'Big Prize', path: '/src/assets/big-prize.png', category: 'Special' },
-  { name: 'Mysterious', path: '/src/assets/mysterious.png', category: 'Mystery' },
+  { name: 'Nature Hike', path: natureHike, category: 'Outdoor' },
+  { name: 'Compass', path: compass, category: 'Outdoor' },
+  { name: 'HiSpeed Nomin', path: hiSpeedNomin, category: 'Tech' },
+  { name: 'Vans Mongolia', path: vansMongolia, category: 'Fashion' },
+  { name: 'Kids Toys', path: kidsToys, category: 'Toys' },
+  { name: 'Avandra', path: avandra, category: 'Accessories' },
+  { name: 'HobbyZone', path: hobbyzone, category: 'Toys' },
+  { name: 'Otog', path: otog, category: 'Outdoor' },
+  { name: 'Gorkhi Terelj', path: gorkhiTerelj, category: 'Resort' },
+  { name: 'Wonderer', path: wonderer, category: 'Travel' },
+  { name: 'Cases', path: cases, category: 'Accessories' },
+  { name: 'Big Prize', path: bigPrize, category: 'Special' },
+  { name: 'Mysterious', path: mysterious, category: 'Mystery' },
 ];
