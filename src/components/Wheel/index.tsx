@@ -12,6 +12,7 @@ import {
   RotationContainer,
   RouletteContainer,
   RoulettePointerImage,
+  RouletteWrapperImage,
 } from './styles';
 import {
   DEFAULT_BACKGROUND_COLORS,
@@ -273,6 +274,12 @@ export const Wheel = ({
           : {}
       }
     >
+      {/* Roulette Wrapper Frame */}
+      <RouletteWrapperImage
+        src="/src/assets/roulette-wrapper.png"
+        alt="roulette-wrapper"
+      />
+      
       <RotationContainer
         className={getRouletteClass()}
         classKey={classKey}
@@ -305,6 +312,7 @@ export const Wheel = ({
           centerIcon={centerIcon}
         />
       </RotationContainer>
+      
       <RoulettePointerImage
         style={pointerProps?.style}
         src={pointerProps?.src || roulettePointer.src}
