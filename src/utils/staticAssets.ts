@@ -121,20 +121,3 @@ export const getOptionNameAsset = (prizeName: string): string => {
   }
   return FALLBACK_OPTION_NAMES.default;
 };
-
-// Available static assets for selection
-export const AVAILABLE_ASSETS = [
-  { name: 'Nature Hike', path: natureHike, category: 'Outdoor' },
-  { name: 'Compass', path: compass, category: 'Outdoor' },
-  { name: 'HiSpeed Nomin', path: hiSpeedNomin, category: 'Tech' },
-  { name: 'Vans Mongolia', path: vansMongolia, category: 'Fashion' },
-  { name: 'Kids Toys', path: kidsToys, category: 'Toys' },
-  { name: 'Avandra', path: avandra, category: 'Accessories' },
-  { name: 'HobbyZone', path: hobbyzone, category: 'Toys' },
-  { name: 'Otog', path: otog, category: 'Outdoor' },
-  { name: 'Gorkhi Terelj', path: gorkhiTerelj, category: 'Resort' },
-  { name: 'Wonderer', path: wonderer, category: 'Travel' },
-  { name: 'Cases', path: cases, category: 'Accessories' },
-  { name: 'Big Prize', path: bigPrize, category: 'Special' },
-  { name: 'Mysterious', path: mysterious, category: 'Mystery' },
-];
