@@ -90,13 +90,6 @@ const WinningChancesPage: React.FC<WinningChancesPageProps> = ({
     setEditingImageIndex(null);
   };
 
-  // Handle outside click to close modal
-  const handleModalBackdropClick = (e: React.MouseEvent) => {
-    if (e.target === e.currentTarget) {
-      handleImageEditClose();
-    }
-  };
-
   const handleRemoveItem = (index: number) => {
     if (tempData.length <= 1) {
       alert('At least one prize is required');
@@ -351,10 +344,7 @@ const WinningChancesPage: React.FC<WinningChancesPageProps> = ({
 
       {/* Image Selection Modal */}
       {editingImageIndex !== null && (
-        <div 
-          className="fixed inset-0 bg-black/50 backdrop-blur-sm flex items-center justify-center z-50 p-4"
-          onClick={handleModalBackdropClick}
-        >
+        <div className="fixed inset-0 bg-black/50 backdrop-blur-sm flex items-center justify-center z-50 p-4">
           <div className="bg-white/10 backdrop-blur-lg rounded-3xl p-6 border border-white/20 max-w-2xl w-full mx-4 max-h-[80vh] overflow-y-auto">
             <div className="flex items-center justify-between mb-4">
               <h3 className="text-lg font-semibold text-white">Select Image</h3>
