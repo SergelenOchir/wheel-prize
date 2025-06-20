@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Edit3, Save, X, Trash2, Plus, Play, ArrowRight, Package, RotateCcw, Image, Shuffle } from 'lucide-react';
+import { Edit3, Save, X, Trash2, Plus, Play, ArrowRight, Package, RotateCcw, Image } from 'lucide-react';
 import { WheelData } from '../types/WheelData';
 import { getPrizeIcon } from '../utils/prizeIcons';
 import { clearWheelData } from '../utils/localStorage';
@@ -9,14 +9,12 @@ interface WinningChancesPageProps {
   data: WheelData[];
   onDataUpdate: (data: WheelData[]) => void;
   onNavigateToRoulette: () => void;
-  onShuffleData: () => void;
 }
 
 const WinningChancesPage: React.FC<WinningChancesPageProps> = ({
   data,
   onDataUpdate,
-  onNavigateToRoulette,
-  onShuffleData
+  onNavigateToRoulette
 }) => {
   const [isEditing, setIsEditing] = useState(false);
   const [tempData, setTempData] = useState<WheelData[]>([]);
@@ -50,12 +48,6 @@ const WinningChancesPage: React.FC<WinningChancesPageProps> = ({
     if (confirm('Are you sure you want to reset all stock amounts to their original values? This will clear all localStorage data.')) {
       clearWheelData();
       window.location.reload(); // Reload to get default data
-    }
-  };
-
-  const handleShuffle = () => {
-    if (confirm('Shuffle the wheel order randomly? This will mix up all the prizes on the wheel.')) {
-      onShuffleData();
     }
   };
 
@@ -138,13 +130,6 @@ const WinningChancesPage: React.FC<WinningChancesPageProps> = ({
             <div className="flex gap-3">
               {!isEditing ? (
                 <>
-                  <button
-                    onClick={handleShuffle}
-                    className="flex items-center gap-2 px-4 py-2 bg-purple-500 hover:bg-purple-600 text-white rounded-lg font-medium transition-colors"
-                  >
-                    <Shuffle className="w-5 h-5" />
-                    Shuffle Order
-                  </button>
                   <button
                     onClick={handleResetStock}
                     className="flex items-center gap-2 px-4 py-2 bg-orange-500 hover:bg-orange-600 text-white rounded-lg font-medium transition-colors"
