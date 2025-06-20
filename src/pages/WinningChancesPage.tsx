@@ -1,8 +1,9 @@
-import React, { useState, useRef } from 'react';
-import { Edit3, Save, X, Trash2, Plus, Link, Upload, Image, Play, ArrowRight, Package, RotateCcw } from 'lucide-react';
+import React, { useState } from 'react';
+import { Edit3, Save, X, Trash2, Plus, Play, ArrowRight, Package, RotateCcw, Image } from 'lucide-react';
 import { WheelData } from '../types/WheelData';
 import { getPrizeIcon } from '../utils/prizeIcons';
 import { clearWheelData } from '../utils/localStorage';
+import { AVAILABLE_ASSETS, getAssetForPrize } from '../utils/staticAssets';
 
 interface WinningChancesPageProps {
   data: WheelData[];
@@ -18,8 +19,6 @@ const WinningChancesPage: React.FC<WinningChancesPageProps> = ({
   const [isEditing, setIsEditing] = useState(false);
   const [tempData, setTempData] = useState<WheelData[]>([]);
   const [editingImageIndex, setEditingImageIndex] = useState<number | null>(null);
-  const [imageInputMethod, setImageInputMethod] = useState<'url' | 'upload'>('url');
-  const fileInputRef = useRef<HTMLInputElement>(null);
 
   const handleEditStart = () => {
     setTempData([...data]);
@@ -30,7 +29,6 @@ const WinningChancesPage: React.FC<WinningChancesPageProps> = ({
     setTempData([]);
     setIsEditing(false);
     setEditingImageIndex(null);
-    setImageInputMethod('url');
   };
 
   const handleEditSave = () => {
@@ -47,7 +45,6 @@ const WinningChancesPage: React.FC<WinningChancesPageProps> = ({
     setTempData([]);
     setIsEditing(false);
     setEditingImageIndex(null);
-    setImageInputMethod('url');
   };
 
   const handleResetStock = () => {
@@ -71,50 +68,26 @@ const WinningChancesPage: React.FC<WinningChancesPageProps> = ({
 
   const handleOptionChange = (index: number, newOption: string) => {
     const updatedData = [...tempData];
-    updatedData[index] = { ...updatedData[index], option: newOption };
+    updatedData[index] = { 
+      ...updatedData[index], 
+      option: newOption,
+      image_url: getAssetForPrize(newOption) // Auto-update image based on name
+    };
     setTempData(updatedData);
   };
 
-  const handleImageChange = (index: number, newImage: string) => {
+  const handleImageChange = (index: number, newImagePath: string) => {
     const updatedData = [...tempData];
-    updatedData[index] = { ...updatedData[index], image_url: newImage };
+    updatedData[index] = { ...updatedData[index], image_url: newImagePath };
     setTempData(updatedData);
   };
 
   const handleImageEdit = (index: number) => {
     setEditingImageIndex(index);
-    setImageInputMethod('url');
   };
 
   const handleImageEditClose = () => {
     setEditingImageIndex(null);
-    setImageInputMethod('url');
-  };
-
-  const handleFileUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const file = event.target.files?.[0];
-    if (file && editingImageIndex !== null) {
-      if (!file.type.startsWith('image/')) {
-        alert('Please select an image file');
-        return;
-      }
-
-      if (file.size > 5 * 1024 * 1024) {
-        alert('File size must be less than 5MB');
-        return;
-      }
-
-      const reader = new FileReader();
-      reader.onload = (e) => {
-        const result = e.target?.result as string;
-        handleImageChange(editingImageIndex, result);
-      };
-      reader.readAsDataURL(file);
-    }
-  };
-
-  const handleUploadClick = () => {
-    fileInputRef.current?.click();
   };
 
   const handleRemoveItem = (index: number) => {
@@ -135,7 +108,7 @@ const WinningChancesPage: React.FC<WinningChancesPageProps> = ({
       style: { backgroundColor: randomColor, textColor: '#ffffff' },
       chance: 10,
       amount: 10,
-      image_url: 'https://images.pexels.com/photos/1666065/pexels-photo-1666065.jpeg?auto=compress&cs=tinysrgb&w=400'
+      image_url: getAssetForPrize('New Prize')
     };
     
     setTempData([...tempData, newItem]);
@@ -220,7 +193,7 @@ const WinningChancesPage: React.FC<WinningChancesPageProps> = ({
           {isEditing && (
             <div className="mb-6 p-4 bg-blue-500/20 border border-blue-500/30 rounded-lg">
               <p className="text-blue-300 font-medium">
-                Total Probability: {totalChance}% | Total Items: {totalItems} | Edit prizes, chances, amounts, and images
+                Total Probability: {totalChance}% | Total Items: {totalItems} | Edit prizes, chances, amounts, and select from available images
               </p>
             </div>
           )}
@@ -369,12 +342,12 @@ const WinningChancesPage: React.FC<WinningChancesPageProps> = ({
         </div>
       </div>
 
-      {/* Image Edit Modal */}
+      {/* Image Selection Modal */}
       {editingImageIndex !== null && (
         <div className="fixed inset-0 bg-black/50 backdrop-blur-sm flex items-center justify-center z-50 p-4">
-          <div className="bg-white/10 backdrop-blur-lg rounded-3xl p-6 border border-white/20 max-w-md w-full mx-4">
+          <div className="bg-white/10 backdrop-blur-lg rounded-3xl p-6 border border-white/20 max-w-2xl w-full mx-4 max-h-[80vh] overflow-y-auto">
             <div className="flex items-center justify-between mb-4">
-              <h3 className="text-lg font-semibold text-white">Edit Image</h3>
+              <h3 className="text-lg font-semibold text-white">Select Image</h3>
               <button
                 onClick={handleImageEditClose}
                 className="p-1 text-gray-400 hover:text-white transition-colors"
@@ -401,86 +374,48 @@ const WinningChancesPage: React.FC<WinningChancesPageProps> = ({
                 </div>
               </div>
 
-              {/* Method Selection */}
-              <div className="flex gap-2 p-1 bg-white/5 rounded-lg">
-                <button
-                  onClick={() => setImageInputMethod('url')}
-                  className={`flex-1 flex items-center justify-center gap-2 py-2 px-3 rounded-md text-sm font-medium transition-colors ${
-                    imageInputMethod === 'url'
-                      ? 'bg-blue-500 text-white'
-                      : 'text-gray-300 hover:text-white hover:bg-white/10'
-                  }`}
-                >
-                  <Link className="w-4 h-4" />
-                  URL
-                </button>
-                <button
-                  onClick={() => setImageInputMethod('upload')}
-                  className={`flex-1 flex items-center justify-center gap-2 py-2 px-3 rounded-md text-sm font-medium transition-colors ${
-                    imageInputMethod === 'upload'
-                      ? 'bg-blue-500 text-white'
-                      : 'text-gray-300 hover:text-white hover:bg-white/10'
-                  }`}
-                >
-                  <Upload className="w-4 h-4" />
-                  Upload
-                </button>
+              {/* Available Assets Grid */}
+              <div className="space-y-4">
+                <h4 className="text-white font-medium">Available Assets:</h4>
+                <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
+                  {AVAILABLE_ASSETS.map((asset, index) => (
+                    <button
+                      key={index}
+                      onClick={() => {
+                        handleImageChange(editingImageIndex, asset.path);
+                        handleImageEditClose();
+                      }}
+                      className="group relative bg-white/5 hover:bg-white/10 rounded-lg p-3 transition-colors border border-white/10 hover:border-white/30"
+                    >
+                      <div className="aspect-square rounded-lg overflow-hidden bg-white/5 mb-2">
+                        <img 
+                          src={asset.path} 
+                          alt={asset.name}
+                          className="w-full h-full object-cover group-hover:scale-105 transition-transform"
+                          onError={(e) => {
+                            const target = e.target as HTMLImageElement;
+                            target.style.display = 'none';
+                            target.nextElementSibling?.classList.remove('hidden');
+                          }}
+                        />
+                        <div className="w-full h-full flex items-center justify-center hidden text-gray-400">
+                          <Image className="w-6 h-6" />
+                        </div>
+                      </div>
+                      <div className="text-xs text-white font-medium truncate">{asset.name}</div>
+                      <div className="text-xs text-gray-400">{asset.category}</div>
+                    </button>
+                  ))}
+                </div>
               </div>
-
-              {/* URL Input */}
-              {imageInputMethod === 'url' && (
-                <div className="space-y-2">
-                  <label className="text-sm text-gray-300 flex items-center gap-2">
-                    <Link className="w-4 h-4" />
-                    Image URL
-                  </label>
-                  <input
-                    type="url"
-                    value={tempData[editingImageIndex]?.image_url || ''}
-                    onChange={(e) => handleImageChange(editingImageIndex, e.target.value)}
-                    className="w-full px-3 py-2 bg-white/10 border border-white/20 rounded-lg text-white focus:outline-none focus:border-blue-400"
-                    placeholder="https://example.com/image.jpg"
-                  />
-                  <p className="text-xs text-gray-400">
-                    Enter a direct link to an image (JPG, PNG, GIF, WebP)
-                  </p>
-                </div>
-              )}
-
-              {/* File Upload */}
-              {imageInputMethod === 'upload' && (
-                <div className="space-y-2">
-                  <label className="text-sm text-gray-300 flex items-center gap-2">
-                    <Upload className="w-4 h-4" />
-                    Upload Image
-                  </label>
-                  <input
-                    ref={fileInputRef}
-                    type="file"
-                    accept="image/*"
-                    onChange={handleFileUpload}
-                    className="hidden"
-                  />
-                  <button
-                    onClick={handleUploadClick}
-                    className="w-full flex items-center justify-center gap-2 p-3 bg-white/10 hover:bg-white/20 border-2 border-dashed border-white/20 hover:border-white/40 rounded-lg text-white transition-colors"
-                  >
-                    <Image className="w-5 h-5" />
-                    Choose Image File
-                  </button>
-                  <p className="text-xs text-gray-400">
-                    Supports JPG, PNG, GIF, WebP (max 5MB)
-                  </p>
-                </div>
-              )}
 
               {/* Action Button */}
               <div className="flex gap-3 pt-2">
                 <button
                   onClick={handleImageEditClose}
-                  className="flex-1 bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 px-4 rounded-lg transition-colors"
+                  className="flex-1 bg-gray-500 hover:bg-gray-600 text-white font-semibold py-2 px-4 rounded-lg transition-colors"
                 >
-                  Done
+                  Cancel
                 </button>
               </div>
             </div>

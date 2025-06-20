@@ -3,6 +3,7 @@ import WinningChancesPage from './pages/WinningChancesPage';
 import RoulettePage from './pages/RoulettePage';
 import { WheelData } from './types/WheelData';
 import { saveWheelData, loadWheelData } from './utils/localStorage';
+import { getAssetForPrize } from './utils/staticAssets';
 
 function App() {
   const [currentPage, setCurrentPage] = useState<'chances' | 'roulette'>('chances');
@@ -15,77 +16,77 @@ function App() {
       style: { backgroundColor: '#723E00', textColor: '#ffffff' },
       chance: 5,
       amount: 5,
-      image_url: 'https://images.pexels.com/photos/1687845/pexels-photo-1687845.jpeg?auto=compress&cs=tinysrgb&w=400'
+      image_url: getAssetForPrize('NatureHike Outdoors')
     },
     {
       option: 'Compass Outdoors',
       style: { backgroundColor: '#A4580C', textColor: '#ffffff' },
       chance: 5,
       amount: 5,
-      image_url: 'https://images.pexels.com/photos/1271619/pexels-photo-1271619.jpeg?auto=compress&cs=tinysrgb&w=400'
+      image_url: getAssetForPrize('Compass Outdoors')
     },
     {
       option: 'HiSpeed Nomin',
       style: { backgroundColor: '#723E00', textColor: '#ffffff' },
       chance: 5,
       amount: 5,
-      image_url: 'https://images.pexels.com/photos/919073/pexels-photo-919073.jpeg?auto=compress&cs=tinysrgb&w=400'
+      image_url: getAssetForPrize('HiSpeed Nomin')
     },
     {
       option: 'Vans Mongolia',
       style: { backgroundColor: '#A4580C', textColor: '#ffffff' },
       chance: 5,
       amount: 5,
-      image_url: 'https://images.pexels.com/photos/1598505/pexels-photo-1598505.jpeg?auto=compress&cs=tinysrgb&w=400'
+      image_url: getAssetForPrize('Vans Mongolia')
     },
     {
       option: 'Kids Toys Mongolia',
       style: { backgroundColor: '#723E00', textColor: '#ffffff' },
       chance: 5,
       amount: 5,
-      image_url: 'https://images.pexels.com/photos/1148998/pexels-photo-1148998.jpeg?auto=compress&cs=tinysrgb&w=400'
+      image_url: getAssetForPrize('Kids Toys Mongolia')
     },
     {
       option: 'Avandra',
       style: { backgroundColor: '#A4580C', textColor: '#ffffff' },
       chance: 5,
       amount: 5,
-      image_url: 'https://images.pexels.com/photos/1667088/pexels-photo-1667088.jpeg?auto=compress&cs=tinysrgb&w=400'
+      image_url: getAssetForPrize('Avandra')
     },
     {
       option: 'HobbyZone',
       style: { backgroundColor: '#723E00', textColor: '#ffffff' },
       chance: 5,
       amount: 5,
-      image_url: 'https://images.pexels.com/photos/1148998/pexels-photo-1148998.jpeg?auto=compress&cs=tinysrgb&w=400'
+      image_url: getAssetForPrize('HobbyZone')
     },
     {
       option: 'Otog Outdoors',
       style: { backgroundColor: '#A4580C', textColor: '#ffffff' },
       chance: 5,
       amount: 5,
-      image_url: 'https://images.pexels.com/photos/1687845/pexels-photo-1687845.jpeg?auto=compress&cs=tinysrgb&w=400'
+      image_url: getAssetForPrize('Otog Outdoors')
     },
     {
       option: 'Gorkhi Family Resort',
       style: { backgroundColor: '#723E00', textColor: '#ffffff' },
       chance: 5,
       amount: 5,
-      image_url: 'https://images.pexels.com/photos/338504/pexels-photo-338504.jpeg?auto=compress&cs=tinysrgb&w=400'
+      image_url: getAssetForPrize('Gorkhi Family Resort')
     },
     {
       option: 'Wonderer Mongolia',
       style: { backgroundColor: '#A4580C', textColor: '#ffffff' },
       chance: 5,
       amount: 5,
-      image_url: 'https://images.pexels.com/photos/1271619/pexels-photo-1271619.jpeg?auto=compress&cs=tinysrgb&w=400'
+      image_url: getAssetForPrize('Wonderer Mongolia')
     },
     {
       option: 'Cases.Mn',
       style: { backgroundColor: '#723E00', textColor: '#ffffff' },
       chance: 5,
       amount: 5,
-      image_url: 'https://images.pexels.com/photos/1667088/pexels-photo-1667088.jpeg?auto=compress&cs=tinysrgb&w=400'
+      image_url: getAssetForPrize('Cases.Mn')
     },
     // 10 Mysterious Prizes - All with 5% chance and 5 amount
     {
@@ -93,70 +94,70 @@ function App() {
       style: { backgroundColor: '#A4580C', textColor: '#ffffff' },
       chance: 5,
       amount: 5,
-      image_url: 'https://images.pexels.com/photos/1666065/pexels-photo-1666065.jpeg?auto=compress&cs=tinysrgb&w=400'
+      image_url: getAssetForPrize('Mysterious Prize #1')
     },
     {
       option: 'Mysterious Prize #2',
       style: { backgroundColor: '#723E00', textColor: '#ffffff' },
       chance: 5,
       amount: 5,
-      image_url: 'https://images.pexels.com/photos/1303081/pexels-photo-1303081.jpeg?auto=compress&cs=tinysrgb&w=400'
+      image_url: getAssetForPrize('Mysterious Prize #2')
     },
     {
       option: 'Mysterious Prize #3',
       style: { backgroundColor: '#A4580C', textColor: '#ffffff' },
       chance: 5,
       amount: 5,
-      image_url: 'https://images.pexels.com/photos/1319854/pexels-photo-1319854.jpeg?auto=compress&cs=tinysrgb&w=400'
+      image_url: getAssetForPrize('Mysterious Prize #3')
     },
     {
       option: 'Mysterious Prize #4',
       style: { backgroundColor: '#723E00', textColor: '#ffffff' },
       chance: 5,
       amount: 5,
-      image_url: 'https://images.pexels.com/photos/1666065/pexels-photo-1666065.jpeg?auto=compress&cs=tinysrgb&w=400'
+      image_url: getAssetForPrize('Mysterious Prize #4')
     },
     {
       option: 'Mysterious Prize #5',
       style: { backgroundColor: '#A4580C', textColor: '#ffffff' },
       chance: 5,
       amount: 5,
-      image_url: 'https://images.pexels.com/photos/1303081/pexels-photo-1303081.jpeg?auto=compress&cs=tinysrgb&w=400'
+      image_url: getAssetForPrize('Mysterious Prize #5')
     },
     {
       option: 'Mysterious Prize #6',
       style: { backgroundColor: '#723E00', textColor: '#ffffff' },
       chance: 5,
       amount: 5,
-      image_url: 'https://images.pexels.com/photos/1319854/pexels-photo-1319854.jpeg?auto=compress&cs=tinysrgb&w=400'
+      image_url: getAssetForPrize('Mysterious Prize #6')
     },
     {
       option: 'Mysterious Prize #7',
       style: { backgroundColor: '#A4580C', textColor: '#ffffff' },
       chance: 5,
       amount: 5,
-      image_url: 'https://images.pexels.com/photos/1666065/pexels-photo-1666065.jpeg?auto=compress&cs=tinysrgb&w=400'
+      image_url: getAssetForPrize('Mysterious Prize #7')
     },
     {
       option: 'Mysterious Prize #8',
       style: { backgroundColor: '#723E00', textColor: '#ffffff' },
       chance: 5,
       amount: 5,
-      image_url: 'https://images.pexels.com/photos/1303081/pexels-photo-1303081.jpeg?auto=compress&cs=tinysrgb&w=400'
+      image_url: getAssetForPrize('Mysterious Prize #8')
     },
     {
       option: 'Mysterious Prize #9',
       style: { backgroundColor: '#A4580C', textColor: '#ffffff' },
       chance: 5,
       amount: 5,
-      image_url: 'https://images.pexels.com/photos/1319854/pexels-photo-1319854.jpeg?auto=compress&cs=tinysrgb&w=400'
+      image_url: getAssetForPrize('Mysterious Prize #9')
     },
     {
       option: 'Mysterious Prize #10',
       style: { backgroundColor: '#723E00', textColor: '#ffffff' },
       chance: 5,
       amount: 5,
-      image_url: 'https://images.pexels.com/photos/1666065/pexels-photo-1666065.jpeg?auto=compress&cs=tinysrgb&w=400'
+      image_url: getAssetForPrize('Mysterious Prize #10')
     },
     // The Ultimate Treasure - 1% chance and 1 amount (very rare!)
     {
@@ -164,7 +165,7 @@ function App() {
       style: { backgroundColor: '#DC2626', textColor: '#ffffff' },
       chance: 1,
       amount: 1,
-      image_url: 'https://images.pexels.com/photos/164527/pexels-photo-164527.jpeg?auto=compress&cs=tinysrgb&w=400'
+      image_url: getAssetForPrize('ULTIMATE TREASURE')
     },
   ];
 
@@ -175,10 +176,11 @@ function App() {
   useEffect(() => {
     const savedData = loadWheelData();
     if (savedData && savedData.length > 0) {
-      // Ensure all items have the amount property (for backward compatibility)
+      // Ensure all items have the amount property and updated image_url (for backward compatibility)
       const dataWithAmounts = savedData.map((item, index) => ({
         ...item,
-        amount: item.amount !== undefined ? item.amount : defaultWheelData[index]?.amount || 0
+        amount: item.amount !== undefined ? item.amount : defaultWheelData[index]?.amount || 0,
+        image_url: item.image_url || getAssetForPrize(item.option)
       }));
       setWheelData(dataWithAmounts);
     }
