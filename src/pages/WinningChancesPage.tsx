@@ -100,7 +100,9 @@ const WinningChancesPage: React.FC<WinningChancesPageProps> = ({
   };
 
   const currentData = isEditing ? tempData : data;
-  const totalChance = currentData.reduce((sum, item) => sum + item.chance, 0);
+  
+  // Calculate totals based on original chance values (not the processed ones)
+  const totalChance = currentData.reduce((sum, item) => sum + (item.amount > 0 ? item.chance : 0), 0);
   const totalItems = currentData.reduce((sum, item) => sum + item.amount, 0);
   const availableItems = currentData.filter(item => item.amount > 0).length;
 
@@ -125,6 +127,10 @@ const WinningChancesPage: React.FC<WinningChancesPageProps> = ({
       <div className="grid gap-3">
         {prizes.map((item, globalIndex) => {
           const index = currentData.findIndex(dataItem => dataItem.option === item.option);
+          // Use original chance for display, but show effective chance (0% when out of stock)
+          const displayChance = item.amount === 0 ? 0 : item.chance;
+          const originalChance = item.chance;
+          
           return (
             <div
               key={index}
@@ -198,11 +204,22 @@ const WinningChancesPage: React.FC<WinningChancesPageProps> = ({
                     <div className="flex items-center gap-3">
                       <div className="flex-1 bg-gray-700 rounded-full h-2">
                         <div 
-                          className="bg-gradient-to-r from-green-400 to-blue-500 h-2 rounded-full transition-all duration-300"
-                          style={{ width: `${Math.min((item.chance / Math.max(totalChance, 25)) * 100, 100)}%` }}
+                          className={`h-2 rounded-full transition-all duration-300 ${
+                            item.amount === 0 
+                              ? 'bg-gradient-to-r from-red-500 to-red-600' 
+                              : 'bg-gradient-to-r from-green-400 to-blue-500'
+                          }`}
+                          style={{ width: `${Math.min((displayChance / Math.max(totalChance, 25)) * 100, 100)}%` }}
                         ></div>
                       </div>
-                      <span className="text-sm font-medium text-gray-300 w-10">{item.chance}%</span>
+                      <span className={`text-sm font-medium w-10 ${
+                        item.amount === 0 ? 'text-red-400' : 'text-gray-300'
+                      }`}>
+                        {displayChance}%
+                        {item.amount === 0 && originalChance > 0 && (
+                          <span className="text-xs text-gray-500 ml-1">({originalChance}%)</span>
+                        )}
+                      </span>
                     </div>
                   </div>
                 </>
@@ -224,7 +241,7 @@ const WinningChancesPage: React.FC<WinningChancesPageProps> = ({
                         type="number"
                         min="0"
                         max="100"
-                        value={item.chance}
+                        value={originalChance}
                         onChange={(e) => handleChanceChange(index, parseInt(e.target.value) || 0)}
                         className="w-16 px-2 py-2 bg-white/10 border border-white/20 rounded-lg text-white text-center font-medium focus:outline-none focus:border-blue-400 text-sm"
                       />
@@ -265,7 +282,7 @@ const WinningChancesPage: React.FC<WinningChancesPageProps> = ({
           </div>
           <div className="bg-white/10 backdrop-blur-lg rounded-xl p-4 border border-white/20 text-center">
             <div className="text-2xl font-bold text-amber-400">{totalChance}%</div>
-            <div className="text-sm text-gray-300">Total Probability</div>
+            <div className="text-sm text-gray-300">Active Probability</div>
           </div>
           <div className="bg-white/10 backdrop-blur-lg rounded-xl p-4 border border-white/20 text-center">
             <div className="text-2xl font-bold text-purple-400">{currentData.length}</div>
@@ -320,6 +337,9 @@ const WinningChancesPage: React.FC<WinningChancesPageProps> = ({
             <div className="mb-6 p-4 bg-blue-500/20 border border-blue-500/30 rounded-lg">
               <p className="text-blue-300 font-medium">
                 Total Probability: {totalChance}% | Total Items: {totalItems}
+              </p>
+              <p className="text-blue-200 text-sm mt-1">
+                Note: Items with 0 stock automatically have 0% chance in the wheel
               </p>
             </div>
           )}

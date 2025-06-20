@@ -242,17 +242,23 @@ function App() {
     setCurrentPage('chances');
   };
 
+  // Process wheel data to set chance to 0 when amount is 0
+  const processedWheelData = wheelData.map(item => ({
+    ...item,
+    chance: item.amount === 0 ? 0 : item.chance
+  }));
+
   return (
     <div className="min-h-screen bg-gradient-to-br from-purple-900 via-blue-900 to-indigo-900">
       {currentPage === 'chances' ? (
         <WinningChancesPage
-          data={wheelData}
+          data={processedWheelData}
           onDataUpdate={handleDataUpdate}
           onNavigateToRoulette={navigateToRoulette}
         />
       ) : (
         <RoulettePage
-          data={wheelData}
+          data={processedWheelData}
           onNavigateToChances={navigateToChances}
           onPrizeWon={handlePrizeWon}
         />

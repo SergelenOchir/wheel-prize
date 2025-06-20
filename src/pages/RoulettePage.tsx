@@ -25,8 +25,8 @@ const RoulettePage: React.FC<RoulettePageProps> = ({
   const [isOutOfStock, setIsOutOfStock] = useState(false);
 
   const getWeightedRandomIndex = () => {
-    // Filter out items with 0 amount
-    const availableItems = data.filter(item => item.amount > 0);
+    // Filter out items with 0 amount or 0 chance
+    const availableItems = data.filter(item => item.amount > 0 && item.chance > 0);
     
     if (availableItems.length === 0) {
       // If no items available, return -1 to indicate no valid prize
@@ -100,8 +100,8 @@ const RoulettePage: React.FC<RoulettePageProps> = ({
     setIsOutOfStock(false);
   };
 
-  // Filter data to only show items with amount > 0 for the wheel
-  const availableData = data.filter(item => item.amount > 0);
+  // Filter data to only show items with amount > 0 AND chance > 0 for the wheel
+  const availableData = data.filter(item => item.amount > 0 && item.chance > 0);
 
   const handleModalBackdropClick = (e: React.MouseEvent) => {
     if (e.target === e.currentTarget) {
