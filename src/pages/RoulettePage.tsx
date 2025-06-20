@@ -191,26 +191,6 @@ const RoulettePage: React.FC<RoulettePageProps> = ({
                   </div>
                 </div>
               )}
-
-              <div className="flex flex-col sm:flex-row gap-3">
-                <button
-                  onClick={closeModal}
-                  className="flex-1 bg-black/40 hover:bg-black/60 text-white font-semibold py-3 px-6 rounded-xl transition-colors border border-white/30 backdrop-blur-sm"
-                >
-                  Close
-                </button>
-                {!isOutOfStock && availableData.length > 0 && (
-                  <button
-                    onClick={() => {
-                      closeModal();
-                      setTimeout(() => handleSpinClick(), 100);
-                    }}
-                    className="flex-1 bg-gradient-to-r from-amber-500 to-yellow-500 hover:from-amber-600 hover:to-yellow-600 text-white font-semibold py-3 px-6 rounded-xl transition-colors border border-amber-300/50"
-                  >
-                    Hunt Again
-                  </button>
-                )}
-              </div>
             </div>
           </div>
         </div>
