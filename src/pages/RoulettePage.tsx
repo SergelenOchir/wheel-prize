@@ -119,22 +119,22 @@ const RoulettePage: React.FC<RoulettePageProps> = ({
         
         {/* Roulette Wheel Container */}
         <div className="flex flex-col items-center space-y-8">
-          {/* Wheel Wrapper with Much Larger Size */}
+          {/* Wheel Wrapper with Larger Responsive Sizing */}
           <div className="relative">
             {availableData.length > 0 ? (
-              <div className="relative w-[42rem] h-[42rem] flex items-center justify-center">
+              <div className="relative w-[32rem] h-[32rem] flex items-center justify-center">
                 {/* Roulette Wrapper Background */}
                 <img 
                   src={rouletteWrapper} 
                   alt="Roulette Wrapper" 
                   className="absolute inset-0 w-full h-full object-contain z-20 pointer-events-none"
                   style={{
-                    filter: 'drop-shadow(0 15px 40px rgba(0,0,0,0.6))'
+                    filter: 'drop-shadow(0 10px 30px rgba(0,0,0,0.5))'
                   }}
                 />
                 
                 {/* Wheel Container - positioned behind wrapper */}
-                <div className="absolute inset-0 flex items-center justify-center z-10" style={{ padding: '4.5rem' }}>
+                <div className="absolute inset-0 flex items-center justify-center z-10" style={{ padding: '3.5rem' }}>
                   <div className="w-full h-full">
                     <Wheel
                       mustStartSpinning={mustSpin}
@@ -144,22 +144,22 @@ const RoulettePage: React.FC<RoulettePageProps> = ({
                       backgroundColors={availableData.map(item => item.style.backgroundColor)}
                       textColors={['#ffffff']}
                       outerBorderColor="#FAB654"
-                      outerBorderWidth={8}
+                      outerBorderWidth={6}
                       innerBorderColor="#f59e0b"
-                      innerBorderWidth={4}
+                      innerBorderWidth={3}
                       radiusLineColor="#FFD08F"
                       radiusLineWidth={1}
-                      fontSize={14}
+                      fontSize={11}
                       textDistance={65}
                       spinDuration={1.2}
                       innerRadius={0}
-                      centerIcon={<img style={{width: 64, height: 64}} alt="logoImage" src={logo}/>}
+                      centerIcon={<img style={{width: 48, height: 48}} alt="logoImage" src={logo}/>}
                     />
                   </div>
                 </div>
               </div>
             ) : (
-              <div className="relative w-[42rem] h-[42rem] flex items-center justify-center">
+              <div className="relative w-[32rem] h-[32rem] flex items-center justify-center">
                 {/* Roulette Wrapper Background */}
                 <img 
                   src={rouletteWrapper} 
