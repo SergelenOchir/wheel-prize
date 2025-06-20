@@ -243,6 +243,7 @@ const WinningChancesPage: React.FC<WinningChancesPageProps> = ({
                       <input
                         type="text"
                         value={item.option}
+                        disabled="disabled"
                         onChange={(e) => handleOptionChange(index, e.target.value)}
                         className="w-full px-3 py-2 bg-white/10 border border-white/20 rounded-lg text-white font-medium focus:outline-none focus:border-blue-400"
                         placeholder="Prize name"
