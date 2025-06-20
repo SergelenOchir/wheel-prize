@@ -41,15 +41,15 @@ export const PRIZE_ASSETS = {
 
 // Fallback images for different categories
 export const FALLBACK_IMAGES = {
-  outdoor: 'https://images.pexels.com/photos/1687845/pexels-photo-1687845.jpeg?auto=compress&cs=tinysrgb&w=400',
-  tech: 'https://images.pexels.com/photos/919073/pexels-photo-919073.jpeg?auto=compress&cs=tinysrgb&w=400',
-  fashion: 'https://images.pexels.com/photos/1598505/pexels-photo-1598505.jpeg?auto=compress&cs=tinysrgb&w=400',
-  toys: 'https://images.pexels.com/photos/1148998/pexels-photo-1148998.jpeg?auto=compress&cs=tinysrgb&w=400',
-  accessories: 'https://images.pexels.com/photos/1667088/pexels-photo-1667088.jpeg?auto=compress&cs=tinysrgb&w=400',
-  resort: 'https://images.pexels.com/photos/338504/pexels-photo-338504.jpeg?auto=compress&cs=tinysrgb&w=400',
-  mystery: 'https://images.pexels.com/photos/1666065/pexels-photo-1666065.jpeg?auto=compress&cs=tinysrgb&w=400',
-  treasure: 'https://images.pexels.com/photos/164527/pexels-photo-164527.jpeg?auto=compress&cs=tinysrgb&w=400',
-  default: 'https://images.pexels.com/photos/1303081/pexels-photo-1303081.jpeg?auto=compress&cs=tinysrgb&w=400'
+  outdoor: natureHike,
+  tech: hiSpeedNomin,
+  fashion: vansMongolia,
+  toys: kidsToys,
+  accessories: cases,
+  resort: gorkhiTerelj,
+  mystery: mysterious,
+  treasure: bigPrize,
+  default: mysterious
 };
 
 export const getAssetForPrize = (prizeName: string): string => {

@@ -182,20 +182,25 @@ const WinningChancesPage: React.FC<WinningChancesPageProps> = ({
                     : 'bg-white/5 hover:bg-white/10'
                 }`}
               >
-                <div className="w-16 h-16 flex-shrink-0 rounded-xl overflow-hidden bg-white/10 relative group">
+                <div className="w-16 h-16 flex-shrink-0 rounded-xl overflow-hidden bg-white/10 relative group border-2 border-white/20">
                   <img 
                     src={item.image_url} 
                     alt={item.option}
-                    className="w-full h-full object-cover"
+                    className="w-full h-full object-cover transition-transform group-hover:scale-110"
                     onError={(e) => {
                       const target = e.target as HTMLImageElement;
                       target.style.display = 'none';
-                      target.nextElementSibling?.classList.remove('hidden');
+                      const fallbackDiv = target.nextElementSibling as HTMLElement;
+                      if (fallbackDiv) {
+                        fallbackDiv.classList.remove('hidden');
+                      }
                     }}
                   />
-                  <div className="w-full h-full flex items-center justify-center hidden">
+                  <div className="w-full h-full flex items-center justify-center hidden absolute inset-0 bg-gradient-to-br from-purple-500/20 to-blue-500/20">
                     {getPrizeIcon(item.option)}
                   </div>
+                  {/* Image overlay for better visibility */}
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity"></div>
                 </div>
                 
                 {!isEditing ? (
@@ -230,7 +235,13 @@ const WinningChancesPage: React.FC<WinningChancesPageProps> = ({
                 ) : (
                   <>
                     <div className="flex-1 space-y-3">
-                      <div className="w-full px-3 py-2 bg-white/10 border border-white/20 rounded-lg text-white font-medium focus:outline-none focus:border-blue-400">{item.option}</div>
+                      <input
+                        type="text"
+                        value={item.option}
+                        onChange={(e) => handleOptionChange(index, e.target.value)}
+                        className="w-full px-3 py-2 bg-white/10 border border-white/20 rounded-lg text-white font-medium focus:outline-none focus:border-blue-400"
+                        placeholder="Prize name"
+                      />
                     </div>
                     <div className="flex items-center justify-center gap-3">
                       <div className="text-center">
