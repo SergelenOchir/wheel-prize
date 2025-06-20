@@ -178,7 +178,7 @@ const RoulettePage: React.FC<RoulettePageProps> = ({
                     <img
                       src={selectedPrizeImage}
                       alt={selectedPrize}
-                      className="w-full h-full object-cover"
+                      className="w-[200px] h-[200px] object-cover"
                       onError={(e) => {
                         const target = e.target as HTMLImageElement;
                         target.style.display = 'none';
