@@ -128,13 +128,6 @@ const drawWheel = (
     const imagePromises = data.map(item => {
       const promises = [];
       
-      // Load prize image
-      if (item.image_url) {
-        promises.push(loadImage(item.image_url).catch(() => null));
-      } else {
-        promises.push(Promise.resolve(null));
-      }
-      
       // Load option name image
       if (item.option_url) {
         promises.push(loadImage(item.option_url).catch(() => null));
