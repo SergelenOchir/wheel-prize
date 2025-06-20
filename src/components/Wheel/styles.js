@@ -75,7 +75,7 @@ export const RoulettePointerImage = styled(NonDraggableImage)`
   position: absolute;
   z-index: 10;
   width: 17%;
-  top: 13%;
+  top: 10%;
   left: 50%;
   transform: translate(-50%, -50%) translateY(-45%);
   transform-origin: center bottom;
