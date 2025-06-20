@@ -13,77 +13,77 @@ function App() {
     {
       option: 'NatureHike Outdoors',
       style: { backgroundColor: '#723E00', textColor: '#ffffff' },
-      chance: 5,
+      chance: 100,
       amount: 5,
       image_url: 'https://images.pexels.com/photos/1687845/pexels-photo-1687845.jpeg?auto=compress&cs=tinysrgb&w=400'
     },
     {
       option: 'Compass Outdoors',
       style: { backgroundColor: '#A4580C', textColor: '#ffffff' },
-      chance: 5,
+      chance: 0,
       amount: 5,
       image_url: 'https://images.pexels.com/photos/1271619/pexels-photo-1271619.jpeg?auto=compress&cs=tinysrgb&w=400'
     },
     {
       option: 'HiSpeed Nomin',
       style: { backgroundColor: '#723E00', textColor: '#ffffff' },
-      chance: 5,
+      chance: 0,
       amount: 5,
       image_url: 'https://images.pexels.com/photos/919073/pexels-photo-919073.jpeg?auto=compress&cs=tinysrgb&w=400'
     },
     {
       option: 'Vans Mongolia',
       style: { backgroundColor: '#A4580C', textColor: '#ffffff' },
-      chance: 5,
+      chance: 0,
       amount: 5,
       image_url: 'https://images.pexels.com/photos/1598505/pexels-photo-1598505.jpeg?auto=compress&cs=tinysrgb&w=400'
     },
     {
       option: 'Kids Toys Mongolia',
       style: { backgroundColor: '#723E00', textColor: '#ffffff' },
-      chance: 5,
+      chance: 0,
       amount: 5,
       image_url: 'https://images.pexels.com/photos/1148998/pexels-photo-1148998.jpeg?auto=compress&cs=tinysrgb&w=400'
     },
     {
       option: 'Avandra',
       style: { backgroundColor: '#A4580C', textColor: '#ffffff' },
-      chance: 5,
+      chance: 0,
       amount: 5,
       image_url: 'https://images.pexels.com/photos/1667088/pexels-photo-1667088.jpeg?auto=compress&cs=tinysrgb&w=400'
     },
     {
       option: 'HobbyZone',
       style: { backgroundColor: '#723E00', textColor: '#ffffff' },
-      chance: 5,
+      chance: 0,
       amount: 5,
       image_url: 'https://images.pexels.com/photos/1148998/pexels-photo-1148998.jpeg?auto=compress&cs=tinysrgb&w=400'
     },
     {
       option: 'Otog Outdoors',
       style: { backgroundColor: '#A4580C', textColor: '#ffffff' },
-      chance: 5,
+      chance: 0,
       amount: 5,
       image_url: 'https://images.pexels.com/photos/1687845/pexels-photo-1687845.jpeg?auto=compress&cs=tinysrgb&w=400'
     },
     {
       option: 'Gorkhi Family Resort',
       style: { backgroundColor: '#723E00', textColor: '#ffffff' },
-      chance: 5,
+      chance: 0,
       amount: 5,
       image_url: 'https://images.pexels.com/photos/338504/pexels-photo-338504.jpeg?auto=compress&cs=tinysrgb&w=400'
     },
     {
       option: 'Wonderer Mongolia',
       style: { backgroundColor: '#A4580C', textColor: '#ffffff' },
-      chance: 5,
+      chance: 0,
       amount: 5,
       image_url: 'https://images.pexels.com/photos/1271619/pexels-photo-1271619.jpeg?auto=compress&cs=tinysrgb&w=400'
     },
     {
       option: 'Cases.Mn',
       style: { backgroundColor: '#723E00', textColor: '#ffffff' },
-      chance: 5,
+      chance: 0,
       amount: 5,
       image_url: 'https://images.pexels.com/photos/1667088/pexels-photo-1667088.jpeg?auto=compress&cs=tinysrgb&w=400'
     },
@@ -91,70 +91,70 @@ function App() {
     {
       option: 'Mysterious Prize #1',
       style: { backgroundColor: '#A4580C', textColor: '#ffffff' },
-      chance: 5,
+      chance: 0,
       amount: 5,
       image_url: 'https://images.pexels.com/photos/1666065/pexels-photo-1666065.jpeg?auto=compress&cs=tinysrgb&w=400'
     },
     {
       option: 'Mysterious Prize #2',
       style: { backgroundColor: '#723E00', textColor: '#ffffff' },
-      chance: 5,
+      chance: 0,
       amount: 5,
       image_url: 'https://images.pexels.com/photos/1303081/pexels-photo-1303081.jpeg?auto=compress&cs=tinysrgb&w=400'
     },
     {
       option: 'Mysterious Prize #3',
       style: { backgroundColor: '#A4580C', textColor: '#ffffff' },
-      chance: 5,
+      chance: 0,
       amount: 5,
       image_url: 'https://images.pexels.com/photos/1319854/pexels-photo-1319854.jpeg?auto=compress&cs=tinysrgb&w=400'
     },
     {
       option: 'Mysterious Prize #4',
       style: { backgroundColor: '#723E00', textColor: '#ffffff' },
-      chance: 5,
+      chance: 0,
       amount: 5,
       image_url: 'https://images.pexels.com/photos/1666065/pexels-photo-1666065.jpeg?auto=compress&cs=tinysrgb&w=400'
     },
     {
       option: 'Mysterious Prize #5',
       style: { backgroundColor: '#A4580C', textColor: '#ffffff' },
-      chance: 5,
+      chance: 0,
       amount: 5,
       image_url: 'https://images.pexels.com/photos/1303081/pexels-photo-1303081.jpeg?auto=compress&cs=tinysrgb&w=400'
     },
     {
       option: 'Mysterious Prize #6',
       style: { backgroundColor: '#723E00', textColor: '#ffffff' },
-      chance: 5,
+      chance: 0,
       amount: 5,
       image_url: 'https://images.pexels.com/photos/1319854/pexels-photo-1319854.jpeg?auto=compress&cs=tinysrgb&w=400'
     },
     {
       option: 'Mysterious Prize #7',
       style: { backgroundColor: '#A4580C', textColor: '#ffffff' },
-      chance: 5,
+      chance: 0,
       amount: 5,
       image_url: 'https://images.pexels.com/photos/1666065/pexels-photo-1666065.jpeg?auto=compress&cs=tinysrgb&w=400'
     },
     {
       option: 'Mysterious Prize #8',
       style: { backgroundColor: '#723E00', textColor: '#ffffff' },
-      chance: 5,
+      chance: 0,
       amount: 5,
       image_url: 'https://images.pexels.com/photos/1303081/pexels-photo-1303081.jpeg?auto=compress&cs=tinysrgb&w=400'
     },
     {
       option: 'Mysterious Prize #9',
       style: { backgroundColor: '#A4580C', textColor: '#ffffff' },
-      chance: 5,
+      chance: 0,
       amount: 5,
       image_url: 'https://images.pexels.com/photos/1319854/pexels-photo-1319854.jpeg?auto=compress&cs=tinysrgb&w=400'
     },
     {
       option: 'Mysterious Prize #10',
       style: { backgroundColor: '#723E00', textColor: '#ffffff' },
-      chance: 5,
+      chance: 0,
       amount: 5,
       image_url: 'https://images.pexels.com/photos/1666065/pexels-photo-1666065.jpeg?auto=compress&cs=tinysrgb&w=400'
     },
