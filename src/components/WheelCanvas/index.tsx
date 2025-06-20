@@ -270,7 +270,7 @@ const drawWheel = (
             );
             
             // Option name image (bottom position, larger)
-            const optionSize = STANDARD_IMAGE_SIZE * 1.2; // Increased size for option_url
+            const optionSize = STANDARD_IMAGE_SIZE * 0.5; // Increased size for option_url
             ctx.drawImage(
               optionNameImage,
               -optionSize / 2,
