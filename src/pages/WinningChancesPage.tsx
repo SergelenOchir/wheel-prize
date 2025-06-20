@@ -82,14 +82,6 @@ const WinningChancesPage: React.FC<WinningChancesPageProps> = ({
     setTempData(updatedData);
   };
 
-  const handleImageEdit = (index: number) => {
-    setEditingImageIndex(index);
-  };
-
-  const handleImageEditClose = () => {
-    setEditingImageIndex(null);
-  };
-
   const handleRemoveItem = (index: number) => {
     if (tempData.length <= 1) {
       alert('At least one prize is required');
@@ -222,14 +214,6 @@ const WinningChancesPage: React.FC<WinningChancesPageProps> = ({
                   <div className="w-full h-full flex items-center justify-center hidden">
                     {getPrizeIcon(item.option)}
                   </div>
-                  {isEditing && (
-                    <button
-                      onClick={() => handleImageEdit(index)}
-                      className="absolute inset-0 bg-black/50 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center"
-                    >
-                      <Edit3 className="w-5 h-5 text-white" />
-                    </button>
-                  )}
                 </div>
                 
                 {!isEditing ? (
@@ -341,87 +325,6 @@ const WinningChancesPage: React.FC<WinningChancesPageProps> = ({
           </button>
         </div>
       </div>
-
-      {/* Image Selection Modal */}
-      {editingImageIndex !== null && (
-        <div className="fixed inset-0 bg-black/50 backdrop-blur-sm flex items-center justify-center z-50 p-4">
-          <div className="bg-white/10 backdrop-blur-lg rounded-3xl p-6 border border-white/20 max-w-2xl w-full mx-4 max-h-[80vh] overflow-y-auto">
-            <div className="flex items-center justify-between mb-4">
-              <h3 className="text-lg font-semibold text-white">Select Image</h3>
-              <button
-                onClick={handleImageEditClose}
-                className="p-1 text-gray-400 hover:text-white transition-colors"
-              >
-                <X className="w-5 h-5" />
-              </button>
-            </div>
-
-            <div className="space-y-4">
-              {/* Current Image Preview */}
-              <div className="w-full h-32 rounded-lg overflow-hidden bg-white/5">
-                <img 
-                  src={tempData[editingImageIndex]?.image_url} 
-                  alt="Current"
-                  className="w-full h-full object-cover"
-                  onError={(e) => {
-                    const target = e.target as HTMLImageElement;
-                    target.style.display = 'none';
-                    target.nextElementSibling?.classList.remove('hidden');
-                  }}
-                />
-                <div className="w-full h-full flex items-center justify-center hidden text-gray-400">
-                  <Image className="w-8 h-8" />
-                </div>
-              </div>
-
-              {/* Available Assets Grid */}
-              <div className="space-y-4">
-                <h4 className="text-white font-medium">Available Assets:</h4>
-                <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
-                  {AVAILABLE_ASSETS.map((asset, index) => (
-                    <button
-                      key={index}
-                      onClick={() => {
-                        handleImageChange(editingImageIndex, asset.path);
-                        handleImageEditClose();
-                      }}
-                      className="group relative bg-white/5 hover:bg-white/10 rounded-lg p-3 transition-colors border border-white/10 hover:border-white/30"
-                    >
-                      <div className="aspect-square rounded-lg overflow-hidden bg-white/5 mb-2">
-                        <img 
-                          src={asset.path} 
-                          alt={asset.name}
-                          className="w-full h-full object-cover group-hover:scale-105 transition-transform"
-                          onError={(e) => {
-                            const target = e.target as HTMLImageElement;
-                            target.style.display = 'none';
-                            target.nextElementSibling?.classList.remove('hidden');
-                          }}
-                        />
-                        <div className="w-full h-full flex items-center justify-center hidden text-gray-400">
-                          <Image className="w-6 h-6" />
-                        </div>
-                      </div>
-                      <div className="text-xs text-white font-medium truncate">{asset.name}</div>
-                      <div className="text-xs text-gray-400">{asset.category}</div>
-                    </button>
-                  ))}
-                </div>
-              </div>
-
-              {/* Action Button */}
-              <div className="flex gap-3 pt-2">
-                <button
-                  onClick={handleImageEditClose}
-                  className="flex-1 bg-gray-500 hover:bg-gray-600 text-white font-semibold py-2 px-4 rounded-lg transition-colors"
-                >
-                  Cancel
-                </button>
-              </div>
-            </div>
-          </div>
-        </div>
-      )}
     </div>
   );
 };
