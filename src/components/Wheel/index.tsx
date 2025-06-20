@@ -155,6 +155,26 @@ export const Wheel = ({
       for (let j = 0; j < (wheelDataAux[i].optionSize || 1); j++) {
         auxPrizeMap[i][j] = initialMapNum++;
       }
+      
+      // Handle prize images from image_url
+      if (data[i].image_url) {
+        setTotalImages(prevCounter => prevCounter + 1);
+
+        const img = new Image();
+        img.crossOrigin = 'anonymous';
+        img.src = data[i].image_url;
+        img.onload = () => {
+          setLoadedImagesCounter(prevCounter => prevCounter + 1);
+          setRouletteUpdater(prevState => !prevState);
+        };
+        img.onerror = () => {
+          // If image fails to load, still count it as loaded to prevent hanging
+          setLoadedImagesCounter(prevCounter => prevCounter + 1);
+          setRouletteUpdater(prevState => !prevState);
+        };
+      }
+      
+      // Handle existing image property (for backward compatibility)
       if (data[i].image) {
         setTotalImages(prevCounter => prevCounter + 1);
 
