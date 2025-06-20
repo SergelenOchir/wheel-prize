@@ -174,7 +174,7 @@ const RoulettePage: React.FC<RoulettePageProps> = ({
                 </div>
               ) : (
                 <div className="mb-6">
-                  <div className="w-24 h-24 sm:w-32 sm:h-32 mx-auto mb-4 rounded-2xl overflow-hidden bg-amber-500/20 shadow-2xl border-2 border-amber-400/50">
+                  <div className="w-24 h-24 sm:w-32 sm:h-32 mx-auto mb-4">
                     <img
                       src={selectedPrizeImage}
                       alt={selectedPrize}
@@ -185,9 +185,6 @@ const RoulettePage: React.FC<RoulettePageProps> = ({
                         target.nextElementSibling?.classList.remove('hidden');
                       }}
                     />
-                    <div className="w-full h-full flex items-center justify-center hidden bg-gradient-to-r from-amber-400 to-yellow-500">
-                      {getPrizeIcon(selectedPrize)}
-                    </div>
                   </div>
                 </div>
               )}
