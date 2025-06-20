@@ -86,7 +86,8 @@ const drawWheel = (
     ctx.strokeStyle = 'transparent';
     ctx.lineWidth = 0;
 
-    let startAngle = 0;
+    // Start from top (0 degrees) - adjusted for top pointer
+    let startAngle = -Math.PI / 2; // Start from top instead of right
     const outsideRadius = canvas.width / 2 - 10;
 
     const clampedContentDistance = clamp(0, 100, textDistance);
