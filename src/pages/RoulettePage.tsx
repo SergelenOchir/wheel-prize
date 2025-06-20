@@ -189,10 +189,6 @@ const RoulettePage: React.FC<RoulettePageProps> = ({
                       {getPrizeIcon(selectedPrize)}
                     </div>
                   </div>
-                  <h2 className="text-2xl sm:text-3xl font-bold text-white mb-2 drop-shadow-lg">{selectedPrize}</h2>
-                  <p className="text-base sm:text-lg font-semibold drop-shadow-md text-amber-300 mb-2">
-                    Treasure Found!
-                  </p>
                 </div>
               )}
 
