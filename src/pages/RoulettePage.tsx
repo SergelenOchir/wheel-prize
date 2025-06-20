@@ -103,6 +103,12 @@ const RoulettePage: React.FC<RoulettePageProps> = ({
   // Filter data to only show items with amount > 0 for the wheel
   const availableData = data.filter(item => item.amount > 0);
 
+  const handleModalBackdropClick = (e: React.MouseEvent) => {
+    if (e.target === e.currentTarget) {
+      closeModal();
+    }
+  };
+
   return (
     <div className="min-h-screen relative overflow-hidden">
       {/* Full Screen Background */}
@@ -159,7 +165,7 @@ const RoulettePage: React.FC<RoulettePageProps> = ({
 
       {/* Prize Modal */}
       {showModal && (
-        <div className="fixed inset-0 bg-black/60 backdrop-blur-sm flex items-center justify-center z-50 p-4">
+        <div onClick={handleModalBackdropClick} className="fixed inset-0 bg-black/60 backdrop-blur-sm flex items-center justify-center z-50 p-4">
             <div className="text-center">
               {isOutOfStock ? (
                 <div className="mb-6">
