@@ -252,54 +252,97 @@ const drawWheel = (
 
           const [prizeImage, optionNameImage] = loadedImagePairs[i] || [null, null];
           
-          // Define consistent image size for all images
-          const segmentWidth = (outsideRadius - insideRadius) * 0.8;
-          const STANDARD_IMAGE_SIZE = Math.min(120, segmentWidth * 0.8); // Increased base size
-          
           if (prizeImage && optionNameImage) {
-            // Both images available - display them stacked
+            // Calculate segment dimensions
+            const segmentWidth = (outsideRadius - insideRadius) * 0.8;
+            const maxImageSize = Math.min(80, segmentWidth * 0.6);
             
-            // Prize image (top position)
-            const prizeSize = STANDARD_IMAGE_SIZE * 0.7; // Slightly smaller for prize
+            // Draw prize image (smaller, positioned towards outer edge)
+            const prizeAspectRatio = prizeImage.naturalWidth / prizeImage.naturalHeight;
+            let prizeWidth = maxImageSize * 0.7;
+            let prizeHeight = maxImageSize * 0.7;
+            
+            if (prizeAspectRatio > 1) {
+              prizeHeight = prizeWidth / prizeAspectRatio;
+            } else {
+              prizeWidth = prizeHeight * prizeAspectRatio;
+            }
+            
+            // Position prize image towards outer edge
+            const prizeOffset = segmentWidth * 0.15;
             ctx.drawImage(
               prizeImage,
-              -prizeSize / 2,
-              -prizeSize / 2 - STANDARD_IMAGE_SIZE * 0.3, // Position towards outer edge
-              prizeSize,
-              prizeSize
+              -prizeWidth / 2,
+              -prizeHeight / 2 - prizeOffset,
+              prizeWidth,
+              prizeHeight
             );
             
-            // Option name image (bottom position, larger)
-            const optionSize = STANDARD_IMAGE_SIZE * 0.1; // Increased size for option_url
+            // Draw option name image (larger, positioned towards inner edge)
+            const optionAspectRatio = optionNameImage.naturalWidth / optionNameImage.naturalHeight;
+            let optionWidth = maxImageSize;
+            let optionHeight = maxImageSize * 0.4; // Make text images shorter
+            
+            if (optionAspectRatio > 1) {
+              optionHeight = optionWidth / optionAspectRatio;
+            } else {
+              optionWidth = optionHeight * optionAspectRatio;
+            }
+            
+            // Position option name towards inner edge
+            const optionOffset = segmentWidth * 0.15;
             ctx.drawImage(
               optionNameImage,
-              -optionSize / 2,
-              -optionSize / 2 + STANDARD_IMAGE_SIZE * 0.2, // Position towards inner edge
-              optionSize,
-              optionSize
+              -optionWidth / 2,
+              -optionHeight / 2 + optionOffset,
+              optionWidth,
+              optionHeight
             );
             
           } else if (prizeImage) {
-            // Only prize image available - center it
+            // Only prize image available
+            const aspectRatio = prizeImage.naturalWidth / prizeImage.naturalHeight;
+            const segmentWidth = (outsideRadius - insideRadius) * 0.8;
+            const maxImageSize = Math.min(100, segmentWidth);
+            
+            let drawWidth = maxImageSize;
+            let drawHeight = maxImageSize;
+            
+            if (aspectRatio > 1) {
+              drawHeight = maxImageSize / aspectRatio;
+            } else {
+              drawWidth = maxImageSize * aspectRatio;
+            }
+            
             ctx.drawImage(
               prizeImage,
-              -STANDARD_IMAGE_SIZE / 2,
-              -STANDARD_IMAGE_SIZE / 2,
-              STANDARD_IMAGE_SIZE,
-              STANDARD_IMAGE_SIZE
+              -drawWidth / 2,
+              -drawHeight / 2,
+              drawWidth,
+              drawHeight
             );
-            
           } else if (optionNameImage) {
-            // Only option name image available - center it with increased size
-            const optionSize = STANDARD_IMAGE_SIZE * 1.2; // Increased size for option_url
+            // Only option name image available
+            const aspectRatio = optionNameImage.naturalWidth / optionNameImage.naturalHeight;
+            const segmentWidth = (outsideRadius - insideRadius) * 0.8;
+            const maxImageSize = Math.min(100, segmentWidth);
+            
+            let drawWidth = maxImageSize;
+            let drawHeight = maxImageSize * 0.4; // Make text images shorter
+            
+            if (aspectRatio > 1) {
+              drawHeight = drawWidth / aspectRatio;
+            } else {
+              drawWidth = drawHeight * aspectRatio;
+            }
+            
             ctx.drawImage(
               optionNameImage,
-              -optionSize / 2,
-              -optionSize / 2,
-              optionSize,
-              optionSize
+              -drawWidth / 2,
+              -drawHeight / 2,
+              drawWidth,
+              drawHeight
             );
-            
           } else {
             // Fallback to text if both images fail to load
             const text = data[i].option;
