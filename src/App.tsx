@@ -4,6 +4,7 @@ import RoulettePage from './pages/RoulettePage';
 import { WheelData } from './types/WheelData';
 import { saveWheelData, loadWheelData } from './utils/localStorage';
 import { getAssetForPrize, getOptionNameAsset } from './utils/staticAssets';
+import { shuffleWheelData } from './utils/shuffleUtils';
 
 function App() {
   const [currentPage, setCurrentPage] = useState<'chances' | 'roulette'>('chances');
@@ -191,7 +192,8 @@ function App() {
     },
   ];
 
-  const [wheelData, setWheelData] = useState<WheelData[]>(defaultWheelData);
+  // Shuffle the default data on initial load for randomness
+  const [wheelData, setWheelData] = useState<WheelData[]>(shuffleWheelData(defaultWheelData));
   const [isInitialLoad, setIsInitialLoad] = useState(true);
 
   // Load data from localStorage on component mount
@@ -206,6 +208,9 @@ function App() {
         option_url: item.option_url || getOptionNameAsset(item.option)
       }));
       setWheelData(dataWithAmounts);
+    } else {
+      // If no saved data, use shuffled default data
+      setWheelData(shuffleWheelData(defaultWheelData));
     }
     setIsInitialLoad(false);
   }, []);
@@ -234,6 +239,10 @@ function App() {
     });
   };
 
+  const handleShuffleData = () => {
+    setWheelData(prevData => shuffleWheelData(prevData));
+  };
+
   const navigateToRoulette = () => {
     setCurrentPage('roulette');
   };
@@ -249,12 +258,14 @@ function App() {
           data={wheelData}
           onDataUpdate={handleDataUpdate}
           onNavigateToRoulette={navigateToRoulette}
+          onShuffleData={handleShuffleData}
         />
       ) : (
         <RoulettePage
           data={wheelData}
           onNavigateToChances={navigateToChances}
           onPrizeWon={handlePrizeWon}
+          onShuffleData={handleShuffleData}
         />
       )}
     </div>

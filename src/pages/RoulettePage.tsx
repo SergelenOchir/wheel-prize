@@ -2,7 +2,7 @@ import React, {useState, useCallback, useEffect} from 'react';
 import { Wheel } from '../components/Wheel';
 import { WheelData } from '../types/WheelData';
 import { getPrizeIcon } from '../utils/prizeIcons';
-import { Crown, Package, Gift } from 'lucide-react';
+import { Crown, Package, Gift, Shuffle, ArrowLeft } from 'lucide-react';
 import logo from '../assets/logo.png'
 import wrapperImage from '../assets/roulette-wrapper.png'
 
@@ -10,11 +10,14 @@ interface RoulettePageProps {
   data: WheelData[];
   onNavigateToChances: () => void;
   onPrizeWon: (prizeIndex: number) => void;
+  onShuffleData: () => void;
 }
 
 const RoulettePage: React.FC<RoulettePageProps> = ({
   data,
-  onPrizeWon
+  onPrizeWon,
+  onNavigateToChances,
+  onShuffleData
 }) => {
   const [mustSpin, setMustSpin] = useState(false);
   const [prizeNumber, setPrizeNumber] = useState(0);
@@ -61,6 +64,12 @@ const RoulettePage: React.FC<RoulettePageProps> = ({
       setMustSpin(true);
     }
   }, [mustSpin, data]);
+
+  const handleShuffle = () => {
+    if (!mustSpin && confirm('Shuffle the wheel order randomly? This will mix up all the prizes on the wheel.')) {
+      onShuffleData();
+    }
+  };
 
   useEffect(() => {
     const handleKeyPress = (event: MouseEvent) => {
@@ -120,8 +129,30 @@ const RoulettePage: React.FC<RoulettePageProps> = ({
       >
       </div>
 
+      {/* Top Navigation Bar */}
+      <div className="relative z-20 p-4">
+        <div className="flex justify-between items-center max-w-4xl mx-auto">
+          <button
+            onClick={onNavigateToChances}
+            className="flex items-center gap-2 px-4 py-2 bg-white/10 hover:bg-white/20 backdrop-blur-lg text-white rounded-lg font-medium transition-colors border border-white/20"
+          >
+            <ArrowLeft className="w-5 h-5" />
+            Back to Settings
+          </button>
+          
+          <button
+            onClick={handleShuffle}
+            disabled={mustSpin}
+            className="flex items-center gap-2 px-4 py-2 bg-purple-500/80 hover:bg-purple-600/80 disabled:bg-gray-500/50 backdrop-blur-lg text-white rounded-lg font-medium transition-colors border border-purple-400/30 disabled:cursor-not-allowed"
+          >
+            <Shuffle className="w-5 h-5" />
+            Shuffle Wheel
+          </button>
+        </div>
+      </div>
+
       {/* Content Container */}
-      <div className="relative z-10 min-h-screen flex flex-col items-center justify-center p-4 sm:p-6 lg:p-8">
+      <div className="relative z-10 min-h-screen flex flex-col items-center justify-center p-4 sm:p-6 lg:p-8 -mt-16">
         
         {/* Roulette Wheel Container */}
         <div className="flex flex-col items-center space-y-8">
@@ -160,6 +191,18 @@ const RoulettePage: React.FC<RoulettePageProps> = ({
               </div>
             )}
           </div>
+        </div>
+
+        {/* Instructions */}
+        <div className="text-center mt-8">
+          <p className="text-white/80 text-lg font-medium">
+            {mustSpin ? 'Spinning...' : 'Click anywhere to spin the wheel!'}
+          </p>
+          {availableData.length > 0 && (
+            <p className="text-white/60 text-sm mt-2">
+              {availableData.length} prizes available
+            </p>
+          )}
         </div>
       </div>
 
