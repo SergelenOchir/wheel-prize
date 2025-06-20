@@ -119,11 +119,35 @@ const RoulettePage: React.FC<RoulettePageProps> = ({
         
         {/* Roulette Wheel Container */}
         <div className="flex flex-col items-center space-y-8">
-          {/* Wheel Wrapper with Larger Responsive Sizing */}
-          <img alt="wrapperImage" className="w-[40rem] top-[-105px] absolute" src={wrapperImage} />
-          <div className="relative">
+          {/* Responsive Wheel Wrapper */}
+          <div className="relative flex items-center justify-center">
+            {/* Wrapper Image - Responsive sizing */}
+            <img 
+              alt="wrapperImage" 
+              className="absolute z-10 pointer-events-none
+                w-[20rem] h-auto
+                sm:w-[24rem] 
+                md:w-[32rem] 
+                lg:w-[40rem] 
+                xl:w-[44rem]
+                top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2
+                -translate-y-[3.5rem]
+                sm:-translate-y-[4rem]
+                md:-translate-y-[5rem]
+                lg:-translate-y-[6.5rem]
+                xl:-translate-y-[7rem]" 
+              src={wrapperImage} 
+            />
+            
+            {/* Wheel Container - Responsive sizing to match wrapper */}
             {availableData.length > 0 ? (
-              <div className="w-[28rem] h-[28rem] flex items-center justify-center">
+              <div className="relative z-0
+                w-[16rem] h-[16rem]
+                sm:w-[19rem] sm:h-[19rem]
+                md:w-[25rem] md:h-[25rem]
+                lg:w-[31rem] lg:h-[31rem]
+                xl:w-[34rem] xl:h-[34rem]
+                flex items-center justify-center">
                 <Wheel
                   mustStartSpinning={mustSpin}
                   prizeNumber={availableData.findIndex(item => item.option === data[prizeNumber]?.option)}
@@ -141,15 +165,30 @@ const RoulettePage: React.FC<RoulettePageProps> = ({
                   textDistance={60}
                   spinDuration={1.2}
                   innerRadius={0}
-                  centerIcon={<img style={{width: 64, height: 64}} alt="logoImage" src={logo}/>}
+                  centerIcon={
+                    <img 
+                      style={{
+                        width: 'clamp(48px, 8vw, 64px)', 
+                        height: 'clamp(48px, 8vw, 64px)'
+                      }} 
+                      alt="logoImage" 
+                      src={logo}
+                    />
+                  }
                 />
               </div>
             ) : (
-              <div className="w-[28rem] h-[28rem] flex items-center justify-center bg-black/40 backdrop-blur-lg rounded-full border-4 border-red-500/50">
+              <div className="relative z-0
+                w-[16rem] h-[16rem]
+                sm:w-[19rem] sm:h-[19rem]
+                md:w-[25rem] md:h-[25rem]
+                lg:w-[31rem] lg:h-[31rem]
+                xl:w-[34rem] xl:h-[34rem]
+                flex items-center justify-center bg-black/40 backdrop-blur-lg rounded-full border-4 border-red-500/50">
                 <div className="text-center">
-                  <Package className="w-16 h-16 text-red-400 mx-auto mb-4" />
-                  <h3 className="text-2xl font-bold text-white mb-2">All Prizes Claimed!</h3>
-                  <p className="text-red-400">No more items available</p>
+                  <Package className="w-12 h-12 sm:w-16 sm:h-16 text-red-400 mx-auto mb-4" />
+                  <h3 className="text-xl sm:text-2xl font-bold text-white mb-2">All Prizes Claimed!</h3>
+                  <p className="text-red-400 text-sm sm:text-base">No more items available</p>
                 </div>
               </div>
             )}
