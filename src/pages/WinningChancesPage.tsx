@@ -301,29 +301,12 @@ const WinningChancesPage: React.FC<WinningChancesPageProps> = ({
                         />
                         <div className="text-xs text-gray-400 mt-1">Stock</div>
                       </div>
-                      <button
-                        onClick={() => handleRemoveItem(index)}
-                        className="p-2 text-red-400 hover:text-red-300 hover:bg-red-500/20 rounded-lg transition-colors"
-                        title="Remove this prize"
-                      >
-                        <Trash2 className="w-5 h-5" />
-                      </button>
                     </div>
                   </>
                 )}
               </div>
             ))}
           </div>
-
-          {isEditing && (
-            <button
-              onClick={handleAddItem}
-              className="w-full mt-6 flex items-center justify-center gap-2 p-4 bg-white/5 hover:bg-white/10 border-2 border-dashed border-white/20 hover:border-white/40 rounded-xl text-white font-medium transition-colors"
-            >
-              <Plus className="w-5 h-5" />
-              Add New Prize
-            </button>
-          )}
         </div>
 
         {/* Navigation Button */}

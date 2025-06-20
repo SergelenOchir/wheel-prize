@@ -308,8 +308,8 @@ const drawWheel = (
             const maxImageSize = Math.min(180, segmentWidth);
             console.log(maxImageSize, 'maxImageSize')
             
-            let drawWidth = 200;
-            let drawHeight = 200;
+            let drawWidth = 220;
+            let drawHeight = 220;
             
             if (aspectRatio > 1) {
               drawHeight = maxImageSize / aspectRatio;
