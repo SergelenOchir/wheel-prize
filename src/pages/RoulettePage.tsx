@@ -126,10 +126,10 @@ const RoulettePage: React.FC<RoulettePageProps> = ({
         {/* Roulette Wheel Container */}
         <div className="flex flex-col items-center space-y-8">
           {/* Wheel Wrapper with Larger Responsive Sizing */}
-          <img alt="wrapperImage" className="w-[31rem] h-[31rem] pt-[0.1rem] absolute" src={wrapperImage} />
+          <img alt="wrapperImage" className="w-[34rem] h-[34rem] pt-[0.1rem] absolute" src={wrapperImage} />
           <div className="relative">
             {Array.isArray(availableData) && availableData.length > 0 ? (
-              <div className="w-[28rem] h-[27rem] flex items-center justify-center">
+              <div className="w-[31rem] h-[30rem] flex items-center justify-center">
                 <Wheel
                   mustStartSpinning={mustSpin}
                   prizeNumber={availableData.findIndex(item => item.option === data[prizeNumber]?.option)}
