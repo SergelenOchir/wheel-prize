@@ -114,6 +114,24 @@ const WinningChancesPage: React.FC<WinningChancesPageProps> = ({
   return (
     <div className="min-h-screen p-8">
       <div className="max-w-4xl mx-auto">
+
+        {/* Stock Overview */}
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-8">
+          <div className="bg-white/10 backdrop-blur-lg rounded-xl p-4 border border-white/20 text-center">
+            <Package className="w-8 h-8 text-blue-400 mx-auto mb-2" />
+            <div className="text-2xl font-bold text-white">{totalItems}</div>
+            <div className="text-sm text-gray-300">Total Items</div>
+          </div>
+          <div className="bg-white/10 backdrop-blur-lg rounded-xl p-4 border border-white/20 text-center">
+            <div className="text-2xl font-bold text-green-400">{availableItems}</div>
+            <div className="text-sm text-gray-300">Available Prizes</div>
+          </div>
+          <div className="bg-white/10 backdrop-blur-lg rounded-xl p-4 border border-white/20 text-center">
+            <div className="text-2xl font-bold text-amber-400">{totalChance}%</div>
+            <div className="text-sm text-gray-300">Total Probability</div>
+          </div>
+        </div>
+
         {/* Main Content */}
         <div className="bg-white/10 backdrop-blur-lg rounded-2xl p-8 border border-white/20 mb-8">
           <div className="flex items-center justify-between mb-6">
