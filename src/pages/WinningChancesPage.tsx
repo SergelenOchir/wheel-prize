@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Edit3, Save, X, Trash2, Plus, Play, ArrowRight, Package, RotateCcw, Image } from 'lucide-react';
+import { Edit3, Save, X, Trash2, Plus, Play, ArrowRight, Package, RotateCcw, Image, Crown, Gift, Gem } from 'lucide-react';
 import { WheelData } from '../types/WheelData';
 import { getPrizeIcon } from '../utils/prizeIcons';
 import { clearWheelData } from '../utils/localStorage';
@@ -104,11 +104,157 @@ const WinningChancesPage: React.FC<WinningChancesPageProps> = ({
   const totalItems = currentData.reduce((sum, item) => sum + item.amount, 0);
   const availableItems = currentData.filter(item => item.amount > 0).length;
 
+  // Categorize prizes for better organization
+  const brandSponsors = currentData.filter(item => 
+    !item.option.includes('Mysterious') && item.option !== 'ULTIMATE TREASURE'
+  );
+  const mysteriousPrizes = currentData.filter(item => 
+    item.option.includes('Mysterious')
+  );
+  const ultimateTreasure = currentData.filter(item => 
+    item.option === 'ULTIMATE TREASURE'
+  );
+
+  const renderPrizeSection = (title: string, prizes: WheelData[], icon: React.ReactNode, bgColor: string) => (
+    <div className={`${bgColor} backdrop-blur-lg rounded-xl p-6 border border-white/20 mb-6`}>
+      <div className="flex items-center gap-3 mb-4">
+        {icon}
+        <h4 className="text-xl font-bold text-white">{title}</h4>
+        <span className="text-sm text-gray-300">({prizes.length} items)</span>
+      </div>
+      <div className="grid gap-3">
+        {prizes.map((item, globalIndex) => {
+          const index = currentData.findIndex(dataItem => dataItem.option === item.option);
+          return (
+            <div
+              key={index}
+              className={`flex items-center gap-4 p-4 rounded-xl transition-colors ${
+                item.amount === 0 
+                  ? 'bg-red-500/10 border border-red-500/30' 
+                  : 'bg-white/5 hover:bg-white/10'
+              }`}
+            >
+              {/* Prize Image and Option Name Image Display */}
+              <div className="flex gap-2 flex-shrink-0">
+                {/* Prize Image */}
+                <div className="w-12 h-12 rounded-lg overflow-hidden bg-white/10 relative group border-2 border-white/20">
+                  <img 
+                    src={item.image_url} 
+                    alt={`${item.option} - Prize`}
+                    className="w-full h-full object-cover transition-transform group-hover:scale-110"
+                    onError={(e) => {
+                      const target = e.target as HTMLImageElement;
+                      target.style.display = 'none';
+                      const fallbackDiv = target.nextElementSibling as HTMLElement;
+                      if (fallbackDiv) {
+                        fallbackDiv.classList.remove('hidden');
+                      }
+                    }}
+                  />
+                  <div className="w-full h-full flex items-center justify-center hidden absolute inset-0 bg-gradient-to-br from-purple-500/20 to-blue-500/20">
+                    {getPrizeIcon(item.option)}
+                  </div>
+                </div>
+
+                {/* Option Name Image */}
+                <div className="w-12 h-12 rounded-lg overflow-hidden bg-white/10 relative group border-2 border-amber-400/30">
+                  <img 
+                    src={item.option_url} 
+                    alt={`${item.option} - Name`}
+                    className="w-full h-full object-cover transition-transform group-hover:scale-110"
+                    onError={(e) => {
+                      const target = e.target as HTMLImageElement;
+                      target.style.display = 'none';
+                      const fallbackDiv = target.nextElementSibling as HTMLElement;
+                      if (fallbackDiv) {
+                        fallbackDiv.classList.remove('hidden');
+                      }
+                    }}
+                  />
+                  <div className="w-full h-full flex items-center justify-center hidden absolute inset-0 bg-gradient-to-br from-amber-500/20 to-orange-500/20">
+                    <Image className="w-4 h-4 text-amber-400" />
+                  </div>
+                </div>
+              </div>
+              
+              {!isEditing ? (
+                <>
+                  <div className="flex-1">
+                    <div className="flex items-center gap-3 mb-2">
+                      <h5 className={`text-base font-semibold ${item.amount === 0 ? 'text-red-400' : 'text-white'}`}>
+                        {item.option}
+                      </h5>
+                      <div className={`inline-flex items-center gap-1 px-2 py-1 rounded-full text-xs font-medium ${
+                        item.amount === 0 
+                          ? 'bg-red-500/20 text-red-400 border border-red-500/30' 
+                          : item.amount <= 2
+                          ? 'bg-orange-500/20 text-orange-400 border border-orange-500/30'
+                          : 'bg-green-500/20 text-green-400 border border-green-500/30'
+                      }`}>
+                        <Package className="w-3 h-3" />
+                        {item.amount === 0 ? 'Out of Stock' : `${item.amount} left`}
+                      </div>
+                    </div>
+                    <div className="flex items-center gap-3">
+                      <div className="flex-1 bg-gray-700 rounded-full h-2">
+                        <div 
+                          className="bg-gradient-to-r from-green-400 to-blue-500 h-2 rounded-full transition-all duration-300"
+                          style={{ width: `${Math.min((item.chance / Math.max(totalChance, 25)) * 100, 100)}%` }}
+                        ></div>
+                      </div>
+                      <span className="text-sm font-medium text-gray-300 w-10">{item.chance}%</span>
+                    </div>
+                  </div>
+                </>
+              ) : (
+                <>
+                  <div className="flex-1 space-y-2">
+                    <input
+                      type="text"
+                      value={item.option}
+                      disabled={true}
+                      onChange={(e) => handleOptionChange(index, e.target.value)}
+                      className="w-full px-3 py-2 bg-white/10 border border-white/20 rounded-lg text-white font-medium focus:outline-none focus:border-blue-400 text-sm"
+                      placeholder="Prize name"
+                    />
+                  </div>
+                  <div className="flex items-center justify-center gap-2">
+                    <div className="text-center">
+                      <input
+                        type="number"
+                        min="0"
+                        max="100"
+                        value={item.chance}
+                        onChange={(e) => handleChanceChange(index, parseInt(e.target.value) || 0)}
+                        className="w-16 px-2 py-2 bg-white/10 border border-white/20 rounded-lg text-white text-center font-medium focus:outline-none focus:border-blue-400 text-sm"
+                      />
+                      <div className="text-xs text-gray-400 mt-1">%</div>
+                    </div>
+                    <div className="text-center">
+                      <input
+                        type="number"
+                        min="0"
+                        value={item.amount}
+                        onChange={(e) => handleAmountChange(index, parseInt(e.target.value) || 0)}
+                        className="w-16 px-2 py-2 bg-white/10 border border-white/20 rounded-lg text-white text-center font-medium focus:outline-none focus:border-blue-400 text-sm"
+                      />
+                      <div className="text-xs text-gray-400 mt-1">Stock</div>
+                    </div>
+                  </div>
+                </>
+              )}
+            </div>
+          );
+        })}
+      </div>
+    </div>
+  );
+
   return (
     <div className="min-h-screen p-8">
-      <div className="max-w-4xl mx-auto">
-        {/* Stock Overview */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-8">
+      <div className="max-w-6xl mx-auto">
+        {/* Header Stats */}
+        <div className="grid grid-cols-1 md:grid-cols-4 gap-4 mb-8">
           <div className="bg-white/10 backdrop-blur-lg rounded-xl p-4 border border-white/20 text-center">
             <div className="text-2xl font-bold text-white">{totalItems}</div>
             <div className="text-sm text-gray-300">Total Items</div>
@@ -121,12 +267,16 @@ const WinningChancesPage: React.FC<WinningChancesPageProps> = ({
             <div className="text-2xl font-bold text-amber-400">{totalChance}%</div>
             <div className="text-sm text-gray-300">Total Probability</div>
           </div>
+          <div className="bg-white/10 backdrop-blur-lg rounded-xl p-4 border border-white/20 text-center">
+            <div className="text-2xl font-bold text-purple-400">{currentData.length}</div>
+            <div className="text-sm text-gray-300">Prize Types</div>
+          </div>
         </div>
 
-        {/* Main Content */}
-        <div className="bg-white/10 backdrop-blur-lg rounded-2xl p-8 border border-white/20 mb-8">
+        {/* Control Panel */}
+        <div className="bg-white/10 backdrop-blur-lg rounded-2xl p-6 border border-white/20 mb-8">
           <div className="flex items-center justify-between mb-6">
-            <h3 className="text-2xl font-semibold text-white">Prize Configuration</h3>
+            <h3 className="text-2xl font-semibold text-white">Prize Management</h3>
             <div className="flex gap-3">
               {!isEditing ? (
                 <>
@@ -173,141 +323,33 @@ const WinningChancesPage: React.FC<WinningChancesPageProps> = ({
               </p>
             </div>
           )}
+        </div>
 
-          <div className="grid gap-4 max-h-96 overflow-y-auto">
-            {currentData.map((item, index) => (
-              <div
-                key={index}
-                className={`flex items-center gap-4 p-4 rounded-xl transition-colors ${
-                  item.amount === 0 
-                    ? 'bg-red-500/10 border border-red-500/30' 
-                    : 'bg-white/5 hover:bg-white/10'
-                }`}
-              >
-                {/* Prize Image and Option Name Image Display */}
-                <div className="flex gap-2 flex-shrink-0">
-                  {/* Prize Image */}
-                  <div className="w-16 h-16 rounded-xl overflow-hidden bg-white/10 relative group border-2 border-white/20">
-                    <img 
-                      src={item.image_url} 
-                      alt={`${item.option} - Prize`}
-                      className="w-full h-full object-cover transition-transform group-hover:scale-110"
-                      onError={(e) => {
-                        const target = e.target as HTMLImageElement;
-                        target.style.display = 'none';
-                        const fallbackDiv = target.nextElementSibling as HTMLElement;
-                        if (fallbackDiv) {
-                          fallbackDiv.classList.remove('hidden');
-                        }
-                      }}
-                    />
-                    <div className="w-full h-full flex items-center justify-center hidden absolute inset-0 bg-gradient-to-br from-purple-500/20 to-blue-500/20">
-                      {getPrizeIcon(item.option)}
-                    </div>
-                    {/* Image overlay for better visibility */}
-                    <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity"></div>
-                    {/* Label */}
-                    <div className="absolute -bottom-5 left-0 right-0 text-center">
-                      <span className="text-xs text-gray-400 bg-black/50 px-1 rounded">Prize</span>
-                    </div>
-                  </div>
+        {/* Prize Categories */}
+        <div className="space-y-6 mb-8">
+          {/* Ultimate Treasure */}
+          {ultimateTreasure.length > 0 && renderPrizeSection(
+            "Ultimate Treasure", 
+            ultimateTreasure, 
+            <Crown className="w-6 h-6 text-yellow-400" />,
+            "bg-gradient-to-r from-yellow-500/20 to-orange-500/20"
+          )}
 
-                  {/* Option Name Image */}
-                  <div className="w-16 h-16 rounded-xl overflow-hidden bg-white/10 relative group border-2 border-amber-400/30">
-                    <img 
-                      src={item.option_url} 
-                      alt={`${item.option} - Name`}
-                      className="w-full h-full object-cover transition-transform group-hover:scale-110"
-                      onError={(e) => {
-                        const target = e.target as HTMLImageElement;
-                        target.style.display = 'none';
-                        const fallbackDiv = target.nextElementSibling as HTMLElement;
-                        if (fallbackDiv) {
-                          fallbackDiv.classList.remove('hidden');
-                        }
-                      }}
-                    />
-                    <div className="w-full h-full flex items-center justify-center hidden absolute inset-0 bg-gradient-to-br from-amber-500/20 to-orange-500/20">
-                      <Image className="w-6 h-6 text-amber-400" />
-                    </div>
-                    {/* Image overlay for better visibility */}
-                    <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity"></div>
-                    {/* Label */}
-                    <div className="absolute -bottom-5 left-0 right-0 text-center">
-                      <span className="text-xs text-amber-400 bg-black/50 px-1 rounded">Name</span>
-                    </div>
-                  </div>
-                </div>
-                
-                {!isEditing ? (
-                  <>
-                    <div className="flex-1">
-                      <div className="flex items-center gap-3 mb-2">
-                        <h4 className={`text-lg font-semibold ${item.amount === 0 ? 'text-red-400' : 'text-white'}`}>
-                          {item.option}
-                        </h4>
-                        <div className={`inline-flex items-center gap-1 px-2 py-1 rounded-full text-xs font-medium ${
-                          item.amount === 0 
-                            ? 'bg-red-500/20 text-red-400 border border-red-500/30' 
-                            : item.amount <= 5
-                            ? 'bg-orange-500/20 text-orange-400 border border-orange-500/30'
-                            : 'bg-green-500/20 text-green-400 border border-green-500/30'
-                        }`}>
-                          <Package className="w-3 h-3" />
-                          {item.amount === 0 ? 'Out of Stock' : `${item.amount} left`}
-                        </div>
-                      </div>
-                      <div className="flex items-center gap-3">
-                        <div className="flex-1 bg-gray-700 rounded-full h-3">
-                          <div 
-                            className="bg-gradient-to-r from-green-400 to-blue-500 h-3 rounded-full transition-all duration-300"
-                            style={{ width: `${Math.min((item.chance / Math.max(totalChance, 25)) * 100, 100)}%` }}
-                          ></div>
-                        </div>
-                        <span className="text-sm font-medium text-gray-300 w-12">{item.chance}%</span>
-                      </div>
-                    </div>
-                  </>
-                ) : (
-                  <>
-                    <div className="flex-1 space-y-3">
-                      <input
-                        type="text"
-                        value={item.option}
-                        disabled={true}
-                        onChange={(e) => handleOptionChange(index, e.target.value)}
-                        className="w-full px-3 py-2 bg-white/10 border border-white/20 rounded-lg text-white font-medium focus:outline-none focus:border-blue-400"
-                        placeholder="Prize name"
-                      />
-                    </div>
-                    <div className="flex items-center justify-center gap-3">
-                      <div className="text-center">
-                        <input
-                          type="number"
-                          min="0"
-                          max="100"
-                          value={item.chance}
-                          onChange={(e) => handleChanceChange(index, parseInt(e.target.value) || 0)}
-                          className="w-20 px-3 py-2 bg-white/10 border border-white/20 rounded-lg text-white text-center font-medium focus:outline-none focus:border-blue-400"
-                        />
-                        <div className="text-xs text-gray-400 mt-1">Chance %</div>
-                      </div>
-                      <div className="text-center">
-                        <input
-                          type="number"
-                          min="0"
-                          value={item.amount}
-                          onChange={(e) => handleAmountChange(index, parseInt(e.target.value) || 0)}
-                          className="w-20 px-3 py-2 bg-white/10 border border-white/20 rounded-lg text-white text-center font-medium focus:outline-none focus:border-blue-400"
-                        />
-                        <div className="text-xs text-gray-400 mt-1">Stock</div>
-                      </div>
-                    </div>
-                  </>
-                )}
-              </div>
-            ))}
-          </div>
+          {/* Brand Sponsors */}
+          {brandSponsors.length > 0 && renderPrizeSection(
+            "Brand Sponsors", 
+            brandSponsors, 
+            <Gift className="w-6 h-6 text-blue-400" />,
+            "bg-blue-500/10"
+          )}
+
+          {/* Mysterious Prizes */}
+          {mysteriousPrizes.length > 0 && renderPrizeSection(
+            "Mysterious Prizes", 
+            mysteriousPrizes, 
+            <Gem className="w-6 h-6 text-purple-400" />,
+            "bg-purple-500/10"
+          )}
         </div>
 
         {/* Navigation Button */}
