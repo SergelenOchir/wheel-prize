@@ -50,6 +50,32 @@ const drawRadialBorder = (
   ctx.stroke();
 };
 
+// Cache for loaded images
+const imageCache = new Map<string, HTMLImageElement>();
+
+const loadImage = (src: string): Promise<HTMLImageElement> => {
+  return new Promise((resolve, reject) => {
+    if (imageCache.has(src)) {
+      resolve(imageCache.get(src)!);
+      return;
+    }
+
+    const img = new Image();
+    img.crossOrigin = 'anonymous';
+    
+    img.onload = () => {
+      imageCache.set(src, img);
+      resolve(img);
+    };
+    
+    img.onerror = () => {
+      reject(new Error(`Failed to load image: ${src}`));
+    };
+    
+    img.src = src;
+  });
+};
+
 const drawWheel = (
   canvasRef: RefObject<HTMLCanvasElement>,
   data: WheelData[],
@@ -98,141 +124,147 @@ const drawWheel = (
     const centerX = canvas.width / 2;
     const centerY = canvas.height / 2;
 
-    for (let i = 0; i < data.length; i++) {
-      const { optionSize, style, option } = data[i];
-
-      const arc =
-        (optionSize && (optionSize * (2 * Math.PI)) / QUANTITY) ||
-        (2 * Math.PI) / QUANTITY;
-      const endAngle = startAngle + arc;
-
-      // Special red gradient handling for Ultimate Treasure
-      if (option === 'ULTIMATE TREASURE') {
-        const gradient = ctx.createRadialGradient(centerX, centerY, insideRadius, centerX, centerY, outsideRadius);
-        gradient.addColorStop(0, '#EF4444'); // Lighter red
-        gradient.addColorStop(1, '#DC2626'); // Darker red
-        ctx.fillStyle = gradient;
-      } else {
-        ctx.fillStyle = (style && style.backgroundColor) as string;
+    // Pre-load all images
+    const imagePromises = data.map(item => {
+      if (item.image_url) {
+        return loadImage(item.image_url).catch(() => null);
       }
+      return Promise.resolve(null);
+    });
 
-      ctx.beginPath();
-      ctx.arc(centerX, centerY, outsideRadius, startAngle, endAngle, false);
-      ctx.arc(centerX, centerY, insideRadius, endAngle, startAngle, true);
-      ctx.stroke();
-      ctx.fill();
-      ctx.save();
+    Promise.all(imagePromises).then(loadedImages => {
+      // Clear canvas again before drawing
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      
+      let currentStartAngle = -Math.PI / 2;
 
-      // WHEEL RADIUS LINES
-      ctx.strokeStyle = radiusLineWidth <= 0 ? 'transparent' : radiusLineColor;
-      ctx.lineWidth = radiusLineWidth;
-      drawRadialBorder(
-        ctx,
-        centerX,
-        centerY,
-        insideRadius,
-        outsideRadius,
-        startAngle
-      );
-      if (i === data.length - 1) {
+      for (let i = 0; i < data.length; i++) {
+        const { optionSize, style, option } = data[i];
+
+        const arc =
+          (optionSize && (optionSize * (2 * Math.PI)) / QUANTITY) ||
+          (2 * Math.PI) / QUANTITY;
+        const endAngle = currentStartAngle + arc;
+
+        // Special red gradient handling for Ultimate Treasure
+        if (option === 'ULTIMATE TREASURE') {
+          const gradient = ctx.createRadialGradient(centerX, centerY, insideRadius, centerX, centerY, outsideRadius);
+          gradient.addColorStop(0, '#EF4444'); // Lighter red
+          gradient.addColorStop(1, '#DC2626'); // Darker red
+          ctx.fillStyle = gradient;
+        } else {
+          ctx.fillStyle = (style && style.backgroundColor) as string;
+        }
+
+        ctx.beginPath();
+        ctx.arc(centerX, centerY, outsideRadius, currentStartAngle, endAngle, false);
+        ctx.arc(centerX, centerY, insideRadius, endAngle, currentStartAngle, true);
+        ctx.stroke();
+        ctx.fill();
+        ctx.save();
+
+        // WHEEL RADIUS LINES
+        ctx.strokeStyle = radiusLineWidth <= 0 ? 'transparent' : radiusLineColor;
+        ctx.lineWidth = radiusLineWidth;
         drawRadialBorder(
           ctx,
           centerX,
           centerY,
           insideRadius,
           outsideRadius,
-          endAngle
+          currentStartAngle
         );
-      }
+        if (i === data.length - 1) {
+          drawRadialBorder(
+            ctx,
+            centerX,
+            centerY,
+            insideRadius,
+            outsideRadius,
+            endAngle
+          );
+        }
 
-      // WHEEL OUTER BORDER
-      ctx.strokeStyle =
-        outerBorderWidth <= 0 ? 'transparent' : outerBorderColor;
-      ctx.lineWidth = outerBorderWidth;
-      ctx.beginPath();
-      ctx.arc(
-        centerX,
-        centerY,
-        outsideRadius - ctx.lineWidth / 2,
-        0,
-        2 * Math.PI
-      );
-      ctx.closePath();
-      ctx.stroke();
-
-      // WHEEL INNER BORDER
-      ctx.strokeStyle =
-        innerBorderWidth <= 0 ? 'transparent' : innerBorderColor;
-      ctx.lineWidth = innerBorderWidth;
-      ctx.beginPath();
-      ctx.arc(
-        centerX,
-        centerY,
-        insideRadius + ctx.lineWidth / 2 - 1,
-        0,
-        2 * Math.PI
-      );
-      ctx.closePath();
-      ctx.stroke();
-
-      // CONTENT FILL - DISPLAY IMAGES
-      ctx.translate(
-        centerX + Math.cos(startAngle + arc / 2) * contentRadius,
-        centerY + Math.sin(startAngle + arc / 2) * contentRadius
-      );
-      let contentRotationAngle = startAngle + arc / 2;
-
-      if (data[i].image) {
-        // CASE IMAGE (existing image handling)
-        contentRotationAngle +=
-          data[i].image && !data[i].image?.landscape ? Math.PI / 2 : 0;
-        ctx.rotate(contentRotationAngle);
-
-        const img = data[i].image?._imageHTML || new Image();
-        ctx.drawImage(
-          img,
-          (img.width + (data[i].image?.offsetX || 0)) / -2,
-          -(
-            img.height -
-            (data[i].image?.landscape ? 0 : 90) + // offsetY correction for non landscape images
-            (data[i].image?.offsetY || 0)
-          ) / 2,
-          img.width,
-          img.height
+        // WHEEL OUTER BORDER
+        ctx.strokeStyle =
+          outerBorderWidth <= 0 ? 'transparent' : outerBorderColor;
+        ctx.lineWidth = outerBorderWidth;
+        ctx.beginPath();
+        ctx.arc(
+          centerX,
+          centerY,
+          outsideRadius - ctx.lineWidth / 2,
+          0,
+          2 * Math.PI
         );
-      } else {
-        // CASE PRIZE IMAGE FROM STATIC ASSETS
-        contentRotationAngle += perpendicularText ? Math.PI / 2 : 0;
-        ctx.rotate(contentRotationAngle);
+        ctx.closePath();
+        ctx.stroke();
 
-        // Create and load prize image
-        const prizeImage = new Image();
-        prizeImage.crossOrigin = 'anonymous';
-        
-        // Set image source from the wheel data
-        if (data[i].image_url) {
-          prizeImage.src = data[i].image_url;
+        // WHEEL INNER BORDER
+        ctx.strokeStyle =
+          innerBorderWidth <= 0 ? 'transparent' : innerBorderColor;
+        ctx.lineWidth = innerBorderWidth;
+        ctx.beginPath();
+        ctx.arc(
+          centerX,
+          centerY,
+          insideRadius + ctx.lineWidth / 2 - 1,
+          0,
+          2 * Math.PI
+        );
+        ctx.closePath();
+        ctx.stroke();
+
+        // CONTENT FILL - DISPLAY IMAGES
+        ctx.translate(
+          centerX + Math.cos(currentStartAngle + arc / 2) * contentRadius,
+          centerY + Math.sin(currentStartAngle + arc / 2) * contentRadius
+        );
+        let contentRotationAngle = currentStartAngle + arc / 2;
+
+        if (data[i].image) {
+          // CASE IMAGE (existing image handling for backward compatibility)
+          contentRotationAngle +=
+            data[i].image && !data[i].image?.landscape ? Math.PI / 2 : 0;
+          ctx.rotate(contentRotationAngle);
+
+          const img = data[i].image?._imageHTML || new Image();
+          ctx.drawImage(
+            img,
+            (img.width + (data[i].image?.offsetX || 0)) / -2,
+            -(
+              img.height -
+              (data[i].image?.landscape ? 0 : 90) + // offsetY correction for non landscape images
+              (data[i].image?.offsetY || 0)
+            ) / 2,
+            img.width,
+            img.height
+          );
+        } else {
+          // CASE PRIZE IMAGE FROM image_url
+          ctx.rotate(contentRotationAngle);
+
+          const loadedImage = loadedImages[i];
           
-          // Calculate image size based on wheel segment
-          const maxImageSize = Math.min(80, (outsideRadius - insideRadius) * 0.6);
-          const imageSize = maxImageSize;
-          
-          // Draw image if it's loaded, otherwise draw text as fallback
-          if (prizeImage.complete && prizeImage.naturalHeight !== 0) {
+          if (loadedImage) {
+            // Calculate image size based on wheel segment
+            const segmentWidth = (outsideRadius - insideRadius) * 0.8;
+            const maxImageSize = Math.min(100, segmentWidth);
+            
             // Calculate aspect ratio to maintain proportions
-            const aspectRatio = prizeImage.naturalWidth / prizeImage.naturalHeight;
-            let drawWidth = imageSize;
-            let drawHeight = imageSize;
+            const aspectRatio = loadedImage.naturalWidth / loadedImage.naturalHeight;
+            let drawWidth = maxImageSize;
+            let drawHeight = maxImageSize;
             
             if (aspectRatio > 1) {
-              drawHeight = imageSize / aspectRatio;
+              drawHeight = maxImageSize / aspectRatio;
             } else {
-              drawWidth = imageSize * aspectRatio;
+              drawWidth = maxImageSize * aspectRatio;
             }
             
             // Draw the prize image
             ctx.drawImage(
-              prizeImage,
+              loadedImage,
               -drawWidth / 2,
               -drawHeight / 2,
               drawWidth,
@@ -243,37 +275,48 @@ const drawWheel = (
             const text = data[i].option;
             ctx.font = `${style?.fontStyle || fontStyle} ${
               style?.fontWeight || fontWeight
-            } ${(style?.fontSize || fontSize) * 1.5}px ${
+            } ${(style?.fontSize || fontSize) * 1.2}px ${
               style?.fontFamily || fontFamily
             }, Helvetica, Arial`;
             ctx.fillStyle = (style && style.textColor) as string;
-            ctx.fillText(
-              text || '',
-              -ctx.measureText(text || '').width / 2,
-              fontSize / 3
-            );
+            
+            // Multi-line text handling for long names
+            const words = text.split(' ');
+            const maxWidth = (outsideRadius - insideRadius) * 1.2;
+            let lines = [];
+            let currentLine = words[0];
+
+            for (let j = 1; j < words.length; j++) {
+              const testLine = currentLine + ' ' + words[j];
+              const metrics = ctx.measureText(testLine);
+              if (metrics.width > maxWidth && currentLine.length > 0) {
+                lines.push(currentLine);
+                currentLine = words[j];
+              } else {
+                currentLine = testLine;
+              }
+            }
+            lines.push(currentLine);
+
+            // Draw each line
+            const lineHeight = fontSize * 1.2;
+            const totalHeight = lines.length * lineHeight;
+            const startY = -totalHeight / 2 + lineHeight / 2;
+
+            lines.forEach((line, index) => {
+              ctx.fillText(
+                line,
+                -ctx.measureText(line).width / 2,
+                startY + index * lineHeight
+              );
+            });
           }
-        } else {
-          // Fallback to text if no image_url
-          const text = data[i].option;
-          ctx.font = `${style?.fontStyle || fontStyle} ${
-            style?.fontWeight || fontWeight
-          } ${(style?.fontSize || fontSize) * 1.5}px ${
-            style?.fontFamily || fontFamily
-          }, Helvetica, Arial`;
-          ctx.fillStyle = (style && style.textColor) as string;
-          ctx.fillText(
-            text || '',
-            -ctx.measureText(text || '').width / 2,
-            fontSize / 3
-          );
         }
+
+        ctx.restore();
+        currentStartAngle = endAngle;
       }
-
-      ctx.restore();
-
-      startAngle = endAngle;
-    }
+    });
   }
 };
 
