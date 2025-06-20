@@ -184,25 +184,59 @@ const WinningChancesPage: React.FC<WinningChancesPageProps> = ({
                     : 'bg-white/5 hover:bg-white/10'
                 }`}
               >
-                <div className="w-16 h-16 flex-shrink-0 rounded-xl overflow-hidden bg-white/10 relative group border-2 border-white/20">
-                  <img 
-                    src={item.image_url} 
-                    alt={item.option}
-                    className="w-full h-full object-cover transition-transform group-hover:scale-110"
-                    onError={(e) => {
-                      const target = e.target as HTMLImageElement;
-                      target.style.display = 'none';
-                      const fallbackDiv = target.nextElementSibling as HTMLElement;
-                      if (fallbackDiv) {
-                        fallbackDiv.classList.remove('hidden');
-                      }
-                    }}
-                  />
-                  <div className="w-full h-full flex items-center justify-center hidden absolute inset-0 bg-gradient-to-br from-purple-500/20 to-blue-500/20">
-                    {getPrizeIcon(item.option)}
+                {/* Prize Image and Option Name Image Display */}
+                <div className="flex gap-2 flex-shrink-0">
+                  {/* Prize Image */}
+                  <div className="w-16 h-16 rounded-xl overflow-hidden bg-white/10 relative group border-2 border-white/20">
+                    <img 
+                      src={item.image_url} 
+                      alt={`${item.option} - Prize`}
+                      className="w-full h-full object-cover transition-transform group-hover:scale-110"
+                      onError={(e) => {
+                        const target = e.target as HTMLImageElement;
+                        target.style.display = 'none';
+                        const fallbackDiv = target.nextElementSibling as HTMLElement;
+                        if (fallbackDiv) {
+                          fallbackDiv.classList.remove('hidden');
+                        }
+                      }}
+                    />
+                    <div className="w-full h-full flex items-center justify-center hidden absolute inset-0 bg-gradient-to-br from-purple-500/20 to-blue-500/20">
+                      {getPrizeIcon(item.option)}
+                    </div>
+                    {/* Image overlay for better visibility */}
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity"></div>
+                    {/* Label */}
+                    <div className="absolute -bottom-5 left-0 right-0 text-center">
+                      <span className="text-xs text-gray-400 bg-black/50 px-1 rounded">Prize</span>
+                    </div>
                   </div>
-                  {/* Image overlay for better visibility */}
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity"></div>
+
+                  {/* Option Name Image */}
+                  <div className="w-16 h-16 rounded-xl overflow-hidden bg-white/10 relative group border-2 border-amber-400/30">
+                    <img 
+                      src={item.option_url} 
+                      alt={`${item.option} - Name`}
+                      className="w-full h-full object-cover transition-transform group-hover:scale-110"
+                      onError={(e) => {
+                        const target = e.target as HTMLImageElement;
+                        target.style.display = 'none';
+                        const fallbackDiv = target.nextElementSibling as HTMLElement;
+                        if (fallbackDiv) {
+                          fallbackDiv.classList.remove('hidden');
+                        }
+                      }}
+                    />
+                    <div className="w-full h-full flex items-center justify-center hidden absolute inset-0 bg-gradient-to-br from-amber-500/20 to-orange-500/20">
+                      <Image className="w-6 h-6 text-amber-400" />
+                    </div>
+                    {/* Image overlay for better visibility */}
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity"></div>
+                    {/* Label */}
+                    <div className="absolute -bottom-5 left-0 right-0 text-center">
+                      <span className="text-xs text-amber-400 bg-black/50 px-1 rounded">Name</span>
+                    </div>
+                  </div>
                 </div>
                 
                 {!isEditing ? (
