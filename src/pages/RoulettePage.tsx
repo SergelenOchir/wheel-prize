@@ -4,7 +4,7 @@ import { WheelData } from '../types/WheelData';
 import { getPrizeIcon } from '../utils/prizeIcons';
 import { Crown, Package } from 'lucide-react';
 import logo from '../assets/logo.png'
-import rouletteWrapper from '../assets/roulette-wrapper.png'
+import wrapperImage from '../assets/roulette-wrapper.png'
 
 interface RoulettePageProps {
   data: WheelData[];
@@ -120,64 +120,36 @@ const RoulettePage: React.FC<RoulettePageProps> = ({
         {/* Roulette Wheel Container */}
         <div className="flex flex-col items-center space-y-8">
           {/* Wheel Wrapper with Larger Responsive Sizing */}
+          <img alt="wrapperImage" className="w-[40rem] top-[-105px] absolute" src={wrapperImage} />
           <div className="relative">
             {availableData.length > 0 ? (
-              <div className="relative w-[40rem] h-[40rem] flex items-center justify-center">
-                {/* Roulette Wrapper Background - Increased Size */}
-                <img 
-                  src={rouletteWrapper} 
-                  alt="Roulette Wrapper" 
-                  className="absolute inset-0 w-full h-full object-contain z-20 pointer-events-none"
-                  style={{
-                    filter: 'drop-shadow(0 15px 40px rgba(0,0,0,0.6))',
-                    transform: 'scale(1.1)' // Slightly larger to ensure full coverage
-                  }}
+              <div className="w-[28rem] h-[28rem] flex items-center justify-center">
+                <Wheel
+                  mustStartSpinning={mustSpin}
+                  prizeNumber={availableData.findIndex(item => item.option === data[prizeNumber]?.option)}
+                  data={availableData}
+                  onStopSpinning={handleSpinStop}
+                  backgroundColors={availableData.map(item => item.style.backgroundColor)}
+                  textColors={['#ffffff']}
+                  outerBorderColor="#FAB654"
+                  outerBorderWidth={8}
+                  innerBorderColor="#f59e0b"
+                  innerBorderWidth={4}
+                  radiusLineColor="#FFD08F"
+                  radiusLineWidth={1}
+                  fontSize={13}
+                  textDistance={60}
+                  spinDuration={1.2}
+                  innerRadius={0}
+                  centerIcon={<img style={{width: 64, height: 64}} alt="logoImage" src={logo}/>}
                 />
-                
-                {/* Wheel Container - positioned behind wrapper with adjusted padding */}
-                <div className="absolute inset-0 flex items-center justify-center z-10" style={{ padding: '5rem' }}>
-                  <div className="w-full h-full">
-                    <Wheel
-                      mustStartSpinning={mustSpin}
-                      prizeNumber={availableData.findIndex(item => item.option === data[prizeNumber]?.option)}
-                      data={availableData}
-                      onStopSpinning={handleSpinStop}
-                      backgroundColors={availableData.map(item => item.style.backgroundColor)}
-                      textColors={['#ffffff']}
-                      outerBorderColor="#FAB654"
-                      outerBorderWidth={6}
-                      innerBorderColor="#f59e0b"
-                      innerBorderWidth={3}
-                      radiusLineColor="#FFD08F"
-                      radiusLineWidth={1}
-                      fontSize={11}
-                      textDistance={65}
-                      spinDuration={1.2}
-                      innerRadius={0}
-                      centerIcon={<img style={{width: 48, height: 48}} alt="logoImage" src={logo}/>}
-                    />
-                  </div>
-                </div>
               </div>
             ) : (
-              <div className="relative w-[40rem] h-[40rem] flex items-center justify-center">
-                {/* Roulette Wrapper Background */}
-                <img 
-                  src={rouletteWrapper} 
-                  alt="Roulette Wrapper" 
-                  className="absolute inset-0 w-full h-full object-contain z-20 pointer-events-none opacity-50"
-                  style={{
-                    transform: 'scale(1.1)'
-                  }}
-                />
-                
-                {/* Out of Stock Message */}
-                <div className="absolute inset-0 flex items-center justify-center z-30">
-                  <div className="text-center bg-black/60 backdrop-blur-lg rounded-2xl p-8 border-4 border-red-500/50">
-                    <Package className="w-16 h-16 text-red-400 mx-auto mb-4" />
-                    <h3 className="text-2xl font-bold text-white mb-2">All Prizes Claimed!</h3>
-                    <p className="text-red-400">No more items available</p>
-                  </div>
+              <div className="w-[28rem] h-[28rem] flex items-center justify-center bg-black/40 backdrop-blur-lg rounded-full border-4 border-red-500/50">
+                <div className="text-center">
+                  <Package className="w-16 h-16 text-red-400 mx-auto mb-4" />
+                  <h3 className="text-2xl font-bold text-white mb-2">All Prizes Claimed!</h3>
+                  <p className="text-red-400">No more items available</p>
                 </div>
               </div>
             )}

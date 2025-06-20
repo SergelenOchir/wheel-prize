@@ -7,13 +7,10 @@ export const getRotationDegrees = (
 ): number => {
   const degreesPerPrize = 360 / numberOfPrizes;
 
-  // Adjust initial rotation for top pointer (0 degrees)
-  // The pointer is at the top, so we need to account for this
   const initialRotation = degreesPerPrize / 2;
 
   const randomDifference = (-1 + Math.random() * 2) * degreesPerPrize * 0.35;
 
-  // Calculate rotation so the selected prize ends up under the top pointer
   const perfectRotation =
     degreesPerPrize * (numberOfPrizes - prizeNumber) - initialRotation;
 
@@ -24,7 +21,6 @@ export const getRotationDegrees = (
 
   const prizeRotation = randomDif ? imperfectRotation : perfectRotation;
 
-  // Ensure we get the right direction of rotation
   return numberOfPrizes - prizeNumber > numberOfPrizes / 2
     ? -360 + prizeRotation
     : prizeRotation;
