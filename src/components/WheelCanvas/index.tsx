@@ -81,6 +81,8 @@ const drawWheel = (
   data: WheelData[],
   drawWheelProps: DrawWheelProps
 ) => {
+
+  console.log(JSON.stringify(data), 'dataaaa')
   /* eslint-disable prefer-const */
   let {
     outerBorderColor,

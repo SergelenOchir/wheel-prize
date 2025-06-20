@@ -112,69 +112,13 @@ export const getAssetForPrize = (prizeName: string): string => {
     return PRIZE_ASSETS[prizeName as keyof typeof PRIZE_ASSETS];
   }
 
-  console.log('hereeee')
-  
-  // Fallback to category-based images
-  const lowerName = prizeName.toLowerCase();
-  
-  if (lowerName.includes('outdoor') || lowerName.includes('nature') || lowerName.includes('compass')) {
-    return FALLBACK_IMAGES.outdoor;
-  }
-  if (lowerName.includes('speed') || lowerName.includes('tech')) {
-    return FALLBACK_IMAGES.tech;
-  }
-  if (lowerName.includes('vans') || lowerName.includes('fashion')) {
-    return FALLBACK_IMAGES.fashion;
-  }
-  if (lowerName.includes('toys') || lowerName.includes('hobby')) {
-    return FALLBACK_IMAGES.toys;
-  }
-  if (lowerName.includes('cases') || lowerName.includes('avandra')) {
-    return FALLBACK_IMAGES.accessories;
-  }
-  if (lowerName.includes('resort') || lowerName.includes('gorkhi')) {
-    return FALLBACK_IMAGES.resort;
-  }
-  if (lowerName.includes('mysterious') || lowerName.includes('mystery')) {
-    return FALLBACK_IMAGES.mystery;
-  }
-  if (lowerName.includes('treasure') || lowerName.includes('ultimate')) {
-    return FALLBACK_IMAGES.treasure;
-  }
-  
   return FALLBACK_IMAGES.default;
 };
 
 export const getOptionNameAsset = (prizeName: string): string => {
-  
-  // Fallback to category-based option name images
-  const lowerName = prizeName.toLowerCase();
-  
-  if (lowerName.includes('outdoor') || lowerName.includes('nature') || lowerName.includes('compass')) {
-    return FALLBACK_OPTION_NAMES.outdoor;
+  if (OPTION_NAME_ASSETS[prizeName as keyof typeof OPTION_NAME_ASSETS]) {
+    return OPTION_NAME_ASSETS[prizeName as keyof typeof OPTION_NAME_ASSETS];
   }
-  if (lowerName.includes('speed') || lowerName.includes('tech')) {
-    return FALLBACK_OPTION_NAMES.tech;
-  }
-  if (lowerName.includes('vans') || lowerName.includes('fashion')) {
-    return FALLBACK_OPTION_NAMES.fashion;
-  }
-  if (lowerName.includes('toys') || lowerName.includes('hobby')) {
-    return FALLBACK_OPTION_NAMES.toys;
-  }
-  if (lowerName.includes('cases') || lowerName.includes('avandra')) {
-    return FALLBACK_OPTION_NAMES.accessories;
-  }
-  if (lowerName.includes('resort') || lowerName.includes('gorkhi')) {
-    return FALLBACK_OPTION_NAMES.resort;
-  }
-  if (lowerName.includes('mysterious') || lowerName.includes('mystery')) {
-    return FALLBACK_OPTION_NAMES.mystery;
-  }
-  if (lowerName.includes('treasure') || lowerName.includes('ultimate')) {
-    return FALLBACK_OPTION_NAMES.treasure;
-  }
-  
   return FALLBACK_OPTION_NAMES.default;
 };
 
