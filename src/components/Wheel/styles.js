@@ -17,25 +17,13 @@ export const RouletteContainer = styled.div`
   justify-content: center;
 `;
 
-export const RouletteWrapperImage = styled(NonDraggableImage)`
-  position: absolute;
-  z-index: 15;
-  width: 100%;
-  height: 100%;
-  object-fit: contain;
-  pointer-events: none;
-  top: 0;
-  left: 0;
-`;
-
 export const RotationContainer = styled.div`
   position: relative;
-  width: 75%;
-  height: 75%;
+  width: 100%;
+  height: 100%;
   display: flex;
   justify-content: center;
   align-items: center;
-  z-index: 10;
   transform: rotate(${props => props.startRotationDegrees}deg);
 
   &.started-spinning {
@@ -85,7 +73,7 @@ export const RotationContainer = styled.div`
 
 export const RoulettePointerImage = styled(NonDraggableImage)`
   position: absolute;
-  z-index: 20;
+  z-index: 10;
   width: 17%;
   top: 13%;
   left: 50%;
